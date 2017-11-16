@@ -1,0 +1,31 @@
+{
+  "definition" : {
+    "data_type" : [ "boolean", "datetime", "number", "string", "array" ],
+    "default_field" : [ "id", "last_updated" ],
+    "object" : {
+      "field" : [ {
+        "data_type" : "number",
+        "name" : "id"
+      }, {
+        "data_type" : "string",
+        "name" : "name"
+      }, {
+        "data_type" : "array",
+        "name" : "field"
+      } ]
+    }
+  },
+  "manga" : [ {
+    "chapter" : "201/201",
+    "title" : "Liar Game"
+  } ],
+  "object" : [ {
+    "field" : [ "id", "last_updated", "title", "chapters", "status", "comments" ],
+    "id" : 0,
+    "name" : "manga"
+  }, {
+    "field" : [ "match_date", "year", "season", "organization", "league", "level", "match_type", "partner", "line_number", "opponent", "is_won", "set_1_score", "set_2_score", "set_3_score", "comments" ],
+    "id" : 1,
+    "name" : "tennis"
+  } ]
+}

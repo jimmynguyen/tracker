@@ -2,4 +2,7 @@
 
 angular.module "app.controllers"
 
-.controller "HomeController", ($scope) ->
+.controller "HomeController", ($scope, $location) ->
+	$scope.route = $location.path()
+
+	return

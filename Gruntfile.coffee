@@ -38,8 +38,10 @@ module.exports = (grunt) ->
 				nonull: true
 			dist:
 				src: [
+					"node_modules/firebase/firebase.js"
 					"node_modules/jquery/dist/jquery.min.js"
 					"node_modules/angular/angular.min.js"
+					"node_modules/angularfire/dist/angularfire.min.js"
 					"node_modules/angular-route/angular-route.min.js"
 					"node_modules/bootstrap/dist/js/bootstrap.min.js"
 					"out/js/app.js"
@@ -105,3 +107,5 @@ module.exports = (grunt) ->
 		"concat"
 		"uglify"
 	]
+
+	return

@@ -13,12 +13,13 @@
   },
   "homepage": "https://github.com/jimmynguyen/tracker#readme",
   "scripts": {
-    "build": "coffee -c Gruntfile.coffee && grunt",
-    "start": "open index.html"
+    "build": "coffee -c Gruntfile.coffee && node_modules/grunt/bin/grunt",
+    "start": "npm run build && http-server -o"
   },
   "dependencies": {
     "angular": "^1.6.6",
     "angular-route": "^1.6.6",
+    "angularfire": "^2.3.0",
     "bootstrap": "^3.3.7",
     "jquery": "^3.2.1"
   },
