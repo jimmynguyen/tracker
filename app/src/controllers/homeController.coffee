@@ -6,9 +6,7 @@ angular.module "app.controllers"
 		$scope,
 		$location,
 		DatabaseService) ->
-	$scope.route = $location.path()
+	console.log $location.path()
 	$scope.mangas = []
-
 	DatabaseService.getObjectsByName $scope, "mangas", "manga"
-
 	return
