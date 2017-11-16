@@ -2,7 +2,7 @@
 
 angular.module "app.controllers"
 
-.controller "HomeController", (
+.controller "SettingsController", (
 		$scope,
 		$location,
 		DatabaseService) ->

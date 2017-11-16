@@ -13,7 +13,8 @@ module.exports = (grunt) ->
 					"console",
 					"document",
 					"alert",
-					"window"
+					"window",
+					"firebase"
 				]
 			your_target: [
 				"app/src/**/*.coffee"
@@ -44,8 +45,6 @@ module.exports = (grunt) ->
 					"node_modules/angularfire/dist/angularfire.min.js"
 					"node_modules/angular-route/angular-route.min.js"
 					"node_modules/bootstrap/dist/js/bootstrap.min.js"
-					"out/js/app.js"
-					"out/js/routes.js"
 					"out/js/**/*.js"
 				]
 				dest: "out/app.min.js"

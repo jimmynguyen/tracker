@@ -26,3 +26,13 @@ Table of objects with fields:
 | children     | optional | list of objects that are children of this object |
 | data_type    | required | data type (text, number, etc)                    |
 | last_updated | required | timestamp of when the object was last updated    |
+
+#### Routes
+
+#### Home
+
+path: `/`
+
+#### Settings
+
+path: `/settings`

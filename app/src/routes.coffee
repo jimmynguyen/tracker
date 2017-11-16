@@ -8,6 +8,9 @@ angular.module "app.routes"
 	.when "/",
 		templateUrl: "app/templates/views/home.html"
 		controller: "HomeController"
+	.when "/settings",
+		templateUrl: "app/templates/views/settings.html"
+		controller: "SettingsController"
 	.otherwise
 		redirectTo: "/"
 
