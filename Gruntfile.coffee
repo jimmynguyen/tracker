@@ -50,8 +50,9 @@ module.exports = (grunt) ->
 					"node_modules/firebase/firebase.js"
 					"node_modules/jquery/dist/jquery.min.js"
 					"node_modules/angular/angular.min.js"
-					"node_modules/angularfire/dist/angularfire.min.js"
+					"node_modules/angular-cookies/angular-cookies.min.js"
 					"node_modules/angular-route/angular-route.min.js"
+					"node_modules/angularfire/dist/angularfire.min.js"
 					"node_modules/bootstrap/dist/js/bootstrap.min.js"
 				]
 				dest: "build/dependencies.js"
