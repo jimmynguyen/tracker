@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<base href="/"/>
+		<title>Tracker</title>
+
+		<!-- css -->
+		<link type="text/css" rel="stylesheet" href="out/app.min.css"/>
+	</head>
+	<body ng-app="app">
+		<ng-view></ng-view>
+
+		<!-- js -->
+		<script type="text/javascript" environment="development" src="build/dependencies.js"></script>
+		<script type="text/javascript" environment="development" src="build/js/app.js"></script>
+		<script type="text/javascript" environment="development" src="build/js/routes.js"></script>
+		<script type="text/javascript" environment="development" src="build/js/services/authenticationService.js"></script>
+		<script type="text/javascript" environment="development" src="build/js/services/databaseService.js"></script>
+		<script type="text/javascript" environment="development" src="build/js/services/dialogService.js"></script>
+		<script type="text/javascript" environment="development" src="build/js/services/navigationService.js"></script>
+		<script type="text/javascript" environment="development" src="build/js/directives/navbar.js"></script>
+		<script type="text/javascript" environment="development" src="build/js/controllers/categoryController.js"></script>
+		<script type="text/javascript" environment="development" src="build/js/controllers/entryController.js"></script>
+		<script type="text/javascript" environment="development" src="build/js/controllers/homeController.js"></script>
+		<script type="text/javascript" environment="development" src="build/js/controllers/loginController.js"></script>
+		<script type="text/javascript" environment="production"  src="out/app.min.js"></script>
+
+	</body>
+</html>
