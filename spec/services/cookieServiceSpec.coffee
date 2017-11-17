@@ -72,17 +72,3 @@ describe "CookieServiceTest", ->
 				.toHaveBeenCalled()
 			expect $cookies.remove.calls.mostRecent().args[0]
 				.toBe key
-
-
-	# describe "when AuthenticationService.login()", ->
-	# 	it "if the user credentials are valid, then ", () ->
-	# 		navigationService.goToEntry(categoryId, entryId)
-	# 		expect $location.url
-	# 			.toHaveBeenCalledWith(path)
-
-	# describe "when AuthenticationService.logout()", ->
-	# 	it "then the user should be logged out", () ->
-	# 		spyOn cookieService, "removeUser"
-	# 		authenticationService.logout()
-	# 		expect cookieService.removeUser
-	# 			.toHaveBeenCalled()

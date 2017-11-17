@@ -2,6 +2,7 @@ describe "AuthenticationServiceTest", ->
 	authenticationService = undefined
 	cookieService = undefined
 	databaseService = undefined
+	scope = undefined
 
 	beforeEach ->
 		angular.mock.module "app.services"
@@ -27,11 +28,25 @@ describe "AuthenticationServiceTest", ->
 				expect cookieService.getUser
 					.toHaveBeenCalled()
 
-	# describe "when AuthenticationService.login()", ->
-	# 	it "if the user credentials are valid, then ", () ->
-	# 		navigationService.goToEntry(categoryId, entryId)
-	# 		expect $location.url
-	# 			.toHaveBeenCalledWith(path)
+	describe "when AuthenticationService.login()", ->
+		beforeEach angular.mock.inject ($rootScope) ->
+			scope = $rootScope.$new()
+		it "then call DatabaseService.login()", () ->
+			field = "isLoginSuccessful"
+			emailOrUsername = "emailOrUsername"
+			password = "password"
+			spyOn databaseService, "login"
+			authenticationService.login scope, field, emailOrUsername, password
+			expect databaseService.login
+				.toHaveBeenCalled()
+			expect databaseService.login.calls.mostRecent().args[0]
+				.toBe scope
+			expect databaseService.login.calls.mostRecent().args[1]
+				.toBe field
+			expect databaseService.login.calls.mostRecent().args[2]
+				.toBe emailOrUsername
+			expect databaseService.login.calls.mostRecent().args[3]
+				.toBe password
 
 	describe "when AuthenticationService.logout()", ->
 		it "then the user should be logged out", () ->

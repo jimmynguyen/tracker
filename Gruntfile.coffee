@@ -14,6 +14,7 @@ module.exports = (grunt) ->
 				globals: [
 					"angular"
 					"firebase"
+					"$"
 				]
 			source: [
 				"app/src/**/*.coffee"

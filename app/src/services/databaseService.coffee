@@ -2,7 +2,7 @@
 
 angular.module "app.services"
 
-.factory "DatabaseService", ($cookies, $firebaseArray) ->
+.factory "DatabaseService", (CookieService, $firebaseArray) ->
 	# initialize firebase app if it has not been initialized
 	if firebase.apps.length is 0
 		_config =
@@ -34,14 +34,14 @@ angular.module "app.services"
 			users = $firebaseArray(firebase.database().ref().child('user'))
 			users.$loaded()
 				.then (_users) ->
-					isLoginSuccessful = users.some (user) ->
+					scope[field] = users.some (user) ->
 						if user.password is password and (user.username is emailOrUsername or user.email is emailOrUsername)
+							CookieService.setUser $.extend true, {}, user
 							return true
-					if isLoginSuccessful
-						$cookies.putObject 
 					return
 				.catch (error) ->
 					console.error "error loading node 'user'", error
+					scope[field] = false
 					return
 		getObjectsByName: (scope, field, name) ->
 			scope[field] = $firebaseArray(firebase.database().ref().child(name))
