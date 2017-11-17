@@ -4,12 +4,12 @@ angular.module "app.directives"
 
 .factory "NavigationService", ($location) ->
 	navigationService =
-		goToCategory: (category_id) ->
-			path = "/category/" + category_id
+		goToCategory: (categoryId) ->
+			path = "/category/" + categoryId
 			$location.url path
 			return
-		goToEntry: (category_id, entry_id) ->
-			path = "/category/" + category_id + "/entry/" + entry_id
+		goToEntry: (categoryId, entryId) ->
+			path = "/category/" + categoryId + "/entry/" + entryId
 			$location.url path
 			return
 		goToHome: () ->
