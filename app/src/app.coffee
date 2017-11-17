@@ -11,9 +11,9 @@ angular.module "app.routes", [
 	"ngRoute"
 ]
 angular.module "app.controllers", []
-angular.module "app.directives", [
+angular.module "app.directives", []
+angular.module "app.filters", []
+angular.module "app.services", [
 	"firebase"
 	"ngCookies"
 ]
-angular.module "app.filters", []
-angular.module "app.services", []

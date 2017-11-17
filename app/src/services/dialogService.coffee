@@ -1,6 +1,6 @@
 "use strict"
 
-angular.module "app.directives"
+angular.module "app.services"
 
 .factory "DialogService", () ->
 	dialogService =
