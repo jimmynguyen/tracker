@@ -13,6 +13,7 @@ angular.module "app.routes", [
 angular.module "app.controllers", []
 angular.module "app.directives", [
 	"firebase"
+	"ngCookies"
 ]
 angular.module "app.filters", []
 angular.module "app.services", []
