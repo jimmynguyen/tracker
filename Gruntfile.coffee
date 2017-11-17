@@ -7,17 +7,19 @@ module.exports = (grunt) ->
 		# lint .coffee
 		coffee_jshint:
 			options:
+				jshintOptions: [
+					"devel"
+					"jasmine"
+				]
 				globals: [
-					"angular",
-					"$",
-					"console",
-					"document",
-					"alert",
-					"window",
+					"angular"
 					"firebase"
 				]
 			source: [
 				"app/src/**/*.coffee"
+			]
+			test: [
+				"spec/**/*.coffee"
 			]
 
 		clean:
@@ -36,6 +38,12 @@ module.exports = (grunt) ->
 				cwd: "app/src"
 				src: ["**/*.coffee"]
 				dest: "build/js"
+				ext: ".js"
+			test:
+				expand: true
+				cwd: "spec"
+				src: ["**/*.coffee"]
+				dest: "build/spec"
 				ext: ".js"
 
 		# concat .js files
@@ -94,10 +102,17 @@ module.exports = (grunt) ->
 		copy:
 			index_html:
 				files: [
-					expand: true,
+					expand: true
 					cwd: "app"
 					src: ["index.html"]
 					dest: ""
+				]
+			jasmine_json:
+				files: [
+					expand: true
+					cwd: "spec"
+					src: ["jasmine.json"]
+					dest: "build/spec"
 				]
 
 		replace:
@@ -128,6 +143,16 @@ module.exports = (grunt) ->
 					dest: ""
 				]
 
+		jasmine:
+			test:
+				src: [
+					"build/dependencies.js"
+					"node_modules/angular-mocks/angular-mocks.js"
+					"build/js/**/*.js"
+				]
+				options:
+					specs: "build/spec/**/*Spec.js"
+
 	# load css tasks
 	grunt.loadNpmTasks "grunt-concat-css"
 	grunt.loadNpmTasks "grunt-contrib-cssmin"
@@ -143,6 +168,7 @@ module.exports = (grunt) ->
 	# load utility tasks
 	grunt.loadNpmTasks "grunt-contrib-clean"
 	grunt.loadNpmTasks "grunt-contrib-copy"
+	grunt.loadNpmTasks "grunt-contrib-jasmine"
 	grunt.loadNpmTasks "grunt-replace"
 
 	grunt.registerTask "css", [
@@ -152,9 +178,13 @@ module.exports = (grunt) ->
 
 	grunt.registerTask "development", [
 		"coffee_jshint:source"
+		"coffee_jshint:test"
 		"clean:development"
 		"coffee:source"
+		"coffee:test"
 		"concat:dependencies"
+		"copy:jasmine_json"
+		"jasmine:test"
 		"css"
 		"copy:index_html"
 		"replace:development"
@@ -162,9 +192,13 @@ module.exports = (grunt) ->
 
 	grunt.registerTask "production", [
 		"coffee_jshint:source"
+		"coffee_jshint:test"
 		"clean:production"
 		"coffee:source"
+		"coffee:test"
 		"concat:dependencies"
+		"copy:jasmine_json"
+		"jasmine:test"
 		"uglify:production"
 		"css"
 		"copy:index_html"
