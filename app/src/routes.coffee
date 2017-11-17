@@ -17,13 +17,13 @@ angular.module "app.routes"
 	.when "/category",
 		templateUrl: "app/templates/views/home.html"
 		controller: "HomeController"
-	.when "/category/:category_id",
+	.when "/category/:categoryId",
 		templateUrl: "app/templates/views/category.html"
 		controller: "CategoryController"
-	.when "/category/:category_id/entry",
+	.when "/category/:categoryId/entry",
 		templateUrl: "app/templates/views/category.html"
 		controller: "CategoryController"
-	.when "/category/:category_id/entry/:entry_id",
+	.when "/category/:categoryId/entry/:entryId",
 		templateUrl: "app/templates/views/entry.html"
 		controller: "EntryController"
 	.otherwise
