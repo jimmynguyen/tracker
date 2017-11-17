@@ -1,46 +1,46 @@
-describe "NavigationServiceSpec", ->
-	navigationService = undefined
+describe "LocationServiceTest", ->
+	locationService = undefined
 	$location = undefined
 
 	beforeEach ->
 		angular.mock.module "app.services"
 
-	beforeEach angular.mock.inject (NavigationService, _$location_) ->
-		navigationService = NavigationService
+	beforeEach angular.mock.inject (LocationService, _$location_) ->
+		locationService = LocationService
 		$location = _$location_
 		spyOn $location, "url"
 
-	describe "when NavigationService.goToCategory()", ->
+	describe "when LocationService.goToCategory()", ->
 		categoryId = 0
 		path = "/category/" + categoryId
 
 		it "then redirect to \"" + path + "\"", () ->
-			navigationService.goToCategory(categoryId)
+			locationService.goToCategory(categoryId)
 			expect $location.url
 				.toHaveBeenCalledWith(path)
 
-	describe "when NavigationService.goToEntry()", ->
+	describe "when LocationService.goToEntry()", ->
 		categoryId = 0
 		entryId = 0
 		path = "/category/" + categoryId + "/entry/" + entryId
 
 		it "then redirect to \"" + path + "\"", () ->
-			navigationService.goToEntry(categoryId, entryId)
+			locationService.goToEntry(categoryId, entryId)
 			expect $location.url
 				.toHaveBeenCalledWith(path)
 
-	describe "when NavigationService.goToHome()", ->
+	describe "when LocationService.goToHome()", ->
 		path = "/home"
 
 		it "then redirect to \"" + path + "\"", () ->
-			navigationService.goToHome()
+			locationService.goToHome()
 			expect $location.url
 				.toHaveBeenCalledWith(path)
 
-	describe "when NavigationService.goToLogin()", ->
+	describe "when LocationService.goToLogin()", ->
 		path = "/login"
 
 		it "then redirect to \"" + path + "\"", () ->
-			navigationService.goToLogin()
+			locationService.goToLogin()
 			expect $location.url
 				.toHaveBeenCalledWith(path)

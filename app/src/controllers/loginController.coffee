@@ -4,6 +4,7 @@ angular.module "app.controllers"
 
 .controller "LoginController", (
 		$scope,
-		NavigationService) ->
-	NavigationService.goToHome()
+		LocationService) ->
+	LocationService.logPath()
+	LocationService.goToHome()
 	return

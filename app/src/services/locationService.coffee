@@ -2,8 +2,10 @@
 
 angular.module "app.services"
 
-.factory "NavigationService", ($location) ->
-	navigationService =
+.factory "LocationService", ($location) ->
+	locationService =
+		logPath: () ->
+			console.log $location.path()
 		goToCategory: (categoryId) ->
 			path = "/category/" + categoryId
 			$location.url path
@@ -18,4 +20,4 @@ angular.module "app.services"
 		goToLogin: () ->
 			$location.url "/login"
 			return
-	navigationService
+	locationService

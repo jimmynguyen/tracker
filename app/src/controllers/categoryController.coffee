@@ -4,6 +4,6 @@ angular.module "app.controllers"
 
 .controller "CategoryController", (
 		$scope,
-		$location) ->
-	console.log $location.path()
+		LocationService) ->
+	LocationService.logPath()
 	return
