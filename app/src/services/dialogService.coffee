@@ -2,10 +2,12 @@
 
 angular.module "app.services"
 
-.factory "DialogService", () ->
+.factory "DialogService", ->
+
 	dialogService =
-		show : () ->
+		show : ->
 			return
-		hide : () ->
+		hide : ->
 			return
+
 	dialogService

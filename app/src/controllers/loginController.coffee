@@ -2,9 +2,9 @@
 
 angular.module "app.controllers"
 
-.controller "LoginController", (
-		$scope,
-		LocationService) ->
+.controller "LoginController", (LocationService) ->
+
 	LocationService.logPath()
 	LocationService.goToHome()
+
 	return

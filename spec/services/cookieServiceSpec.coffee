@@ -1,74 +1,67 @@
 describe "CookieServiceTest", ->
 	cookieService = undefined
 	$cookies = undefined
-
 	beforeEach ->
 		angular.mock.module "app.services"
-
-	beforeEach angular.mock.inject (CookieService, _$cookies_) ->
-		cookieService = CookieService
-		$cookies = _$cookies_
-
+		angular.mock.inject (CookieService, _$cookies_) ->
+			cookieService = CookieService
+			$cookies = _$cookies_
+			return
+		return
 	describe "when CookieService.getUser()", ->
-		it "then get user", () ->
+		it "then get user", ->
 			spyOn cookieService, "getObject"
 			cookieService.getUser()
 			expect cookieService.getObject
 				.toHaveBeenCalledWith cookieService.keys.user
-
+			return
+		return
 	describe "when CookieService.setUser()", ->
-		it "then set user", () ->
+		it "then set user", ->
 			user = {}
 			spyOn cookieService, "putObject"
 			cookieService.setUser user
 			expect cookieService.putObject
-				.toHaveBeenCalled()
-			expect cookieService.putObject.calls.mostRecent().args[0]
-				.toBe cookieService.keys.user
-			expect cookieService.putObject.calls.mostRecent().args[1]
-				.toBe user
-
+				.toHaveBeenCalledWith cookieService.keys.user, user
+			return
+		return
 	describe "when CookieService.removeUser()", ->
-		it "then remove user", () ->
+		it "then remove user", ->
 			spyOn cookieService, "remove"
 			cookieService.removeUser()
 			expect cookieService.remove
-				.toHaveBeenCalled()
-			expect cookieService.remove.calls.mostRecent().args[0]
-				.toBe cookieService.keys.user
-
+				.toHaveBeenCalledWith cookieService.keys.user
+			return
+		return
 	describe "when CookieService.getObject()", ->
-		it "then get object from $cookies", () ->
+		it "then get object from $cookies", ->
 			key = "key"
 			obj = {}
 			spyOn $cookies, "getObject"
 				.and.returnValue obj
-			expect cookieService.getObject(key)
+			expect cookieService.getObject key
 				.toBe obj
 			expect $cookies.getObject
-				.toHaveBeenCalled()
-			expect $cookies.getObject.calls.mostRecent().args[0]
-				.toBe key
-
+				.toHaveBeenCalledWith key
+			return
+		return
 	describe "when CookieService.putObject()", ->
-		it "then put object in $cookies", () ->
+		it "then put object in $cookies", ->
 			key = "key"
 			obj = {}
 			spyOn $cookies, "putObject"
 			cookieService.putObject key, obj
 			expect $cookies.putObject
-				.toHaveBeenCalled()
-			expect $cookies.putObject.calls.mostRecent().args[0]
-				.toBe key
-			expect $cookies.putObject.calls.mostRecent().args[1]
-				.toBe obj
-
+				.toHaveBeenCalledWith key, obj
+			return
+		return
 	describe "when CookieService.remove()", ->
-		it "then remove from $cookies", () ->
+		it "then remove from $cookies", ->
 			key = "key"
 			spyOn $cookies, "remove"
 			cookieService.remove key
 			expect $cookies.remove
-				.toHaveBeenCalled()
-			expect $cookies.remove.calls.mostRecent().args[0]
-				.toBe key
+				.toHaveBeenCalledWith key
+			return
+		return
+	return

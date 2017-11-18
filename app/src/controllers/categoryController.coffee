@@ -2,8 +2,8 @@
 
 angular.module "app.controllers"
 
-.controller "CategoryController", (
-		$scope,
-		LocationService) ->
+.controller "CategoryController", (LocationService) ->
+
 	LocationService.logPath()
+
 	return

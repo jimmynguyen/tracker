@@ -2,17 +2,13 @@
 
 angular.module "app.controllers"
 
-.controller "HomeController", (
-		$scope,
-		DatabaseService,
-		LocationService) ->
+.controller "HomeController", (DatabaseService, LocationService, LoggingService) ->
+
 	LocationService.logPath()
-	# $scope.mangas = []
-	# DatabaseService.getObjectsByName $scope, "mangas", "manga"
-	DatabaseService.login $scope, "isLoginSuccessful", null, "password"
-	$scope.$watch "isLoginSuccessful", () ->
-		if $scope.isLoginSuccessful
-			console.log "hip hip hurray"
+	DatabaseService.login "jdoe", "password", (isLoginSuccessful) ->
+		if isLoginSuccessful
+			LoggingService.log "hip hip hurray"
 		else
-			console.log "f me"
+			LoggingService.log "f me"
+
 	return

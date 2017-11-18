@@ -3,16 +3,21 @@
 angular.module "app.services"
 
 .factory "AuthenticationService", (CookieService, DatabaseService) ->
+
 	authenticationService =
-		isLoggedIn : () ->
+		isLoggedIn : ->
 			_isLoggedIn = true
 			if not CookieService.getUser()
 				_isLoggedIn = false
 			_isLoggedIn
-		login : (scope, field, emailOrUsername, password) ->
-			DatabaseService.login scope, field, emailOrUsername, password
+		login : (emailOrUsername, password, callback) ->
+			if emailOrUsername? and password?
+				DatabaseService.login emailOrUsername, password, callback
+			else
+				callback(false)
 			return
-		logout : () ->
+		logout : ->
 			CookieService.removeUser()
 			return
+
 	authenticationService
