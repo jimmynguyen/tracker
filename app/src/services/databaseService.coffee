@@ -2,18 +2,11 @@
 
 angular.module "app.services"
 
-.factory "DatabaseService", (CookieService, LoggingService, $firebaseArray) ->
+.factory "DatabaseService", (firebaseConfig, CookieService, LoggingService, $firebaseArray) ->
 
 	# initialize firebase app if it has not been initialized
 	if firebase.apps.length is 0
-		_config =
-			apiKey: "AIzaSyC84FRJ5B4fs1ZqHwFjv7uhQ3rr3NaFJ-c"
-			authDomain: "tracker-9c7c9.firebaseapp.com"
-			databaseURL: "https://tracker-9c7c9.firebaseio.com"
-			projectId: "tracker-9c7c9"
-			storageBucket: "tracker-9c7c9.appspot.com"
-			messagingSenderId: "542245163827"
-		firebase.initializeApp _config
+		firebase.initializeApp firebaseConfig
 		firebase.auth().signInAnonymously().catch (error) ->
 			# handle errors
 			LoggingService.error "error authenticating firebase app with code: " + error.code, error.message
@@ -29,9 +22,9 @@ angular.module "app.services"
 
 	databaseService =
 		login: (emailOrUsername, password, callback) ->
-			users = $firebaseArray(firebase.database().ref().child('user'))
+			users = $firebaseArray(firebase.database().ref().child(CookieService.keys.user))
 			users.$loaded()
-				.then (_users) ->
+				.then ->
 					isLoginSuccessful = users.some (user) ->
 						if user.password is password and (user.username is emailOrUsername or user.email is emailOrUsername)
 							CookieService.setUser $.extend true, {}, user

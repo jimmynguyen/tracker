@@ -147,12 +147,14 @@ module.exports = (grunt) ->
 		jasmine:
 			test:
 				src: [
-					"build/dependencies.js"
-					"node_modules/angular-mocks/angular-mocks.js"
 					"build/js/**/*.js"
 				]
 				options:
 					specs: "build/spec/**/*Spec.js"
+					vendor: [
+						"<%= concat.dependencies.src %>"
+						"node_modules/angular-mocks/angular-mocks.js"
+					]
 
 	# load css tasks
 	grunt.loadNpmTasks "grunt-concat-css"

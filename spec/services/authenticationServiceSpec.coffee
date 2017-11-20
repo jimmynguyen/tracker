@@ -1,58 +1,54 @@
 describe "AuthenticationServiceTest", ->
-	authenticationService = undefined
-	cookieService = undefined
-	databaseService = undefined
 	beforeEach ->
 		angular.mock.module "app.services"
 		angular.mock.inject (AuthenticationService, CookieService, DatabaseService) ->
-			authenticationService = AuthenticationService
-			cookieService = CookieService
-			databaseService = DatabaseService
+			this.authenticationService = AuthenticationService
+			this.cookieService = CookieService
+			this.databaseService = DatabaseService
 			return
 		return
 	describe "when AuthenticationService.isLoggedIn()", ->
 		it "if user is not logged in, then return false", ->
-			spyOn cookieService, "getUser"
-				.and.returnValue undefined
-			expect authenticationService.isLoggedIn()
+			spyOn this.cookieService, "getUser"
+				.and.returnValue null
+			expect this.authenticationService.isLoggedIn()
 				.toBeFalsy()
-			expect cookieService.getUser
+			expect this.cookieService.getUser
 				.toHaveBeenCalled()
 			return
 		it "if user is logged in, then return true", ->
-			spyOn cookieService, "getUser"
+			spyOn this.cookieService, "getUser"
 				.and.returnValue {}
-			expect authenticationService.isLoggedIn()
+			expect this.authenticationService.isLoggedIn()
 				.toBeTruthy()
-			expect cookieService.getUser
+			expect this.cookieService.getUser
 				.toHaveBeenCalled()
 			return
 		return
 	describe "when AuthenticationService.login()", ->
-		callback = undefined
 		beforeEach ->
-			callback = jasmine.createSpy("callback")
-		it "if emailOrUsername or password is not valid, then the user should not be logged in", ->
+			this.callback = jasmine.createSpy "callback"
+		it "if the credentials are not valid, then the user should not be logged in", ->
 			emailOrUsername = null
 			password = null
-			authenticationService.login emailOrUsername, password, callback
-			expect callback
+			this.authenticationService.login emailOrUsername, password, this.callback
+			expect this.callback
 				.toHaveBeenCalledWith false
 			return
-		it "if emailOrUsername and password are valid, then the user should be logged in", ->
+		it "if the credentials are valid, then the user should be logged in", ->
 			emailOrUsername = "emailOrUsername"
 			password = "password"
-			spyOn databaseService, "login"
-			authenticationService.login emailOrUsername, password, callback
-			expect databaseService.login
-				.toHaveBeenCalledWith emailOrUsername, password, callback
+			spyOn this.databaseService, "login"
+			this.authenticationService.login emailOrUsername, password, this.callback
+			expect this.databaseService.login
+				.toHaveBeenCalledWith emailOrUsername, password, this.callback
 			return
 		return
 	describe "when AuthenticationService.logout()", ->
 		it "then the user should be logged out", ->
-			spyOn cookieService, "removeUser"
-			authenticationService.logout()
-			expect cookieService.removeUser
+			spyOn this.cookieService, "removeUser"
+			this.authenticationService.logout()
+			expect this.cookieService.removeUser
 				.toHaveBeenCalled()
 			return
 		return

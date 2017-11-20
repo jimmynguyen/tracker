@@ -2,30 +2,33 @@
 
 angular.module "app.routes"
 
-.config ($routeProvider, $locationProvider) ->
-	# NOTE: use curly brackets {} for $routeProvider or it won't work
+.constant "routes",
+
+	login:
+		templateUrl: "app/templates/views/login.html"
+		controller: "LoginController"
+	home:
+		templateUrl: "app/templates/views/home.html"
+		controller: "HomeController"
+	category:
+		templateUrl: "app/templates/views/home.html"
+		controller: "HomeController"
+	entry:
+		templateUrl: "app/templates/views/entry.html"
+		controller: "EntryController"
+	default:
+		redirectTo: "/"
+
+.config (routes, $routeProvider) ->
+
 	$routeProvider
-		.when "/",
-			templateUrl: "app/templates/views/login.html"
-			controller: "LoginController"
-		.when "/login",
-			templateUrl: "app/templates/views/login.html"
-			controller: "LoginController"
-		.when "/home",
-			templateUrl: "app/templates/views/home.html"
-			controller: "HomeController"
-		.when "/category",
-			templateUrl: "app/templates/views/home.html"
-			controller: "HomeController"
-		.when "/category/:categoryId",
-			templateUrl: "app/templates/views/category.html"
-			controller: "CategoryController"
-		.when "/category/:categoryId/entry",
-			templateUrl: "app/templates/views/category.html"
-			controller: "CategoryController"
-		.when "/category/:categoryId/entry/:entryId",
-			templateUrl: "app/templates/views/entry.html"
-			controller: "EntryController"
-		.otherwise
-			redirectTo: "/"
+		.when "/", routes.login
+		.when "/login", routes.login
+		.when "/home", routes.home
+		.when "/category", routes.home
+		.when "/category/:categoryId", routes.category
+		.when "/category/:categoryId/entry", routes.category
+		.when "/category/:categoryId/entry/:entryId", routes.entry
+		.otherwise routes.default
+
 	return
