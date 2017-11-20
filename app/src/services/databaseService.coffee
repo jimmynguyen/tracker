@@ -7,6 +7,7 @@ angular.module "app.services"
 	# initialize firebase app if it has not been initialized
 	if firebase.apps.length is 0
 		firebase.initializeApp firebaseConfig
+		# TODO: update to only run the below if running in production mode. otherwise, it will error out in the console. not a big deal, but it's probably bad practice
 		firebase.auth().signInAnonymously().catch (error) ->
 			# handle errors
 			LoggingService.error "error authenticating firebase app with code: " + error.code, error.message
