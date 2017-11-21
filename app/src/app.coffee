@@ -7,7 +7,7 @@ angular.module "app", [
 	"app.filters"
 	"app.services"
 ]
-angular.module "app.config", []
+angular.module "app.constants", []
 angular.module "app.routes", [
 	"ngRoute"
 ]
@@ -15,7 +15,7 @@ angular.module "app.controllers", []
 angular.module "app.directives", []
 angular.module "app.filters", []
 angular.module "app.services", [
-	"app.config"
+	"app.constants"
 	"firebase"
 	"ngCookies"
 ]
