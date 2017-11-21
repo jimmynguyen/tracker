@@ -104,7 +104,7 @@ module.exports = (grunt) ->
 			index_html:
 				files: [
 					expand: true
-					cwd: "app"
+					cwd: "app/templates"
 					src: ["index.html"]
 					dest: ""
 				]
