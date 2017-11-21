@@ -2,27 +2,24 @@
 
 angular.module "app.services"
 
-.factory "CookieService", ($cookies) ->
+.factory "CookieService", (keys, $cookies) ->
 
 	cookieService =
-		keys:
-			user: "user"
-			database: "database"
-		getUser: ->
-			cookieService.getObject cookieService.keys.user
-		setUser: (user) ->
-			cookieService.putObject cookieService.keys.user, user
-			return
-		removeUser: ->
-			cookieService.remove cookieService.keys.user
-			return
-		getObject: (key) ->
+		get: (key) ->
 			$cookies.getObject key
-		putObject: (key, object) ->
+		set: (key, object) ->
 			$cookies.putObject key, object
 			return
 		remove: (key) ->
 			$cookies.remove key
+			return
+		getUser: ->
+			cookieService.get keys.user
+		setUser: (user) ->
+			cookieService.set keys.user, user
+			return
+		removeUser: ->
+			cookieService.remove keys.user
 			return
 
 	cookieService
