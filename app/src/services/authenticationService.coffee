@@ -29,5 +29,6 @@ angular.module "app.services"
 						user.id = firebaseUser.uid
 						DatabaseService.addUser user, callback
 					return
+			return
 
 	authenticationService

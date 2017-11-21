@@ -7,6 +7,7 @@ describe "AuthenticationServiceTest", ->
 			this.databaseService = DatabaseService
 			this.errors = _errors_
 			return
+		this.callback = jasmine.createSpy "callback"
 		return
 	describe "when AuthenticationService.isLoggedIn()", ->
 		it "if user is not logged in, then return false", ->
@@ -27,8 +28,6 @@ describe "AuthenticationServiceTest", ->
 			return
 		return
 	describe "when AuthenticationService.login()", ->
-		beforeEach ->
-			this.callback = jasmine.createSpy "callback"
 		it "if the credentials are not valid, then the user should not be logged in", ->
 			email = null
 			password = null
@@ -37,7 +36,7 @@ describe "AuthenticationServiceTest", ->
 				.toHaveBeenCalledWith this.errors.INVALID_EMAIL_OR_PASSWORD, false
 			return
 		it "if the credentials are valid, then the user should be logged in", ->
-			email = "emailOrUsername"
+			email = "email"
 			password = "password"
 			spyOn this.databaseService, "login"
 			this.authenticationService.login email, password, this.callback
@@ -52,5 +51,38 @@ describe "AuthenticationServiceTest", ->
 			expect this.cookieService.removeUser
 				.toHaveBeenCalled()
 			return
+		return
+	describe "when AuthenticationService.signUp()", ->
+		it "if the credentials are not valid, then the user should not be signed up", ->
+			email = null
+			password = null
+			user = null
+			spyOn this.databaseService, "signUp"
+			this.authenticationService.signUp email, password, user, this.callback
+			expect this.databaseService.signUp
+				.not.toHaveBeenCalled()
+			expect this.callback
+				.not.toHaveBeenCalled()
+			return
+		it "if the credentials are valid, then the user should be signed up", ->
+			email = "email"
+			password = "password"
+			user =
+				email: email
+				first_name: "first_name"
+				last_name: "last_name"
+				last_updated: "last_updated"
+			spyOn this.databaseService, "signUp"
+			this.authenticationService.signUp email, password, user, this.callback
+			expect this.databaseService.signUp
+				.toHaveBeenCalled()
+			expect this.databaseService.signUp.calls.mostRecent().args[0]
+				.toBe email
+			expect this.databaseService.signUp.calls.mostRecent().args[1]
+				.toBe password
+			return
+		# TODO: write more tests
+		# 1. if credentials are valid, but email already used
+		# 2. if credentials are valid, and account is created
 		return
 	return
