@@ -1,10 +1,11 @@
 describe "AuthenticationServiceTest", ->
 	beforeEach ->
 		angular.mock.module "app.services"
-		angular.mock.inject (AuthenticationService, CookieService, DatabaseService) ->
+		angular.mock.inject (AuthenticationService, _errors_, CookieService, DatabaseService) ->
 			this.authenticationService = AuthenticationService
 			this.cookieService = CookieService
 			this.databaseService = DatabaseService
+			this.errors = _errors_
 			return
 		return
 	describe "when AuthenticationService.isLoggedIn()", ->
@@ -29,19 +30,19 @@ describe "AuthenticationServiceTest", ->
 		beforeEach ->
 			this.callback = jasmine.createSpy "callback"
 		it "if the credentials are not valid, then the user should not be logged in", ->
-			emailOrUsername = null
+			email = null
 			password = null
-			this.authenticationService.login emailOrUsername, password, this.callback
+			this.authenticationService.login email, password, this.callback
 			expect this.callback
-				.toHaveBeenCalledWith false
+				.toHaveBeenCalledWith this.errors.INVALID_EMAIL_OR_PASSWORD, false
 			return
 		it "if the credentials are valid, then the user should be logged in", ->
-			emailOrUsername = "emailOrUsername"
+			email = "emailOrUsername"
 			password = "password"
 			spyOn this.databaseService, "login"
-			this.authenticationService.login emailOrUsername, password, this.callback
+			this.authenticationService.login email, password, this.callback
 			expect this.databaseService.login
-				.toHaveBeenCalledWith emailOrUsername, password, this.callback
+				.toHaveBeenCalledWith email, password, this.callback
 			return
 		return
 	describe "when AuthenticationService.logout()", ->
