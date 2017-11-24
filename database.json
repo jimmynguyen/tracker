@@ -3,6 +3,7 @@
 		"default": {
 			"data_types": [
 				"array",
+				"boolean",
 				"datetime",
 				"field",
 				"number",
@@ -23,19 +24,35 @@
 			"category": [
 				{
 					"data_type": "field",
-					"name": "field"
+					"display_name": "Fields",
+					"id": 0,
+					"name": "fields",
+					"order": 4,
+					"visible": false
 				},
 				{
 					"data_type": "number",
-					"name": "id"
+					"display_name": "Id",
+					"id": 1,
+					"name": "id",
+					"order": 1,
+					"visible": false
 				},
 				{
 					"data_type": "string",
-					"name": "last_updated"
+					"display_name": "Last Updated",
+					"id": 2,
+					"name": "last_updated",
+					"order": 3,
+					"visible": true
 				},
 				{
 					"data_type": "string",
-					"name": "name"
+					"display_name": "Name",
+					"id": 3,
+					"name": "name",
+					"order": 2,
+					"visible": true
 				}
 			],
 			"data_type": [
@@ -57,6 +74,10 @@
 				}
 			],
 			"field": [
+				{
+					"data_type": "boolean",
+					"name": "visible"
+				},
 				{
 					"data_type": "string",
 					"name": "data_type"
@@ -107,34 +128,34 @@
 							"data_type": "string",
 							"id": 0,
 							"last_updated": "11/20/2017 14:41:24",
-							"name": "title",
+							"name": "Title",
 							"order": 1
 						},
 						{
 							"data_type": "movie_genre",
 							"id": 1,
 							"last_updated": "11/20/2017 14:41:24",
-							"name": "genre",
+							"name": "Genre",
 							"order": 2
 						},
 						{
 							"data_type": "movie_status",
 							"id": 2,
 							"last_updated": "11/20/2017 14:41:24",
-							"name": "status",
+							"name": "Status",
 							"order": 3
 						},
 						{
 							"data_type": "string",
 							"id": 3,
 							"last_updated": "11/20/2017 14:41:24",
-							"name": "comments",
+							"name": "Comments",
 							"order": 4
 						}
 					],
 					"id": 0,
 					"last_updated": "11/20/2017 14:39:24",
-					"name": "movies"
+					"name": "Movies"
 				}
 			]
 		},
