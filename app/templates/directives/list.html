@@ -1,0 +1,16 @@
+<table class="table">
+	<thead>
+		<tr>
+			<th ng-repeat="field in fields | orderBy:'order' | filter:{visible:true} track by field.id">
+				{{ field.display_name }}
+			</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr ng-repeat="datum in data | orderBy:'name' track by field.id">
+			<td ng-repeat="field in fields | orderBy:'order' | filter:{visible:true} track by field.id">
+				{{ datum[field.name] }}
+			</td>
+		</tr>
+	</tbody>
+</table>
