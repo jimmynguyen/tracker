@@ -1,0 +1,63 @@
+<div class="col-lg-12">
+	<div class="btn-group">
+		<button class="btn btn-outline-secondary"
+				ng-class="{'active': showList}"
+				aria-pressed="{{ showList }}"
+				autocomplete="off"
+				ng-click="setShowList(true)">
+			<i class="glyphicon glyphicon-list-alt"></i> List
+		</button>
+		<button class="btn btn-outline-secondary"
+				ng-class="{'active': !showList}"
+				aria-pressed="{{ !showList }}"
+				autocomplete="off"
+				ng-click="setShowList(false)">
+			<i class="glyphicon glyphicon-th-large"></i> Grid
+		</button>
+	</div>
+</div>
+<div class="col-lg-12 margin-top-20px">
+	<input type="text"
+			class="form-control"
+			ng-model="search"
+			placeholder="Type here to search..."/>
+</div>
+<div class="col-lg-12 margin-top-20px"
+		ng-show="showList">
+	<table class="table">
+		<thead>
+			<tr>
+				<th ng-repeat="field in fields | orderBy:'order' | filter:{visible:true} track by field.id">
+					{{ field.display_name }}
+				</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr ng-repeat="datum in filteredData = (data | orderBy:'name' | filter:{name:search}) track by field.id">
+				<td ng-repeat="field in filteredFields = (fields | orderBy:'order' | filter:{visible:true}) track by field.id">
+					{{ datum[field.name] }}
+				</td>
+			</tr>
+			<tr ng-hide="filteredData.length">
+				<td colspan="filteredFields.length">
+					No {{ name }} found
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+<div class="col-lg-12 margin-top-20px"
+		ng-show="!showList">
+	<div class="col-lg-3 well margin-bottom-0px"
+			ng-repeat="datum in filteredData = (data | orderBy:'name' | filter:{name:search}) track by field.id">
+		<h3>{{ datum.name }}</h3>
+		<p ng-repeat="field in fields | orderBy:'order' | filter:{visible:true} | filter:{name:'!name'} track by field.id">
+			<strong>{{ field.display_name }}</strong>: {{ datum[field.name] }}
+		</p>
+	</div>
+	<div class="col-lg-3 well margin-bottom-0px"
+			ng-hide="filteredData.length">
+		<h3>No {{ name }} found</h3>
+		<p ng-repeat="field in fields | orderBy:'order' | filter:{visible:true} | filter:{name:'!name'} track by field.id">&nbsp;</p>
+	</div>
+</div>
