@@ -2,8 +2,9 @@ describe "CookieServiceTest", ->
 	beforeEach ->
 		angular.mock.module "app.services"
 		angular.mock.module "app.constants"
-		angular.mock.inject (CookieService, _$cookies_, _keys_) ->
+		angular.mock.inject (CookieService, _keys_, _$cookies_) ->
 			this.cookieService = CookieService
+			this.keys = _keys_
 			this.$cookies = _$cookies_
 			this.keys = _keys_
 			return
@@ -13,7 +14,7 @@ describe "CookieServiceTest", ->
 			spyOn this.cookieService, "get"
 			this.cookieService.getUser()
 			expect this.cookieService.get
-				.toHaveBeenCalledWith this.keys.user
+				.toHaveBeenCalledWith this.keys.user.accounts
 			return
 		return
 	describe "when CookieService.setUser()", ->
@@ -22,7 +23,7 @@ describe "CookieServiceTest", ->
 			spyOn this.cookieService, "set"
 			this.cookieService.setUser user
 			expect this.cookieService.set
-				.toHaveBeenCalledWith this.keys.user, user
+				.toHaveBeenCalledWith this.keys.user.accounts, user
 			return
 		return
 	describe "when CookieService.removeUser()", ->
@@ -30,7 +31,7 @@ describe "CookieServiceTest", ->
 			spyOn this.cookieService, "remove"
 			this.cookieService.removeUser()
 			expect this.cookieService.remove
-				.toHaveBeenCalledWith this.keys.user
+				.toHaveBeenCalledWith this.keys.user.accounts
 			return
 		return
 	describe "when CookieService.get()", ->
