@@ -1,6 +1,0 @@
-<div class="col-lg-3 well margin-bottom-0px" ng-class ng-repeat="datum in data | orderBy:'name' track by field.id">
-	<h3>{{ datum.name }}</h1>
-	<p ng-repeat="field in fields | orderBy:'order' | filter:{visible:true} | filter:{name:'!name'} track by field.id">
-		<strong>{{ field.display_name }}</strong>: {{ datum[field.name] }}
-	</p>
-</div>
