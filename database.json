@@ -156,6 +156,40 @@
 					"id": 0,
 					"last_updated": "11/20/2017 14:39:24",
 					"name": "Movies"
+				},{
+					"fields": [
+						{
+							"data_type": "string",
+							"id": 0,
+							"last_updated": "11/20/2017 14:41:24",
+							"name": "Title",
+							"order": 1
+						},
+						{
+							"data_type": "movie_genre",
+							"id": 1,
+							"last_updated": "11/20/2017 14:41:24",
+							"name": "Genre",
+							"order": 2
+						},
+						{
+							"data_type": "movie_status",
+							"id": 2,
+							"last_updated": "11/20/2017 14:41:24",
+							"name": "Status",
+							"order": 3
+						},
+						{
+							"data_type": "string",
+							"id": 3,
+							"last_updated": "11/20/2017 14:41:24",
+							"name": "Comments",
+							"order": 4
+						}
+					],
+					"id": 1,
+					"last_updated": "11/19/2017 14:39:24",
+					"name": "Movies 2"
 				}
 			]
 		},
