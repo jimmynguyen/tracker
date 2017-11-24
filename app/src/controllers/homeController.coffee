@@ -2,28 +2,34 @@
 
 angular.module "app.controllers"
 
-.controller "HomeController", (CookieService, DatabaseService, LocationService, LoggingService, $scope) ->
+.controller "HomeController", (AuthenticationService, DatabaseService, LocationService, LoggingService, $scope) ->
 
 	LocationService.logPath()
-	email = "jdoe@fakemail.com"
-	password = "johndoe"
-	CookieService.removeAll()
-	DatabaseService.util.logout ->
-		DatabaseService.util.login email, password, (err, isLoginSuccessful) ->
+	isLoggedIn = ->
+		if not AuthenticationService.isLoggedIn()
+			LocationService.goToLogin()
+		return
+	getCategories = ->
+		DatabaseService.category.getAll (err, res) ->
 			if err
-				LoggingService.error "HomeController.login", email, err
+				LoggingService.error "HomeController.getCategories()", null, err
 			else
-				if isLoginSuccessful
-					DatabaseService.field.getAllDefault (err, objects) ->
-						if err
-							LoggingService.log "fuck"
-						else
-							$scope.objects = objects
-							LoggingService.log $scope.objects
-					LoggingService.log "login successful"
-				else
-					LoggingService.log "login failed"
+				$scope.categories = res
 			return
 		return
+	getCategoryDefinition = ->
+		DatabaseService.definition.getCategory (err, res) ->
+			if err
+				LoggingService.error "HomeController.getCategoryDefinition()", null, err
+			else
+				$scope.categoryDefinition = res
+			return
+		return
+	initialize = ->
+		isLoggedIn()
+		getCategories()
+		getCategoryDefinition()
+		return
+	initialize()
 
 	return
