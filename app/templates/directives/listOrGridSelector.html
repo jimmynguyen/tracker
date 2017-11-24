@@ -1,0 +1,16 @@
+<div class="btn-group">
+	<button class="btn btn-outline-secondary"
+			ng-class="{'active': showList}"
+			aria-pressed="{{ showList }}"
+			autocomplete="off"
+			ng-click="selectViewOption('list')">
+		<i class="glyphicon glyphicon-list-alt"></i> List
+	</button>
+	<button class="btn btn-outline-secondary"
+			ng-class="{'active': !showList}"
+			aria-pressed="{{ !showList }}"
+			autocomplete="off"
+			ng-click="selectViewOption('grid')">
+		<i class="glyphicon glyphicon-th-large"></i> Grid
+	</button>
+</div>

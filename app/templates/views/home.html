@@ -5,7 +5,14 @@
 		<div class="col-lg-12">
 			<h1>Categories</h1>
 			<hr>
-			<list data="categories" datum-definition="categoryDefinition" />
+		</div>
+		<div class="col-lg-12">
+			<list-or-grid-selector show-list="showList" on-view-option-change="selectViewOption"/>
+		</div>
+		<div class="col-lg-12">
+			<list data="categories" datum-definition="categoryDefinition" ng-show="showList"/>
+			<grid data="categories" datum-definition="categoryDefinition" ng-show="!showList"/>
+		</div>
 		</div>
 	</div>
 </div>

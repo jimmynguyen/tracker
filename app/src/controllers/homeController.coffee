@@ -25,10 +25,18 @@ angular.module "app.controllers"
 				$scope.categoryDefinition = res
 			return
 		return
+	selectViewOption = (option) ->
+		if option is "list"
+			$scope.showList = true
+		else if option is "grid"
+			$scope.showList = false
+		return
 	initialize = ->
 		isLoggedIn()
 		getCategories()
 		getCategoryDefinition()
+		$scope.showList = true
+		$scope.selectViewOption = selectViewOption
 		return
 	initialize()
 
