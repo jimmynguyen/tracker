@@ -15,18 +15,20 @@ angular.module "app.constants"
 	databaseURL: "ws://test.firebaseio.localhost:5000"
 
 .constant "keys",
-	default:
-		dataTypes: "system_definition/data_type"
-		fields: "system_definition/default_field"
-	definition:
-		user:
-			dataTypes: "user_definition/data_type"
-		system:
-			category: "system_definition/category"
-			field: "system_definition/field"
-			user: "system_definition/user"
-	categories: "category"
-	users: "user"
+	system:
+		default:
+			data_types: "system/default/data_types"
+			fields: "system/default/fields"
+		definition:
+			category: "system/definition/category"
+			data_type: "system/definition/data_type"
+			field: "system/definition/field"
+			user: "system/definition/user"
+	user:
+		accounts: "user/accounts"
+		categories: "user/categories"
+		data_types: "user/data_types"
+		entries: "user/entries"
 
 .constant "errors",
 	INVALID_EMAIL_OR_PASSWORD: "Invalid email or password"

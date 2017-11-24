@@ -1,14 +1,14 @@
 {
 	"system": {
 		"default": {
-			"data_type": [
+			"data_types": [
 				"array",
 				"datetime",
 				"field",
 				"number",
 				"string"
 			],
-			"default_field": [
+			"fields": [
 				{
 					"data_type": "number",
 					"name": "id"
@@ -99,64 +99,30 @@
 		}
 	},
 	"user": {
-		// user_id
-		"1LhQMD9hZFPq4qcN4MWlog6PbQ23": {
-			"email": "jdoe@fakemail.com",
-			"first_name": "John",
-			"last_name": "Doe",
-			"last_updated": "11/20/2017 14:38:09"
-		}
-	},
-	"data": {
-		"data_type": {
-			// grouped by user_id
-			"1LhQMD9hZFPq4qcN4MWlog6PbQ23": [
+		"categories": {
+			"IY2ZMGNzsTPmWdmi3lec35v2CRt2": [
 				{
-					"id": 0,// data_type_id
-					"last_updated": "11/20/2017 14:45:30",
-					"name": "movie_genre",
-					"value": [
-						"action",
-						"horror",
-						"mystery"
-					]
-				},
-				{
-					"id": 1,// data_type_id
-					"last_updated": "11/20/2017 14:45:30",
-					"name": "movie_status",
-					"value": [
-						"watched",
-						"plan on watching"
-					]
-				}
-			]
-		},
-		"category": {
-			// grouped by user_id
-			"1LhQMD9hZFPq4qcN4MWlog6PbQ23": [
-				{
-					"field": [
+					"fields": [
 						{
 							"data_type": "string",
-							"id": 0,// field_id
+							"id": 0,
 							"last_updated": "11/20/2017 14:41:24",
 							"name": "title",
 							"order": 1
 						},
 						{
 							"data_type": "movie_genre",
-							"id": 1,// field_id
+							"id": 1,
 							"last_updated": "11/20/2017 14:41:24",
 							"name": "genre",
 							"order": 2
 						},
 						{
 							"data_type": "movie_status",
-							"id": 2,// field_id
+							"id": 2,
 							"last_updated": "11/20/2017 14:41:24",
 							"name": "status",
-							"order": 3// field_id
+							"order": 3
 						},
 						{
 							"data_type": "string",
@@ -166,26 +132,56 @@
 							"order": 4
 						}
 					],
-					"id": 0,// category_id
+					"id": 0,
 					"last_updated": "11/20/2017 14:39:24",
 					"name": "movies"
 				}
 			]
 		},
-		"entry": {
-			// grouped by user_id
-			"1LhQMD9hZFPq4qcN4MWlog6PbQ23": {
-				// grouped by category_id
+		"data_types": {
+			"IY2ZMGNzsTPmWdmi3lec35v2CRt2": [
+				{
+					"id": 0,
+					"last_updated": "11/20/2017 14:45:30",
+					"name": "movie_genre",
+					"value": [
+						"action",
+						"horror",
+						"mystery"
+					]
+				},
+				{
+					"id": 1,
+					"last_updated": "11/20/2017 14:45:30",
+					"name": "movie_status",
+					"value": [
+						"watched",
+						"plan on watching"
+					]
+				}
+			]
+		},
+		"entries": {
+			"IY2ZMGNzsTPmWdmi3lec35v2CRt2": {
 				"0": [
 					{
 						"comments": "dank movie",
 						"genre": "action",
-						"id": 0,// entry_id
+						"id": 0,
 						"last_updated": "11/16/2017 16:12",
 						"status": "watched",
 						"title": "The Avengers"
 					}
 				]
+			}
+		},
+		"accounts": {
+			"IY2ZMGNzsTPmWdmi3lec35v2CRt2": {
+				"email": "jdoe@fakemail.com",
+				"first_name": "John",
+				"id": "IY2ZMGNzsTPmWdmi3lec35v2CRt2",
+				"last_name": "Doe",
+				"last_updated": "11/20/2017 14:38:09"
 			}
 		}
 	}
