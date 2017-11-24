@@ -13,13 +13,21 @@ angular.module "app.services"
 		remove: (key) ->
 			$cookies.remove key
 			return
+		getAll: ->
+			$cookies.getAll()
+		removeAll: ->
+			cookies = $cookies.getAll()
+			angular.forEach cookies, (value, key) ->
+				$cookies.remove key
+				return
+			return
 		getUser: ->
-			cookieService.get keys.user
+			cookieService.get keys.user.accounts
 		setUser: (user) ->
-			cookieService.set keys.user, user
+			cookieService.set keys.user.accounts, user
 			return
 		removeUser: ->
-			cookieService.remove keys.user
+			cookieService.remove keys.user.accounts
 			return
 
 	cookieService
