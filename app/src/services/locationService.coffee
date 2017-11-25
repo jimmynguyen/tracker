@@ -9,10 +9,6 @@ angular.module "app.services"
 			path = "/category/" + categoryId
 			$location.url path
 			return
-		goToEntry: (categoryId, entryId) ->
-			path = "/category/" + categoryId + "/entry/" + entryId
-			$location.url path
-			return
 		goToHome: ->
 			$location.url "/home"
 			return

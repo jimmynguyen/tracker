@@ -38,7 +38,7 @@ angular.module "app.controllers"
 	getDefaultFields = ->
 		DatabaseService.field.getAllDefault (err, res) ->
 			if err
-				LoggingService.error "HomeController.getDefaultFields()", null, err
+				LoggingService.error "CategoryController.getDefaultFields()", null, err
 			else
 				$scope.defaultFields = res
 			return
@@ -46,7 +46,7 @@ angular.module "app.controllers"
 	getDefaultDataTypes = ->
 		DatabaseService.dataType.getAllDefault (err, res) ->
 			if err
-				LoggingService.error "HomeController.getDefaultDataTypes()", null, err
+				LoggingService.error "CategoryController.getDefaultDataTypes()", null, err
 			else
 				$scope.defaultDataTypes = res
 			return
@@ -54,15 +54,12 @@ angular.module "app.controllers"
 	getUserDataTypes = ->
 		DatabaseService.dataType.getAllByUser (err, res) ->
 			if err
-				LoggingService.error "HomeController.getUserDataTypes()", null, err
+				LoggingService.error "CategoryController.getUserDataTypes()", null, err
 			else
 				$scope.userDataTypes = res
 			return
 		return
 	viewEntry = (entry) ->
-		CookieService.set keys.selected.category, $scope.category
-		CookieService.set keys.selected.entry, entry
-		LocationService.goToEntry $scope.category.id, entry.id
 		return
 	initialize = ->
 		getEntries()
