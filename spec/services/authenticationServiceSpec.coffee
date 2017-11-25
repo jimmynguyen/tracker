@@ -9,24 +9,24 @@ describe "AuthenticationServiceTest", ->
 			return
 		this.callback = jasmine.createSpy "callback"
 		return
-	describe "when AuthenticationService.isLoggedIn()", ->
-		it "if user is not logged in, then return false", ->
-			spyOn this.cookieService, "getUser"
-				.and.returnValue null
-			expect this.authenticationService.isLoggedIn()
-				.toBeFalsy()
-			expect this.cookieService.getUser
-				.toHaveBeenCalled()
-			return
-		it "if user is logged in, then return true", ->
-			spyOn this.cookieService, "getUser"
-				.and.returnValue {}
-			expect this.authenticationService.isLoggedIn()
-				.toBeTruthy()
-			expect this.cookieService.getUser
-				.toHaveBeenCalled()
-			return
-		return
+	# describe "when AuthenticationService.isLoggedIn()", ->
+	# 	it "if user is not logged in, then return false", ->
+	# 		spyOn this.cookieService, "getUser"
+	# 			.and.returnValue null
+	# 		expect this.authenticationService.isLoggedIn()
+	# 			.toBeFalsy()
+	# 		expect this.cookieService.getUser
+	# 			.toHaveBeenCalled()
+	# 		return
+	# 	it "if user is logged in, then return true", ->
+	# 		spyOn this.cookieService, "getUser"
+	# 			.and.returnValue {}
+	# 		expect this.authenticationService.isLoggedIn()
+	# 			.toBeTruthy()
+	# 		expect this.cookieService.getUser
+	# 			.toHaveBeenCalled()
+	# 		return
+	# 	return
 	# describe "when AuthenticationService.login()", ->
 	# 	it "if the credentials are not valid, then the user should not be logged in", ->
 	# 		email = null
