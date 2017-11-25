@@ -29,9 +29,13 @@ angular.module "app.constants"
 		categories: "user/categories"
 		data_types: "user/data_types"
 		entries: "user/entries"
+	selected:
+		category: "selected/category"
+		entry: "selected/entry"
 
 .constant "errors",
 	INVALID_EMAIL_OR_PASSWORD: "Invalid email or password"
+	INVALID_CATEGORY_ID: "Invalid category id"
 
 .constant "firebaseErrorCodes",
 	auth:

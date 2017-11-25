@@ -11,8 +11,8 @@ angular.module "app.routes"
 		templateUrl: "app/templates/views/home.html"
 		controller: "HomeController"
 	category:
-		templateUrl: "app/templates/views/home.html"
-		controller: "HomeController"
+		templateUrl: "app/templates/views/category.html"
+		controller: "CategoryController"
 	entry:
 		templateUrl: "app/templates/views/entry.html"
 		controller: "EntryController"

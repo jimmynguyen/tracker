@@ -2,13 +2,10 @@
 
 angular.module "app.controllers"
 
-.controller "HomeController", (AuthenticationService, DatabaseService, LocationService, LoggingService, $scope) ->
+.controller "HomeController", (keys, AuthenticationService, CookieService, DatabaseService, LocationService, LoggingService, $scope) ->
 
 	LocationService.logPath()
-	isLoggedIn = ->
-		if not AuthenticationService.isLoggedIn()
-			LocationService.goToLogin()
-		return
+	AuthenticationService.isLoggedIn()
 	getCategories = ->
 		DatabaseService.category.getAll (err, res) ->
 			if err
@@ -23,6 +20,12 @@ angular.module "app.controllers"
 				LoggingService.error "HomeController.getCategoryDefinition()", null, err
 			else
 				$scope.categoryDefinition = res
+				for field in $scope.categoryDefinition
+					if field.order is 1
+						$scope.categoryOrderByField =
+							display_name: field.display_name
+							name: field.name
+						break
 			return
 		return
 	getDefaultFields = ->
@@ -49,21 +52,17 @@ angular.module "app.controllers"
 				$scope.userDataTypes = res
 			return
 		return
-	selectViewOption = (option) ->
-		if option is "list"
-			$scope.showList = true
-		else if option is "grid"
-			$scope.showList = false
+	viewCategory = (category) ->
+		CookieService.set keys.selected.category, category
+		LocationService.goToCategory category.id
 		return
 	initialize = ->
-		isLoggedIn()
 		getCategories()
 		getCategoryDefinition()
 		getDefaultFields()
 		getDefaultDataTypes()
 		getUserDataTypes()
-		$scope.showList = true
-		$scope.selectViewOption = selectViewOption
+		$scope.viewCategory = viewCategory
 		return
 	initialize()
 

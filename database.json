@@ -312,7 +312,7 @@
 							"name": "last_updated",
 							"display_name": "Last Updated",
 							"data_type": "string",
-							"order": 1,
+							"order": 5,
 							"editable": false,
 							"required": true,
 							"visible": true
@@ -323,7 +323,7 @@
 							"name": "title",
 							"display_name": "Title",
 							"data_type": "string",
-							"order": 2,
+							"order": 1,
 							"editable": true,
 							"required": true,
 							"visible": true
@@ -334,7 +334,7 @@
 							"name": "genre",
 							"display_name": "Genre",
 							"data_type": "movie_genre",
-							"order": 3,
+							"order": 2,
 							"editable": true,
 							"required": true,
 							"visible": true
@@ -345,7 +345,7 @@
 							"name": "status",
 							"display_name": "Status",
 							"data_type": "movie_status",
-							"order": 4,
+							"order": 3,
 							"editable": true,
 							"required": true,
 							"visible": true
@@ -356,7 +356,7 @@
 							"name": "comments",
 							"display_name": "Comments",
 							"data_type": "string",
-							"order": 5,
+							"order": 4,
 							"editable": true,
 							"required": true,
 							"visible": true
@@ -384,7 +384,7 @@
 							"name": "last_updated",
 							"display_name": "Last Updated",
 							"data_type": "string",
-							"order": 1,
+							"order": 5,
 							"editable": false,
 							"required": true,
 							"visible": true
@@ -395,7 +395,7 @@
 							"name": "title",
 							"display_name": "Title",
 							"data_type": "string",
-							"order": 2,
+							"order": 1,
 							"editable": true,
 							"required": true,
 							"visible": true
@@ -406,7 +406,7 @@
 							"name": "genre",
 							"display_name": "Genre",
 							"data_type": "movie_genre",
-							"order": 3,
+							"order": 2,
 							"editable": true,
 							"required": true,
 							"visible": true
@@ -417,7 +417,7 @@
 							"name": "status",
 							"display_name": "Status",
 							"data_type": "movie_status",
-							"order": 4,
+							"order": 3,
 							"editable": true,
 							"required": true,
 							"visible": true
@@ -428,7 +428,7 @@
 							"name": "comments",
 							"display_name": "Comments",
 							"data_type": "string",
-							"order": 5,
+							"order": 4,
 							"editable": true,
 							"required": true,
 							"visible": true
@@ -444,9 +444,9 @@
 					"last_updated": "11/20/2017 14:45:30",
 					"name": "movie_genre",
 					"values": [
-						"action",
-						"horror",
-						"mystery"
+						"Action",
+						"Horror",
+						"Mystery"
 					]
 				},
 				{
@@ -454,8 +454,8 @@
 					"last_updated": "11/20/2017 14:45:30",
 					"name": "movie_status",
 					"values": [
-						"watched",
-						"plan on watching"
+						"Watched",
+						"Want to watch"
 					]
 				}
 			]
@@ -464,12 +464,70 @@
 			"IY2ZMGNzsTPmWdmi3lec35v2CRt2": {
 				"0": [
 					{
-						"comments": "dank movie",
-						"genre": "action",
 						"id": 0,
-						"last_updated": "11/16/2017 16:12",
-						"status": "watched",
-						"title": "The Avengers"
+						"title": "The Avengers",
+						"genre": "Action",
+						"status": "Watched",
+						"comments": "Dank movie",
+						"last_updated": "11/16/2017 16:12"
+					},
+					{
+						"id": 1,
+						"title": "Thor",
+						"genre": "Action",
+						"status": "Watched",
+						"comments": "Dank Natalie Portman movie",
+						"last_updated": "11/17/2017 16:12"
+					},
+					{
+						"id": 2,
+						"title": "Thor 2",
+						"genre": "Action",
+						"status": "Watched",
+						"comments": "Dank Natalie Portman movie 2?",
+						"last_updated": "11/14/2017 16:12"
+					},
+					{
+						"id": 3,
+						"title": "Thor 3",
+						"genre": "Action",
+						"status": "Watched",
+						"comments": "Natalie Portman was definitely not in this one",
+						"last_updated": "11/15/2017 16:12"
+					}
+				],
+				"1": [
+					{
+						"id": 0,
+						"title": "The Avengers",
+						"genre": "Action",
+						"status": "Watched",
+						"comments": "Dank movie",
+						"last_updated": "11/16/2017 16:12"
+					},
+					{
+						"id": 1,
+						"title": "Thor",
+						"genre": "Action",
+						"status": "Watched",
+						"comments": "Dank Natalie Portman movie",
+						"last_updated": "11/17/2017 16:12"
+					},
+					{
+						"id": 2,
+						"title": "Thor 2",
+						"genre": "Action",
+						"status": "Watched",
+						"comments": "Dank Natalie Portman movie 2?",
+						"last_updated": "11/14/2017 16:12"
+					},
+					{
+						"id": 3,
+						"title": "Thor 3",
+						"genre": "Action",
+						"status": "Watched",
+						"comments": "Natalie Portman was definitely not in this one",
+						"last_updated": "11/15/2017 16:12"
 					}
 				]
 			}

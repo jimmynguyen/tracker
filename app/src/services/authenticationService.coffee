@@ -2,14 +2,13 @@
 
 angular.module "app.services"
 
-.factory "AuthenticationService", (errors, CookieService, DatabaseService, LoggingService) ->
+.factory "AuthenticationService", (errors, CookieService, DatabaseService, LocationService, LoggingService) ->
 
 	authenticationService =
 		isLoggedIn : ->
-			_isLoggedIn = true
 			if not CookieService.getUser()
-				_isLoggedIn = false
-			_isLoggedIn
+				LocationService.goToLogin()
+			return
 		# login : (email, password, callback) ->
 		# 	if email? and password?
 		# 		DatabaseService.util.login email, password, callback
