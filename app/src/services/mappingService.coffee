@@ -5,14 +5,20 @@ angular.module "app.services"
 .factory "MappingService", ->
 
 	mappingService =
-		account:
-			map: (firebaseAccount) ->
-				account = {}
-				for property in firebaseAccount
-					account[property.$id] = property.$value
-				account
-		default:
+		defaultMapper:
 			map: (obj) ->
 				obj
+		arrayMapper:
+			map: (obj) ->
+				res = []
+				for o in obj
+					res.push o.$value
+				res
+		objectMapper:
+			map: (obj) ->
+				res = {}
+				for o in obj
+					res[o.$id] = o.$value
+				res
 
 	mappingService
