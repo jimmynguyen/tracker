@@ -2,7 +2,7 @@
 
 angular.module "app.directives"
 
-.directive "listGrid", () ->
+.directive "listGrid", (ModalService) ->
 
 	restrict: "AE"
 	templateUrl: "app/templates/directives/listGrid.html"
@@ -10,6 +10,10 @@ angular.module "app.directives"
 		name: "@"
 		data: "="
 		fields: "=datumDefinition"
+		pluralName: "@"
+		defaultFields: "="
+		defaultDataTypes: "="
+		userDataTypes: "="
 	link: (scope) ->
 		scope.showList = true
 		scope.dataOrderByField =
