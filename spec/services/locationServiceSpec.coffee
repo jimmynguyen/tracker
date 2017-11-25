@@ -17,16 +17,6 @@ describe "LocationServiceTest", ->
 				.toHaveBeenCalledWith path
 			return
 		return
-	describe "when LocationService.goToEntry()", ->
-		categoryId = 0
-		entryId = 0
-		path = "/category/" + categoryId + "/entry/" + entryId
-		it "then redirect to \"" + path + "\"", ->
-			this.locationService.goToEntry categoryId, entryId
-			expect this.$location.url
-				.toHaveBeenCalledWith path
-			return
-		return
 	describe "when LocationService.goToHome()", ->
 		path = "/home"
 		it "then redirect to \"" + path + "\"", ->
