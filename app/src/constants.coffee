@@ -20,10 +20,10 @@ angular.module "app.constants"
 			data_types: "system/default/data_types"
 			fields: "system/default/fields"
 		definition:
+			account: "system/definition/account"
 			category: "system/definition/category"
 			data_type: "system/definition/data_type"
 			field: "system/definition/field"
-			user: "system/definition/user"
 	user:
 		accounts: "user/accounts"
 		categories: "user/categories"
