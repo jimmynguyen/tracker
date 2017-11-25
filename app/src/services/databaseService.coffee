@@ -2,7 +2,7 @@
 
 angular.module "app.services"
 
-.factory "DatabaseService", (firebaseConfig, firebaseErrorCodes, keys, CookieService, LoggingService, MappingService, $firebaseArray, $q) ->
+.factory "DatabaseService", (errors, firebaseConfig, firebaseErrorCodes, keys, CookieService, LoggingService, MappingService, $firebaseArray, $q) ->
 
 	# initialize firebase app if it has not been initialized
 	if firebase.apps.length is 0
@@ -59,49 +59,10 @@ angular.module "app.services"
 							CookieService.set key, mappedRes
 							callback null, mappedRes
 						.catch (err) ->
-							LoggingService.error "databaseService.util.get()", key, err
+							LoggingService.error "DatabaseService.util.get()", key, err
 							callback err, null
 				# else
 				# 	callback null, res
-		# 	login: (email, password) ->
-		# 		firebase.auth().signInWithEmailAndPassword email, password
-		# 			.then ->
-		# 				user =
-		# 					id: firebase.auth().currentUser.uid
-		# 				CookieService.setUser user
-		# 				databaseService.account.get (err, account) ->
-		# 					if err
-		# 						LoggingService.error "databaseService.util.login()", null, err
-		# 						callback err, false
-		# 					else
-		# 						CookieService.setUser account
-		# 						callback null, true
-		# 					return
-		# 			.catch (err) ->
-		# 				LoggingService.error "databaseService.util.login()", null, err
-		# 				callback err, false
-		# 				return
-		# 	logout: (callback) ->
-		# 		firebase.auth().signOut()
-		# 			.then ->
-		# 				callback null
-		# 				return
-		# 			.catch (err) ->
-		# 				LoggingService.error "databaseService.util.logout()", null, err
-		# 				callback err
-		# 				return
-		# 		return
-		# 	signUp: (email, password, callback) ->
-		# 		firebase.auth().createUserWithEmailAndPassword email, password
-		# 			.then (user) ->
-		# 				# TODO: create user account
-		# 				callback null, user
-		# 				return
-		# 			.catch (err) ->
-		# 				LoggingService.error "databaseService.signUp()", null, err
-		# 				callback err, null
-		# 				return
-		# 		return
 			getUserObjects: (key, parentId, mapper, callback) ->
 				databaseService.util.get key, true, parentId, false, mapper, callback
 				return
@@ -144,6 +105,46 @@ angular.module "app.services"
 		# 				callback err
 		# 				return
 		# 		return
+		# authentication:
+		# 	login: (email, password) ->
+		# 		firebase.auth().signInWithEmailAndPassword email, password
+		# 			.then ->
+		# 				user =
+		# 					id: firebase.auth().currentUser.uid
+		# 				CookieService.setUser user
+		# 				databaseService.account.get (err, account) ->
+		# 					if err
+		# 						LoggingService.error "databaseService.util.login()", null, err
+		# 						callback err, false
+		# 					else
+		# 						CookieService.setUser account
+		# 						callback null, true
+		# 					return
+		# 			.catch (err) ->
+		# 				LoggingService.error "databaseService.util.login()", null, err
+		# 				callback err, false
+		# 				return
+		# 	logout: (callback) ->
+		# 		firebase.auth().signOut()
+		# 			.then ->
+		# 				callback null
+		# 				return
+		# 			.catch (err) ->
+		# 				LoggingService.error "databaseService.util.logout()", null, err
+		# 				callback err
+		# 				return
+		# 		return
+		# 	signUp: (email, password, callback) ->
+		# 		firebase.auth().createUserWithEmailAndPassword email, password
+		# 			.then (user) ->
+		# 				# TODO: create user account
+		# 				callback null, user
+		# 				return
+		# 			.catch (err) ->
+		# 				LoggingService.error "databaseService.signUp()", null, err
+		# 				callback err, null
+		# 				return
+		# 		return
 		# account:
 		# 	get: () ->
 		# 		databaseService.util.get keys.user.accounts, true, null, true, MappingService.objectMapper
@@ -151,10 +152,24 @@ angular.module "app.services"
 			getAll: (callback) ->
 				databaseService.util.getUserObjects keys.user.categories, null, MappingService.defaultMapper, callback
 				return
-		field:
-			getAllDefault: (callback) ->
-				databaseService.util.getSystemObjects keys.system.default.fields, null, MappingService.defaultMapper, callback
-				return
+			getById: (categoryId, callback) ->
+				databaseService.category.getAll (err, res) ->
+					if err
+						LoggingService.error "DatabaseService.category.getById()", null, err
+						callback err, res
+					else
+						category = null
+						for c in res
+							if c.id is categoryId
+								category = c
+								break
+						if not category
+							err = errors.INVALID_CATEGORY_ID
+							LoggingService.error "DatabaseService.category.getById()", null, err
+							callback err, null
+						else
+							callback null, category
+					return
 		dataType:
 			getAllByUser: (callback) ->
 				databaseService.util.getUserObjects keys.user.data_types, null, MappingService.defaultMapper, callback
@@ -175,9 +190,13 @@ angular.module "app.services"
 		# 	getField: (callback) ->
 		# 		databaseService.util.getSystemObjects keys.system.definition.field, null, MappingService.defaultMapper, callback
 		# 		return
-		# entry:
-		# 	getAll: (categoryId, callback) ->
-		# 		databaseService.util.getUserObjects keys.user.entries, categoryId, MappingService.defaultMapper, callback
-		# 		return
+		entry:
+			getAll: (categoryId, callback) ->
+				databaseService.util.getUserObjects keys.user.entries, categoryId, MappingService.defaultMapper, callback
+				return
+		field:
+			getAllDefault: (callback) ->
+				databaseService.util.getSystemObjects keys.system.default.fields, null, MappingService.defaultMapper, callback
+				return
 
 	databaseService
