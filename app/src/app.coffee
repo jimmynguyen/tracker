@@ -18,4 +18,5 @@ angular.module "app.services", [
 	"app.constants"
 	"firebase"
 	"ngCookies"
+	"ui.bootstrap"
 ]

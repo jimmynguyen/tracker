@@ -63,6 +63,7 @@ module.exports = (grunt) ->
 					"node_modules/angular-route/angular-route.min.js"
 					"node_modules/angularfire/dist/angularfire.min.js"
 					"node_modules/bootstrap/dist/js/bootstrap.min.js"
+					"node_modules/angular-ui-bootstrap/dist/ui-bootstrap.js"
 				]
 				dest: "build/dependencies.js"
 
@@ -84,6 +85,7 @@ module.exports = (grunt) ->
 				src: [
 					"node_modules/bootstrap/dist/css/bootstrap.min.css"
 					"node_modules/bootstrap/dist/css/bootstrap-theme.min.css"
+					"node_modules/angular-ui-bootstrap/dist/ui-bootstrap.css"
 					"app/css/**/*.css"
 				]
 				dest: "build/app.min.css"
