@@ -64,7 +64,7 @@
 			</tr>
 		</thead>
 		<tbody>
-			<tr ng-repeat="datum in filteredData = (data | orderBy:dataOrderByField.name | filter:{name:search}) track by datum.id"
+			<tr ng-repeat="datum in filteredData = (data | orderBy:dataOrderByField.name | filter:search) track by datum.id"
 					ng-click="viewDatum(datum)"
 					class="cursor-pointer">
 				<td ng-repeat="field in filteredFields = (fields | orderBy:'order' | filter:{visible:true}) track by field.id">
@@ -82,7 +82,7 @@
 <div class="col-lg-12 margin-top-20px"
 		ng-show="!showList">
 	<div class="col-lg-3 well margin-bottom-0px cursor-pointer"
-			ng-repeat="datum in filteredData = (data | orderBy:dataOrderByField.name | filter:{name:search}) track by datum.id"
+			ng-repeat="datum in filteredData = (data | orderBy:dataOrderByField.name | filter:search) track by datum.id"
 			ng-click="viewDatum(datum)">
 		<h3>{{ datum.name }}</h3>
 		<p ng-repeat="field in fields | orderBy:'order' | filter:{visible:true} | filter:{name:'!name'} track by field.id">
