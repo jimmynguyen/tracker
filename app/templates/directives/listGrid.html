@@ -34,7 +34,10 @@
 		</button>
 		<ul class="dropdown-menu">
 			<li ng-repeat="field in fields | orderBy:'order' | filter:{visible:true} track by field.id">
-				<a ng-click="setDataOrderByField(field)">{{ field.display_name }}</a>
+				<a class="cursor-pointer"
+						ng-click="setDataOrderByField(field)">
+					{{ field.display_name }}
+				</a>
 			</li>
 		</ul>
 	</div>
@@ -44,6 +47,11 @@
 				ng-change="reverseDataOrderByField()"/>
 		Reverse
 	</label>
+	<button type="button"
+			class="btn btn-success pull-right"
+			ng-click="showAddModal()">
+		Add {{ name }}
+	</button>
 </div>
 <div class="col-lg-12 margin-top-20px"
 		ng-show="showList">
@@ -63,7 +71,7 @@
 			</tr>
 			<tr ng-hide="filteredData.length">
 				<td colspan="filteredFields.length">
-					No {{ name }} found
+					No {{ pluralName }} Found
 				</td>
 			</tr>
 		</tbody>
@@ -80,7 +88,7 @@
 	</div>
 	<div class="col-lg-3 well margin-bottom-0px"
 			ng-hide="filteredData.length">
-		<h3>No {{ name }} found</h3>
+		<h3>No {{ pluralName }} Found</h3>
 		<p ng-repeat="field in fields | orderBy:'order' | filter:{visible:true} | filter:{name:'!name'} track by field.id">&nbsp;</p>
 	</div>
 </div>
