@@ -11,110 +11,278 @@
 			],
 			"fields": [
 				{
+					"id": 0,
+					"last_updated": "00/00/0000 00:00:00",
+					"name": "id",
+					"display_name": "Id",
 					"data_type": "number",
-					"name": "id"
+					"order": 0,
+					"editable": false,
+					"required": true,
+					"visible": false
 				},
 				{
-					"data_type": "datetime",
-					"name": "last_updated"
+					"id": 1,
+					"last_updated": "00/00/0000 00:00:00",
+					"name": "last_updated",
+					"display_name": "Last Updated",
+					"data_type": "string",
+					"order": 1,
+					"editable": false,
+					"required": true,
+					"visible": true
 				}
 			]
 		},
 		"definition": {
 			"category": [
 				{
-					"data_type": "field",
-					"display_name": "Fields",
 					"id": 0,
-					"name": "fields",
-					"order": 4,
-					"visible": false
-				},
-				{
-					"data_type": "number",
-					"display_name": "Id",
-					"id": 1,
+					"last_updated": "00/00/0000 00:00:00",
 					"name": "id",
-					"order": 1,
+					"display_name": "Id",
+					"data_type": "number",
+					"order": 0,
+					"editable": false,
+					"required": true,
 					"visible": false
 				},
 				{
-					"data_type": "string",
-					"display_name": "Last Updated",
-					"id": 2,
+					"id": 1,
+					"last_updated": "00/00/0000 00:00:00",
 					"name": "last_updated",
+					"display_name": "Last Updated",
+					"data_type": "string",
 					"order": 3,
+					"editable": false,
+					"required": true,
 					"visible": true
 				},
 				{
-					"data_type": "string",
-					"display_name": "Name",
-					"id": 3,
+					"id": 2,
+					"last_updated": "00/00/0000 00:00:00",
 					"name": "name",
-					"order": 2,
+					"display_name": "Name",
+					"data_type": "string",
+					"order": 1,
+					"editable": true,
+					"required": true,
 					"visible": true
+				},
+				{
+					"id": 3,
+					"last_updated": "00/00/0000 00:00:00",
+					"name": "fields",
+					"display_name": "Fields",
+					"data_type": "field",
+					"order": 2,
+					"editable": true,
+					"required": true,
+					"visible": false
 				}
 			],
 			"data_type": [
 				{
-					"data_type": "array",
-					"name": "value"
-				},
-				{
+					"id": 0,
+					"last_updated": "00/00/0000 00:00:00",
+					"name": "id",
+					"display_name": "Id",
 					"data_type": "number",
-					"name": "id"
+					"order": 0,
+					"editable": false,
+					"required": true,
+					"visible": false
 				},
 				{
+					"id": 1,
+					"last_updated": "00/00/0000 00:00:00",
+					"name": "last_updated",
+					"display_name": "Last Updated",
 					"data_type": "string",
-					"name": "last_updated"
+					"order": 1,
+					"editable": false,
+					"required": true,
+					"visible": true
 				},
 				{
+					"id": 2,
+					"last_updated": "00/00/0000 00:00:00",
+					"name": "name",
+					"display_name": "Name",
 					"data_type": "string",
-					"name": "name"
+					"order": 2,
+					"editable": true,
+					"required": true,
+					"visible": true
+				},
+				{
+					"id": 3,
+					"last_updated": "00/00/0000 00:00:00",
+					"name": "values",
+					"display_name": "Values",
+					"data_type": "array",
+					"order": 3,
+					"editable": true,
+					"required": true,
+					"visible": true
 				}
 			],
 			"field": [
 				{
+					"id": 0,
+					"last_updated": "00/00/0000 00:00:00",
+					"name": "id",
+					"display_name": "Id",
+					"data_type": "number",
+					"order": 0,
+					"editable": false,
+					"required": true,
+					"visible": false
+				},
+				{
+					"id": 1,
+					"last_updated": "00/00/0000 00:00:00",
+					"name": "last_updated",
+					"display_name": "Last Updated",
+					"data_type": "string",
+					"order": 1,
+					"editable": false,
+					"required": true,
+					"visible": true
+				},
+				{
+					"id": 2,
+					"last_updated": "00/00/0000 00:00:00",
+					"name": "name",
+					"display_name": "System Name",
+					"data_type": "string",
+					"order": 2,
+					"editable": false,
+					"required": true,
+					"visible": false
+				},
+				{
+					"id": 3,
+					"last_updated": "00/00/0000 00:00:00",
+					"name": "display_name",
+					"display_name": "Name",
+					"data_type": "string",
+					"order": 3,
+					"editable": true,
+					"required": true,
+					"visible": true
+				},
+				{
+					"id": 4,
+					"last_updated": "00/00/0000 00:00:00",
+					"name": "data_type",
+					"display_name": "Data Type",
+					"data_type": "string",
+					"order": 4,
+					"editable": true,
+					"required": true,
+					"visible": true
+				},
+				{
+					"id": 5,
+					"last_updated": "00/00/0000 00:00:00",
+					"name": "order",
+					"display_name": "Order",
+					"data_type": "number",
+					"order": 5,
+					"editable": true,
+					"required": true,
+					"visible": false
+				},
+				{
+					"id": 6,
+					"last_updated": "00/00/0000 00:00:00",
+					"name": "editable",
+					"display_name": "Editable?",
 					"data_type": "boolean",
-					"name": "visible"
+					"order": 6,
+					"editable": false,
+					"required": true,
+					"visible": false
 				},
 				{
-					"data_type": "string",
-					"name": "data_type"
+					"id": 7,
+					"last_updated": "00/00/0000 00:00:00",
+					"name": "required",
+					"display_name": "Required?",
+					"data_type": "boolean",
+					"order": 7,
+					"editable": true,
+					"required": true,
+					"visible": true
 				},
 				{
-					"data_type": "number",
-					"name": "id"
-				},
-				{
-					"data_type": "string",
-					"name": "last_updated"
-				},
-				{
-					"data_type": "string",
-					"name": "name"
-				},
-				{
-					"data_type": "number",
-					"name": "order"
+					"id": 8,
+					"last_updated": "00/00/0000 00:00:00",
+					"name": "visible",
+					"display_name": "Visible?",
+					"data_type": "boolean",
+					"order": 8,
+					"editable": false,
+					"required": true,
+					"visible": false
 				}
 			],
-			"user": [
+			"account": [
 				{
-					"data_type": "string",
-					"name": "email"
+					"id": 0,
+					"last_updated": "00/00/0000 00:00:00",
+					"name": "id",
+					"display_name": "Id",
+					"data_type": "number",
+					"order": 0,
+					"editable": false,
+					"required": true,
+					"visible": false
 				},
 				{
+					"id": 1,
+					"last_updated": "00/00/0000 00:00:00",
+					"name": "last_updated",
+					"display_name": "Last Updated",
 					"data_type": "string",
-					"name": "first_name"
+					"order": 1,
+					"editable": false,
+					"required": true,
+					"visible": true
 				},
 				{
+					"id": 2,
+					"last_updated": "00/00/0000 00:00:00",
+					"name": "email",
+					"display_name": "Email",
 					"data_type": "string",
-					"name": "last_name"
+					"order": 2,
+					"editable": true,
+					"required": true,
+					"visible": true
 				},
 				{
+					"id": 3,
+					"last_updated": "00/00/0000 00:00:00",
+					"name": "first_name",
+					"display_name": "First Name",
 					"data_type": "string",
-					"name": "last_updated"
+					"order": 3,
+					"editable": true,
+					"required": true,
+					"visible": true
+				},
+				{
+					"id": 3,
+					"last_updated": "00/00/0000 00:00:00",
+					"name": "last_name",
+					"display_name": "Last Name",
+					"data_type": "string",
+					"order": 3,
+					"editable": true,
+					"required": true,
+					"visible": true
 				}
 			]
 		}
@@ -123,73 +291,149 @@
 		"categories": {
 			"IY2ZMGNzsTPmWdmi3lec35v2CRt2": [
 				{
-					"fields": [
-						{
-							"data_type": "string",
-							"id": 0,
-							"last_updated": "11/20/2017 14:41:24",
-							"name": "Title",
-							"order": 1
-						},
-						{
-							"data_type": "movie_genre",
-							"id": 1,
-							"last_updated": "11/20/2017 14:41:24",
-							"name": "Genre",
-							"order": 2
-						},
-						{
-							"data_type": "movie_status",
-							"id": 2,
-							"last_updated": "11/20/2017 14:41:24",
-							"name": "Status",
-							"order": 3
-						},
-						{
-							"data_type": "string",
-							"id": 3,
-							"last_updated": "11/20/2017 14:41:24",
-							"name": "Comments",
-							"order": 4
-						}
-					],
 					"id": 0,
 					"last_updated": "11/20/2017 14:39:24",
-					"name": "Movies"
-				},{
+					"name": "Movies",
 					"fields": [
 						{
-							"data_type": "string",
 							"id": 0,
 							"last_updated": "11/20/2017 14:41:24",
-							"name": "Title",
-							"order": 1
+							"name": "id",
+							"display_name": "Id",
+							"data_type": "number",
+							"order": 0,
+							"editable": false,
+							"required": true,
+							"visible": false
 						},
 						{
-							"data_type": "movie_genre",
 							"id": 1,
 							"last_updated": "11/20/2017 14:41:24",
-							"name": "Genre",
-							"order": 2
+							"name": "last_updated",
+							"display_name": "Last Updated",
+							"data_type": "string",
+							"order": 1,
+							"editable": false,
+							"required": true,
+							"visible": true
 						},
 						{
-							"data_type": "movie_status",
 							"id": 2,
 							"last_updated": "11/20/2017 14:41:24",
-							"name": "Status",
-							"order": 3
+							"name": "title",
+							"display_name": "Title",
+							"data_type": "string",
+							"order": 2,
+							"editable": true,
+							"required": true,
+							"visible": true
 						},
 						{
-							"data_type": "string",
 							"id": 3,
 							"last_updated": "11/20/2017 14:41:24",
-							"name": "Comments",
-							"order": 4
+							"name": "genre",
+							"display_name": "Genre",
+							"data_type": "movie_genre",
+							"order": 3,
+							"editable": true,
+							"required": true,
+							"visible": true
+						},
+						{
+							"id": 4,
+							"last_updated": "11/20/2017 14:41:24",
+							"name": "status",
+							"display_name": "Status",
+							"data_type": "movie_status",
+							"order": 4,
+							"editable": true,
+							"required": true,
+							"visible": true
+						},
+						{
+							"id": 5,
+							"last_updated": "11/20/2017 14:41:24",
+							"name": "comments",
+							"display_name": "Comments",
+							"data_type": "string",
+							"order": 5,
+							"editable": true,
+							"required": true,
+							"visible": true
 						}
-					],
+					]
+				},{
 					"id": 1,
 					"last_updated": "11/19/2017 14:39:24",
-					"name": "Movies 2"
+					"name": "Movies 2",
+					"fields": [
+						{
+							"id": 0,
+							"last_updated": "11/20/2017 14:41:24",
+							"name": "id",
+							"display_name": "Id",
+							"data_type": "number",
+							"order": 0,
+							"editable": false,
+							"required": true,
+							"visible": false
+						},
+						{
+							"id": 1,
+							"last_updated": "11/20/2017 14:41:24",
+							"name": "last_updated",
+							"display_name": "Last Updated",
+							"data_type": "string",
+							"order": 1,
+							"editable": false,
+							"required": true,
+							"visible": true
+						},
+						{
+							"id": 2,
+							"last_updated": "11/20/2017 14:41:24",
+							"name": "title",
+							"display_name": "Title",
+							"data_type": "string",
+							"order": 2,
+							"editable": true,
+							"required": true,
+							"visible": true
+						},
+						{
+							"id": 3,
+							"last_updated": "11/20/2017 14:41:24",
+							"name": "genre",
+							"display_name": "Genre",
+							"data_type": "movie_genre",
+							"order": 3,
+							"editable": true,
+							"required": true,
+							"visible": true
+						},
+						{
+							"id": 4,
+							"last_updated": "11/20/2017 14:41:24",
+							"name": "status",
+							"display_name": "Status",
+							"data_type": "movie_status",
+							"order": 4,
+							"editable": true,
+							"required": true,
+							"visible": true
+						},
+						{
+							"id": 5,
+							"last_updated": "11/20/2017 14:41:24",
+							"name": "comments",
+							"display_name": "Comments",
+							"data_type": "string",
+							"order": 5,
+							"editable": true,
+							"required": true,
+							"visible": true
+						}
+					]
 				}
 			]
 		},
@@ -199,7 +443,7 @@
 					"id": 0,
 					"last_updated": "11/20/2017 14:45:30",
 					"name": "movie_genre",
-					"value": [
+					"values": [
 						"action",
 						"horror",
 						"mystery"
@@ -209,7 +453,7 @@
 					"id": 1,
 					"last_updated": "11/20/2017 14:45:30",
 					"name": "movie_status",
-					"value": [
+					"values": [
 						"watched",
 						"plan on watching"
 					]
@@ -232,11 +476,11 @@
 		},
 		"accounts": {
 			"IY2ZMGNzsTPmWdmi3lec35v2CRt2": {
+				"id": "IY2ZMGNzsTPmWdmi3lec35v2CRt2",
+				"last_updated": "11/20/2017 14:38:09",
 				"email": "jdoe@fakemail.com",
 				"first_name": "John",
-				"id": "IY2ZMGNzsTPmWdmi3lec35v2CRt2",
-				"last_name": "Doe",
-				"last_updated": "11/20/2017 14:38:09"
+				"last_name": "Doe"
 			}
 		}
 	}
