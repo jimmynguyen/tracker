@@ -17,6 +17,7 @@ angular.module "app.filters", []
 angular.module "app.services", [
 	"app.constants"
 	"firebase"
+	"LocalStorageModule"
 	"ngCookies"
 	"ui.bootstrap"
 ]

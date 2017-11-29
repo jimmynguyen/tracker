@@ -64,6 +64,7 @@ module.exports = (grunt) ->
 					"node_modules/angularfire/dist/angularfire.min.js"
 					"node_modules/bootstrap/dist/js/bootstrap.min.js"
 					"node_modules/angular-ui-bootstrap/dist/ui-bootstrap.js"
+					"node_modules/angular-local-storage/dist/angular-local-storage.min.js"
 				]
 				dest: "build/dependencies.js"
 
