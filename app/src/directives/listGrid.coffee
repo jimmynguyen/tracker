@@ -43,21 +43,18 @@ angular.module "app.directives"
 				fields = []
 				for field in item.fields
 					if field.name isnt "id" and field.name isnt "last_updated"
-						field.id--
 						fields.push field
 				item.fields = fields
 			ModalService.showAddEditModal scope.fields, item, scope.defaultFields, scope.defaultDataTypes, scope.userDataTypes, scope.name
 				.then (res) ->
 					if res.fields?
 						# add id and last_updated fields after editing
-						for field in res.fields
-							field.id++
 						res.fields.push
-							id: res.fields.length
+							id: res.fields.length+1
 							name: "last_updated"
 							display_name: "Last Updated"
 							data_type: "string"
-							order: res.fields.length
+							order: res.fields.length+1
 							editable: false
 							required: true
 							visible: true
