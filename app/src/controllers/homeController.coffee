@@ -2,7 +2,7 @@
 
 angular.module "app.controllers"
 
-.controller "HomeController", (keys, AuthenticationService, CookieService, DatabaseService, LocationService, LoggingService, $scope) ->
+.controller "HomeController", (keys, AuthenticationService, CacheService, DatabaseService, LocationService, LoggingService, $scope) ->
 
 	LocationService.logPath()
 	AuthenticationService.isLoggedIn()
@@ -53,7 +53,7 @@ angular.module "app.controllers"
 			return
 		return
 	viewCategory = (category) ->
-		CookieService.set keys.selected.category, category
+		CacheService.set keys.selected.category, category
 		LocationService.goToCategory category.id
 		return
 	initialize = ->

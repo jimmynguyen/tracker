@@ -2,11 +2,11 @@
 
 angular.module "app.services"
 
-.factory "AuthenticationService", (errors, CookieService, DatabaseService, LocationService, LoggingService) ->
+.factory "AuthenticationService", (errors, CacheService, DatabaseService, LocationService, LoggingService) ->
 
 	authenticationService =
 		isLoggedIn : ->
-			if not CookieService.getUser()
+			if not CacheService.getUser()
 				LocationService.goToLogin()
 			return
 		# login : (email, password, callback) ->
@@ -16,7 +16,7 @@ angular.module "app.services"
 		# 		callback errors.INVALID_EMAIL_OR_PASSWORD, false
 		# 	return
 		logout : ->
-			CookieService.removeUser()
+			CacheService.removeUser()
 			return
 		# signUp : (email, password, user, callback) ->
 		# 	if email? and password?

@@ -2,7 +2,7 @@
 
 angular.module "app.services"
 
-.factory "DatabaseService", (errors, firebaseConfig, firebaseErrorCodes, keys, CookieService, LoggingService, MappingService, $firebaseArray, $q) ->
+.factory "DatabaseService", (errors, firebaseConfig, firebaseErrorCodes, keys, CacheService, LoggingService, MappingService, $firebaseArray, $q) ->
 
 	# initialize firebase app if it has not been initialized
 	if firebase.apps.length is 0
@@ -22,12 +22,12 @@ angular.module "app.services"
 				# 		LoggingService.error "firebase.auth().onAuthStateChanged()", null, err
 				# 	else
 				# 		LoggingService.log account
-				# 		CookieService.setUser account
+				# 		CacheService.setUser account
 				# 	return
 				# return
 				user =
 					id: user.uid
-				CookieService.setUser user
+				CacheService.setUser user
 			else
 				# user is signed out
 			return
@@ -38,7 +38,7 @@ angular.module "app.services"
 			getKey: (key, appendUserId, parentId, id) ->
 				_key = key.slice 0
 				if appendUserId
-					_key += "/" + CookieService.getUser().id
+					_key += "/" + CacheService.getUser().id
 				if parentId?
 					_key += "/" + parentId
 				if id?
@@ -48,15 +48,15 @@ angular.module "app.services"
 				update = []
 				update[key] = object
 				update
-			get: (key, appendUserId, parentId, overrideCookieService, mapper, callback) ->
-				# res = CookieService.get key
-				# if not res or overrideCookieService
+			get: (key, appendUserId, parentId, overrideCacheService, mapper, callback) ->
+				# res = CacheService.get key
+				# if not res or overrideCacheService
 					_key = databaseService.util.getKey key, appendUserId, parentId, null
 					$firebaseArray firebase.database().ref().child _key
 						.$loaded()
 						.then (res) ->
 							mappedRes = mapper.map res
-							CookieService.set key, mappedRes
+							CacheService.set key, mappedRes
 							callback null, mappedRes
 						.catch (err) ->
 							LoggingService.error "DatabaseService.util.get()", key, err
@@ -111,13 +111,13 @@ angular.module "app.services"
 		# 			.then ->
 		# 				user =
 		# 					id: firebase.auth().currentUser.uid
-		# 				CookieService.setUser user
+		# 				CacheService.setUser user
 		# 				databaseService.account.get (err, account) ->
 		# 					if err
 		# 						LoggingService.error "databaseService.util.login()", null, err
 		# 						callback err, false
 		# 					else
-		# 						CookieService.setUser account
+		# 						CacheService.setUser account
 		# 						callback null, true
 		# 					return
 		# 			.catch (err) ->

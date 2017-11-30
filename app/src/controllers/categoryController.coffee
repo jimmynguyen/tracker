@@ -2,7 +2,7 @@
 
 angular.module "app.controllers"
 
-.controller "CategoryController", (keys, AuthenticationService, CookieService, DatabaseService, LocationService, LoggingService, $scope, $routeParams) ->
+.controller "CategoryController", (keys, AuthenticationService, CacheService, DatabaseService, LocationService, LoggingService, $scope, $routeParams) ->
 
 	LocationService.logPath()
 	AuthenticationService.isLoggedIn()
@@ -24,7 +24,7 @@ angular.module "app.controllers"
 			return
 		return
 	getCategory = ->
-		category = CookieService.get keys.selected.category
+		category = CacheService.get keys.selected.category
 		if not category or category.id.toString() isnt $routeParams.categoryId
 			DatabaseService.category.getById $routeParams.categoryId, (err, res) ->
 				if err
