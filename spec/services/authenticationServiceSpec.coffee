@@ -1,10 +1,10 @@
 describe "AuthenticationServiceTest", ->
 	beforeEach ->
 		angular.mock.module "app.services"
-		angular.mock.inject (AuthenticationService, _errors_, CookieService, DatabaseService) ->
+		angular.mock.inject (AuthenticationService, _errors_, CacheService, DatabaseService) ->
 			this.authenticationService = AuthenticationService
 			this.errors = _errors_
-			this.cookieService = CookieService
+			this.cookieService = CacheService
 			this.databaseService = DatabaseService
 			return
 		this.callback = jasmine.createSpy "callback"
