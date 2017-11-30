@@ -59,21 +59,14 @@ angular.module "app.controllers"
 				$scope.userDataTypes = res
 			return
 		return
-	addEntry = (entry) ->
-		DatabaseService.entry.add entry, $scope.category.id, (err, res) ->
-			if err
-				LoggingService.error "CategoryController.addEntry()", null, err
-			else
-				$scope.entries = res
-			return
+	addEntry = (entry, callback) ->
+		DatabaseService.entry.add entry, $scope.category.id, callback
 		return
-	editEntry = (entry) ->
-		DatabaseService.entry.update entry, $scope.category.id, (err, res) ->
-			if err
-				LoggingService.error "CategoryController.editEntry()", null, err
-			else
-				$scope.entries = res
-			return
+	editEntry = (entry, callback) ->
+		DatabaseService.entry.update entry, $scope.category.id, callback
+		return
+	deleteEntry = (entry, callback) ->
+		DatabaseService.entry.delete entry, $scope.category.id, callback
 		return
 	initialize = ->
 		getEntries()
@@ -84,6 +77,7 @@ angular.module "app.controllers"
 		$scope.viewEntry = null
 		$scope.addEntry = addEntry
 		$scope.editEntry = editEntry
+		$scope.deleteEntry = deleteEntry
 		return
 	initialize()
 	return

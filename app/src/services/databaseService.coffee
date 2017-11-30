@@ -117,17 +117,23 @@ angular.module "app.services"
 						callback err, null
 						return
 				return
-		# 	delete: (key, appendUserId, parentId, object, callback) ->
-		# 		_key = databaseService.util.getKey key, appendUserId, parentId, object.id
-		# 		firebase.database().ref().child _key
-		# 			.remove()
-		# 			.then ->
-		# 				callback null
-		# 				return
-		# 			.catch (err) ->
-		# 				callback err
-		# 				return
-		# 		return
+			delete: (key, parentId, object, callback) ->
+				_key = databaseService.util.getKey key, true, parentId, object.id
+				firebase.database().ref(_key).remove()
+					.then ->
+						objects = CacheService.get key
+						for o, i in objects
+							if o.id is object.id
+								objects.splice i, 1
+								break
+						CacheService.set key, objects
+						callback null, objects
+						return
+					.catch (err) ->
+						LoggingService.error "DatabaseService.delete()", key, err
+						callback err, null
+						return
+				return
 		# authentication:
 		# 	login: (email, password) ->
 		# 		firebase.auth().signInWithEmailAndPassword email, password
@@ -200,6 +206,9 @@ angular.module "app.services"
 			update: (category, callback) ->
 				databaseService.util.update keys.user.categories, null, category, callback
 				return
+			delete: (category, callback) ->
+				databaseService.util.delete keys.user.categories, null, category, callback
+				return
 		dataType:
 			getAllByUser: (callback) ->
 				databaseService.util.getUserObjects keys.user.data_types, null, MappingService.arrayMapper, callback
@@ -229,6 +238,9 @@ angular.module "app.services"
 				return
 			update: (entry, categoryId, callback) ->
 				databaseService.util.update keys.user.entries, categoryId, entry, callback
+				return
+			delete: (entry, categoryId, callback) ->
+				databaseService.util.delete keys.user.entries, categoryId, entry, callback
 				return
 		field:
 			getAllDefault: (callback) ->

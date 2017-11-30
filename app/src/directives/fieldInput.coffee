@@ -21,18 +21,17 @@ angular.module "app.directives"
 				return
 			return
 		showAddEditModal = (item) ->
-			headerText = (if item? then "Edit" else "Add") + " Field"
 			for i in [scope.fields.length-1..0] by -1
 				if scope.fields[i].name is 'order'
 					scope.orderField = scope.fields.splice(i, 1)[0]
 					break
-			ModalService.showAddEditModal scope.fields, item, scope.defaultFields, scope.defaultDataTypes, scope.userDataTypes, headerText
+			ModalService.showAddEditModal scope.fields, item, scope.defaultFields, scope.defaultDataTypes, scope.userDataTypes, "Field"
 				.then (res) ->
 					if not item?
 						if not scope.data?
 							scope.data = []
 							scope.nextDatumId = 1
-						if not scope.nextDatumId?
+						else
 							scope.nextDatumId = -1
 							for datum in scope.data
 								if datum.id > scope.nextDatumId
@@ -53,13 +52,32 @@ angular.module "app.directives"
 					return
 				.catch (err) ->
 					if err isnt "cancel"
-						LoggingService.error "fieldInput.showAddModal", null, err
+						LoggingService.error "fieldInput.showAddEditModal", null, err
 					scope.fields.push scope.orderField
+					return
+			return
+		showDeleteModal = (item) ->
+			ModalService.showDeleteModal item, "Field"
+				.then ->
+					for datum, index in scope.data
+						if datum.id is item.id
+							datumIndex = index
+							break
+					scope.data.splice index, 1
+					if scope.data.length-1 >= datumIndex
+						for index in [datumIndex..scope.data.length-1]
+							scope.data[index].id--
+							scope.data[index].order--
+					return
+				.catch (err) ->
+					if err isnt "cancel"
+						LoggingService.error "fieldInput.showDeleteModal", null, err
 					return
 			return
 		initialize = ->
 			getFieldDefinition()
 			scope.showAddEditModal = showAddEditModal
+			scope.showDeleteModal = showDeleteModal
 			scope.sortableOptions =
 				stop: (e, ui) ->
 					for datum, ndx in scope.data

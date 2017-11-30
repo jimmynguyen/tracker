@@ -15,6 +15,7 @@ angular.module "app.directives"
 		viewDatum: "="
 		addDatum: "="
 		editDatum: "="
+		deleteDatum: "="
 		defaultFields: "="
 		defaultDataTypes: "="
 		userDataTypes: "="
@@ -36,19 +37,30 @@ angular.module "app.directives"
 				scope.dataOrderByField.name = "-" + scope.dataOrderByField.name
 			return
 		scope.showAddEditModal = (item) ->
-			headerText = (if item? then "Edit " else "Add ") + scope.name
 			if item? and item.fields?
 				originalItem = angular.copy item
 				# remove id and last_updated fields when editing
-				item.fields.shift()
-				item.fields.pop()
+				fields = []
 				for field in item.fields
-					field.id--
-			ModalService.showAddEditModal scope.fields, item, scope.defaultFields, scope.defaultDataTypes, scope.userDataTypes, headerText
+					if field.name isnt "id" and field.name isnt "last_updated"
+						field.id--
+						fields.push field
+				item.fields = fields
+			ModalService.showAddEditModal scope.fields, item, scope.defaultFields, scope.defaultDataTypes, scope.userDataTypes, scope.name
 				.then (res) ->
 					if res.fields?
+						# add id and last_updated fields after editing
 						for field in res.fields
 							field.id++
+						res.fields.push
+							id: res.fields.length
+							name: "last_updated"
+							display_name: "Last Updated"
+							data_type: "string"
+							order: res.fields.length
+							editable: false
+							required: true
+							visible: true
 						res.fields.unshift
 							id: 0
 							name: "id"
@@ -58,21 +70,24 @@ angular.module "app.directives"
 							editable: false
 							required: true
 							visible: false
-						res.fields.push
-							id: 1
-							name: "last_updated"
-							display_name: "Last Updated"
-							data_type: "string"
-							order: res.fields.length
-							editable: false
-							required: true
-							visible: true
 					if item?
 						for property of res
 							item[property] = res[property]
-						scope.editDatum res
+						scope.editDatum res, (err, res) ->
+							if err
+								LoggingService.error "listGrid.editDatum()", null, err
+							else
+								scope.data = res
+								scope.$apply()
+							return
 					else
-						scope.addDatum res
+						scope.addDatum res, (err, res) ->
+							if err
+								LoggingService.error "listGrid.addDatum()", null, err
+							else
+								scope.data = res
+								scope.$apply()
+							return
 					return
 				.catch (err) ->
 					if err isnt "cancel"
@@ -81,6 +96,22 @@ angular.module "app.directives"
 						if originalItem?
 							for property of originalItem
 								item[property] = originalItem[property]
+					return
+			return
+		scope.showDeleteModal = (item) ->
+			ModalService.showDeleteModal item, scope.name
+				.then ->
+					scope.deleteDatum item, (err, res) ->
+						if err
+							LoggingService.error "listGrid.deleteDatum()", null, err
+						else
+							scope.data = res
+							scope.$apply()
+						return
+					return
+				.catch (err) ->
+					if err isnt "cancel"
+						LoggingService.error "listGrid.showDeleteModal", null, err
 					return
 			return
 		return

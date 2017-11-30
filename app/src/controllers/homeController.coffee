@@ -56,21 +56,14 @@ angular.module "app.controllers"
 		CacheService.set keys.selected.category, category
 		LocationService.goToCategory category.id
 		return
-	addCategory = (category) ->
-		DatabaseService.category.add category, (err, res) ->
-			if err
-				LoggingService.error "HomeController.addCategory()", null, err
-			else
-				$scope.categories = res
-			return
+	addCategory = (category, callback) ->
+		DatabaseService.category.add category, callback
 		return
-	editCategory = (category) ->
-		DatabaseService.category.update category, (err, res) ->
-			if err
-				LoggingService.error "HomeController.editCategory()", null, err
-			else
-				$scope.categories = res
-			return
+	editCategory = (category, callback) ->
+		DatabaseService.category.update category, callback
+		return
+	deleteCategory = (category, callback) ->
+		DatabaseService.category.delete category, callback
 		return
 	initialize = ->
 		getCategories()
@@ -81,6 +74,7 @@ angular.module "app.controllers"
 		$scope.viewCategory = viewCategory
 		$scope.addCategory = addCategory
 		$scope.editCategory = editCategory
+		$scope.deleteCategory = deleteCategory
 		return
 	initialize()
 

@@ -10,20 +10,17 @@ angular.module "app.services"
 		modalFade: true
 		templateUrl: "app/templates/modals/default.html"
 	modalOptions =
-		closeButtonText: "Close"
-		actionButtonText: "OK"
-		headerText: "Proceed?"
-		bodyText: "Perform this action?"
+		closeButtonText: "Cancel"
+		bootstrapButtonClass: "btn-success"
 
 	modalService =
-		showAddEditModal: (fields, item, defaultFields, defaultDataTypes, userDataTypes, headerText) ->
+		showAddEditModal: (fields, item, defaultFields, defaultDataTypes, userDataTypes, name) ->
 			userDataTypeMap = {}
 			for dataType in userDataTypes
 				userDataTypeMap[dataType.name] = dataType
 			customModalOptions =
-				closeButtonText: "Cancel"
 				actionButtonText: if item? then "Save changes" else "Add"
-				headerText: headerText
+				headerText: (if item? then "Edit " else "Add ") + name
 				fields: fields
 				defaultFields: defaultFields
 				defaultFieldNames: defaultFields.map (field) ->
@@ -39,6 +36,14 @@ angular.module "app.services"
 			customModalDefaults =
 				templateUrl: "app/templates/modals/addEdit.html"
 			modalService.showModal customModalDefaults, customModalOptions
+		showDeleteModal: (item, name) ->
+			customModalOptions =
+				headerText: "Delete " + name
+				closeButtonText: "Cancel"
+				actionButtonText: "Delete"
+				bodyText: "Are you sure you want to delete " + (if item.name? then "the " else "this ") + name.toLowerCase() + (if item.name? then " \"" + item.name + "\"?" else "?")
+				bootstrapButtonClass: "btn-danger"
+			modalService.showModal {}, customModalOptions
 		showModal: (customModalDefaults, customModalOptions) ->
 			if not customModalDefaults
 				customModalDefaults = {}
