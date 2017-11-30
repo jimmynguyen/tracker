@@ -43,7 +43,6 @@ angular.module "app.directives"
 						res.editable = true
 						res.required = if res.required? then res.required else false
 						res.visible = true
-						scope.nextDatumId++
 						scope.data.push res
 					else
 						for property of res
