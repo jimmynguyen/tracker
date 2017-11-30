@@ -31,10 +31,11 @@ angular.module "app.services"
 				defaultDataTypes: defaultDataTypes
 				userDataTypes: userDataTypes
 				userDataTypeMap: userDataTypeMap
+				dataTypes: defaultDataTypes
+					.filter (dataType) -> ["array", "field"].indexOf(dataType) is -1
+					.concat userDataTypes.map (dataType) ->
+						dataType.name
 				item: {}
-			console.log "defaultFieldNames", customModalOptions.defaultFieldNames
-			console.log "defaultDataTypes", defaultDataTypes
-			console.log "userDataTypes", customModalOptions.userDataTypeMap
 			customModalDefaults =
 				templateUrl: "app/templates/modals/add.html"
 			modalService.showModal customModalDefaults, customModalOptions
