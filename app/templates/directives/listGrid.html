@@ -65,14 +65,14 @@
 		</thead>
 		<tbody>
 			<tr ng-repeat="datum in filteredData = (data | orderBy:dataOrderByField.name | filter:search) track by datum.id"
-					ng-click="viewDatum(datum)"
+					ng-click="viewDatum && viewDatum(datum)"
 					class="cursor-pointer">
 				<td ng-repeat="field in filteredFields = (fields | orderBy:'order' | filter:{visible:true}) track by field.id">
 					{{ datum[field.name] }}
 				</td>
 			</tr>
 			<tr ng-hide="filteredData.length">
-				<td colspan="filteredFields.length">
+				<td colspan="{{ filteredFields.length }}">
 					No {{ pluralName }} Found
 				</td>
 			</tr>

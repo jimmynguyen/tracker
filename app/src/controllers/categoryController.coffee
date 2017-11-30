@@ -59,7 +59,14 @@ angular.module "app.controllers"
 				$scope.userDataTypes = res
 			return
 		return
-	viewEntry = (entry) ->
+	addEntry = (entry) ->
+		DatabaseService.entry.add entry, $scope.category.id, (err, res) ->
+			if err
+				LoggingService.error "HomeController.addEntry()", null, err
+			else
+				$scope.entries = res
+				console.log $scope.entries
+			return
 		return
 	initialize = ->
 		getEntries()
@@ -67,7 +74,8 @@ angular.module "app.controllers"
 		getDefaultFields()
 		getDefaultDataTypes()
 		getUserDataTypes()
-		$scope.viewEntry = viewEntry
+		$scope.viewEntry = null
+		$scope.addEntry = addEntry
 		return
 	initialize()
 	return

@@ -44,10 +44,6 @@ angular.module "app.services"
 				if id?
 					_key += "/" + id
 				_key
-			getUpdate: (key, object) ->
-				update = []
-				update[key] = object
-				update
 			get: (key, appendUserId, parentId, overrideCacheService, mapper, callback) ->
 				# res = CacheService.get key
 				# if not res or overrideCacheService
@@ -69,20 +65,39 @@ angular.module "app.services"
 			getSystemObjects: (key, parentId, mapper, callback) ->
 				databaseService.util.get key, false, parentId, false, mapper, callback
 				return
-		# 	add: (key, appendUserId, parentId, object, callback) ->
-		# 		_key = databaseService.util.getKey key, appendUserId, parentId, null
-		# 		object.id = firebase.database().ref().child _key
-		# 			.push().key
-		# 		_key = databaseService.util.getKey key, appendUserId, parentId, object.id
-		# 		update = databaseService.util.getUpdate _key, object
-		# 		firebase.database().ref().update update
-		# 			.then ->
-		# 				callback null, object.id
-		# 				return
-		# 			.catch (err) ->
-		# 				callback err, null
-		# 				return
-		# 		return
+			padZero: (s) ->
+				if s.length is 1 then "0" + s else s
+			setLastUpdatedField: (object) ->
+				now = new Date()
+				m = databaseService.util.padZero (now.getMonth() + 1).toString()
+				d = databaseService.util.padZero now.getDate().toString()
+				y = now.getFullYear().toString()
+				H = databaseService.util.padZero now.getHours().toString()
+				M = databaseService.util.padZero now.getMinutes().toString()
+				S = databaseService.util.padZero now.getSeconds().toString()
+				lastUpdated = m + "/" + d + "/" + y + " " + H + ":" + M + ":" + S
+				object.last_updated = lastUpdated
+				if object.fields?
+					for field in object.fields
+						field.last_updated = lastUpdated
+				object
+			add: (key, parentId, object, callback) ->
+				_key = databaseService.util.getKey key, true, parentId, null
+				object.id = firebase.database().ref().child(_key).push().key
+				object = databaseService.util.setLastUpdatedField object
+				_key = databaseService.util.getKey key, true, parentId, object.id
+				firebase.database().ref(_key).set object
+					.then ->
+						objects = CacheService.get key
+						objects.push object
+						CacheService.set key, objects
+						callback null, objects
+						return
+					.catch (err) ->
+						LoggingService.error "DatabaseService.add()", key, err
+						callback err, null
+						return
+				return
 		# 	update: (key, appendUserId, parentId, object, callback) ->
 		# 		_key = databaseService.util.getKey key, appendUserId, parentId, object.id
 		# 		update = databaseService.util.getUpdate _key, object
@@ -170,6 +185,10 @@ angular.module "app.services"
 						else
 							callback null, category
 					return
+				return
+			add: (category, callback) ->
+				databaseService.util.add keys.user.categories, null, category, callback
+				return
 		dataType:
 			getAllByUser: (callback) ->
 				databaseService.util.getUserObjects keys.user.data_types, null, MappingService.defaultMapper, callback
@@ -187,12 +206,15 @@ angular.module "app.services"
 		# 	getDataType: (callback) ->
 		# 		databaseService.util.getSystemObjects keys.system.definition.data_type, null, MappingService.defaultMapper, callback
 		# 		return
-		# 	getField: (callback) ->
-		# 		databaseService.util.getSystemObjects keys.system.definition.field, null, MappingService.defaultMapper, callback
-		# 		return
+			getField: (callback) ->
+				databaseService.util.getSystemObjects keys.system.definition.field, null, MappingService.defaultMapper, callback
+				return
 		entry:
 			getAll: (categoryId, callback) ->
 				databaseService.util.getUserObjects keys.user.entries, categoryId, MappingService.defaultMapper, callback
+				return
+			add: (entry, categoryId, callback) ->
+				databaseService.util.add keys.user.entries, categoryId, entry, callback
 				return
 		field:
 			getAllDefault: (callback) ->

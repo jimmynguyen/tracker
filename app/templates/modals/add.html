@@ -1,0 +1,78 @@
+<div class="modal-header">
+	<h3>
+		{{ modalOptions.headerText }}
+	</h3>
+</div>
+<div class="modal-body">
+	<form name="form">
+		<div ng-repeat="field in modalOptions.fields | orderBy:'order' | filter:{editable:true} | notInArray:modalOptions.defaultFieldNames:'name' track by field.id"
+				ng-class="{'form-group': field.data_type !== 'boolean', 'checkbox': field.data_type === 'boolean'}">
+			<!-- boolean -->
+			<label ng-if="field.data_type === 'boolean'">
+				<input type="checkbox"
+						name="field.name"
+						ng-model="modalOptions.item[field.name]"/>{{ field.display_name }}
+			</label>
+			<!-- datetime -->
+			<label ng-if="field.data_type === 'datetime'">
+				{{ field.display_name }}
+			</label>
+			<input ng-if="field.data_type === 'datetime'"
+					name="field.name"
+					type="datetime"
+					class="form-control"
+					placeholder="{{ field.display_name }}"
+					ng-model="modalOptions.item[field.name]"/>
+			<!-- field -->
+			<field-input ng-if="field.data_type === 'field'"
+						name="Field"
+						plural-name="Fields"
+						data="modalOptions.item[field.name]"
+						default-fields="modalOptions.defaultFields"
+						default-data-types="modalOptions.defaultDataTypes"
+						user-data-types="modalOptions.userDataTypes"/>
+			<!-- number -->
+			<label ng-if="field.data_type === 'number'">
+				{{ field.display_name }}
+			</label>
+			<input ng-if="field.data_type === 'number'"
+					name="field.name"
+					type="number"
+					class="form-control"
+					placeholder="{{ field.display_name }}"
+					ng-model="modalOptions.item[field.name]"/>
+			<!-- string -->
+			<label ng-if="field.data_type === 'string'">
+				{{ field.display_name }}
+			</label>
+			<input ng-if="field.data_type === 'string'"
+					name="field.name"
+					type="text"
+					class="form-control"
+					placeholder="{{ field.display_name }}"
+					ng-model="modalOptions.item[field.name]"/>
+			<!-- user data type -->
+			<label ng-if="modalOptions.defaultDataTypes.indexOf(field.data_type) === -1">
+				{{ field.display_name }}
+			</label>
+			<select ng-if="modalOptions.defaultDataTypes.indexOf(field.data_type) === -1"
+					class="form-control"
+					name="field.name"
+					ng-model="modalOptions.item[field.name]"
+					ng-options="value for value in modalOptions.userDataTypeMap[field.data_type].values">
+			</select>
+			<!-- TODO: validation -->
+		</div>
+	</form>
+</div>
+<div class="modal-footer">
+	<button type="button"
+			class="btn btn-secondary"
+			data-ng-click="modalOptions.close()">
+		{{ modalOptions.closeButtonText }}
+	</button>
+	<button class="btn btn-success"
+			data-ng-click="modalOptions.ok(modalOptions.item)">
+		{{ modalOptions.actionButtonText }}
+	</button>
+</div>

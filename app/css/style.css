@@ -1,5 +1,15 @@
+.cursor-move {
+	cursor: move;
+}
+
 .cursor-pointer {
 	cursor: pointer;
+}
+
+.grid-box {
+	-moz-box-shadow: 0 0 2px black;
+	-webkit-box-shadow: 0 0 2px black;
+	box-shadow: 0 0 2px black;
 }
 
 .margin-bottom-0px {
@@ -18,8 +28,6 @@
 	margin-top: 50px;
 }
 
-.grid-box {
-	-moz-box-shadow: 0 0 2px black;
-	-webkit-box-shadow: 0 0 2px black;
-	box-shadow: 0 0 2px black;
+.width-auto {
+	width: auto;
 }
