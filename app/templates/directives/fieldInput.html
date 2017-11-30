@@ -1,0 +1,28 @@
+<label>Fields</label>
+<table class="table width-auto">
+	<thead>
+		<tr>
+			<th ng-repeat="field in fields | orderBy:'order' | filter:{editable:true} track by field.id">
+				{{ field.display_name }}
+			</th>
+		</tr>
+	</thead>
+	<tbody ui-sortable="sortableOptions" ng-model="data" ng-change="">
+		<tr ng-repeat="datum in filteredData = (data | filter:{editable:true}) track by datum.id"
+				class="item cursor-move">
+			<td ng-repeat="field in filteredFields = (fields | orderBy:'order' | filter:{editable:true}) track by field.id">
+				{{ datum[field.name] }}
+			</td>
+		</tr>
+		<tr ng-hide="filteredData.length">
+			<td colspan="{{ filteredFields.length }}">
+				No Fields Defined
+			</td>
+		</tr>
+	</tbody>
+</table>
+<button type="button"
+		class="btn btn-success"
+		ng-click="showAddModal()">
+	Add Field
+</button>

@@ -56,6 +56,15 @@ angular.module "app.controllers"
 		CacheService.set keys.selected.category, category
 		LocationService.goToCategory category.id
 		return
+	addCategory = (category) ->
+		DatabaseService.category.add category, (err, res) ->
+			if err
+				LoggingService.error "HomeController.addCategory()", null, err
+			else
+				$scope.categories = res
+				console.log $scope.categories
+			return
+		return
 	initialize = ->
 		getCategories()
 		getCategoryDefinition()
@@ -63,6 +72,7 @@ angular.module "app.controllers"
 		getDefaultDataTypes()
 		getUserDataTypes()
 		$scope.viewCategory = viewCategory
+		$scope.addCategory = addCategory
 		return
 	initialize()
 

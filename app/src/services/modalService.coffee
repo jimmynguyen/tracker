@@ -16,6 +16,28 @@ angular.module "app.services"
 		bodyText: "Perform this action?"
 
 	modalService =
+		showAddModal: (fields, defaultFields, defaultDataTypes, userDataTypes, headerText) ->
+			userDataTypeMap = {}
+			for dataType in userDataTypes
+				userDataTypeMap[dataType.name] = dataType
+			customModalOptions =
+				closeButtonText: "Cancel"
+				actionButtonText: "Add"
+				headerText: headerText
+				fields: fields
+				defaultFields: defaultFields
+				defaultFieldNames: defaultFields.map (field) ->
+					field.name
+				defaultDataTypes: defaultDataTypes
+				userDataTypes: userDataTypes
+				userDataTypeMap: userDataTypeMap
+				item: {}
+			console.log "defaultFieldNames", customModalOptions.defaultFieldNames
+			console.log "defaultDataTypes", defaultDataTypes
+			console.log "userDataTypes", customModalOptions.userDataTypeMap
+			customModalDefaults =
+				templateUrl: "app/templates/modals/add.html"
+			modalService.showModal customModalDefaults, customModalOptions
 		showModal: (customModalDefaults, customModalOptions) ->
 			if not customModalDefaults
 				customModalDefaults = {}
