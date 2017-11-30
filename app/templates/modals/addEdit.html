@@ -13,13 +13,23 @@
 						name="field.name"
 						ng-model="modalOptions.item[field.name]"/>{{ field.display_name }}
 			</label>
+			<!-- date -->
+			<label ng-if="field.data_type === 'date'">
+				{{ field.display_name }}
+			</label>
+			<input ng-if="field.data_type === 'date'"
+					name="field.name"
+					type="date"
+					class="form-control"
+					placeholder="{{ field.display_name }}"
+					ng-model="modalOptions.item[field.name]"/>
 			<!-- datetime -->
 			<label ng-if="field.data_type === 'datetime'">
 				{{ field.display_name }}
 			</label>
 			<input ng-if="field.data_type === 'datetime'"
 					name="field.name"
-					type="datetime"
+					type="datetime-local"
 					class="form-control"
 					placeholder="{{ field.display_name }}"
 					ng-model="modalOptions.item[field.name]"/>
