@@ -39,6 +39,7 @@ angular.module "app.directives"
 					res.name = res.display_name.toLowerCase().replace(/[^0-9a-z ]/g, '').replace /\s/g, '_'
 					res.order = scope.nextDatumId
 					res.editable = true
+					res.required = if res.required? then res.required else false
 					res.visible = true
 					scope.nextDatumId++
 					scope.data.push res
@@ -60,4 +61,3 @@ angular.module "app.directives"
 						datum.order = ndx+1
 			return
 		initialize()
-
