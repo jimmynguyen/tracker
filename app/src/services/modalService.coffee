@@ -16,13 +16,13 @@ angular.module "app.services"
 		bodyText: "Perform this action?"
 
 	modalService =
-		showAddModal: (fields, defaultFields, defaultDataTypes, userDataTypes, headerText) ->
+		showAddEditModal: (fields, item, defaultFields, defaultDataTypes, userDataTypes, headerText) ->
 			userDataTypeMap = {}
 			for dataType in userDataTypes
 				userDataTypeMap[dataType.name] = dataType
 			customModalOptions =
 				closeButtonText: "Cancel"
-				actionButtonText: "Add"
+				actionButtonText: if item? then "Save changes" else "Add"
 				headerText: headerText
 				fields: fields
 				defaultFields: defaultFields
@@ -35,9 +35,9 @@ angular.module "app.services"
 					.filter (dataType) -> ["array", "field"].indexOf(dataType) is -1
 					.concat userDataTypes.map (dataType) ->
 						dataType.name
-				item: {}
+				item: if item? then angular.copy(item) else {}
 			customModalDefaults =
-				templateUrl: "app/templates/modals/add.html"
+				templateUrl: "app/templates/modals/addEdit.html"
 			modalService.showModal customModalDefaults, customModalOptions
 		showModal: (customModalDefaults, customModalOptions) ->
 			if not customModalDefaults

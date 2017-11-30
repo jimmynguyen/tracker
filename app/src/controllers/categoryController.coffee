@@ -62,10 +62,17 @@ angular.module "app.controllers"
 	addEntry = (entry) ->
 		DatabaseService.entry.add entry, $scope.category.id, (err, res) ->
 			if err
-				LoggingService.error "HomeController.addEntry()", null, err
+				LoggingService.error "CategoryController.addEntry()", null, err
 			else
 				$scope.entries = res
-				console.log $scope.entries
+			return
+		return
+	editEntry = (entry) ->
+		DatabaseService.entry.update entry, $scope.category.id, (err, res) ->
+			if err
+				LoggingService.error "CategoryController.editEntry()", null, err
+			else
+				$scope.entries = res
 			return
 		return
 	initialize = ->
@@ -76,6 +83,7 @@ angular.module "app.controllers"
 		getUserDataTypes()
 		$scope.viewEntry = null
 		$scope.addEntry = addEntry
+		$scope.editEntry = editEntry
 		return
 	initialize()
 	return

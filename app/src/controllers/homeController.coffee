@@ -62,7 +62,14 @@ angular.module "app.controllers"
 				LoggingService.error "HomeController.addCategory()", null, err
 			else
 				$scope.categories = res
-				console.log $scope.categories
+			return
+		return
+	editCategory = (category) ->
+		DatabaseService.category.update category, (err, res) ->
+			if err
+				LoggingService.error "HomeController.editCategory()", null, err
+			else
+				$scope.categories = res
 			return
 		return
 	initialize = ->
@@ -73,6 +80,7 @@ angular.module "app.controllers"
 		getUserDataTypes()
 		$scope.viewCategory = viewCategory
 		$scope.addCategory = addCategory
+		$scope.editCategory = editCategory
 		return
 	initialize()
 

@@ -5,14 +5,19 @@ angular.module "app.services"
 .factory "MappingService", ->
 
 	mappingService =
-		defaultMapper:
-			map: (obj) ->
-				obj
 		arrayMapper:
 			map: (obj) ->
 				res = []
 				for o in obj
-					res.push o.$value
+					if o.$value?
+						res.push o.$value
+					else
+						r = {}
+						for p of o
+							if p.charAt(0) isnt "$"
+								r[p] = o[p]
+						if Object.keys(r).length isnt 0
+							res.push r
 				res
 		objectMapper:
 			map: (obj) ->

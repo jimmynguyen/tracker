@@ -14,6 +14,7 @@ angular.module "app.directives"
 		dataOrderByField: "=orderBy"
 		viewDatum: "="
 		addDatum: "="
+		editDatum: "="
 		defaultFields: "="
 		defaultDataTypes: "="
 		userDataTypes: "="
@@ -34,8 +35,16 @@ angular.module "app.directives"
 			else
 				scope.dataOrderByField.name = "-" + scope.dataOrderByField.name
 			return
-		scope.showAddModal = () ->
-			ModalService.showAddModal scope.fields, scope.defaultFields, scope.defaultDataTypes, scope.userDataTypes, "Add " + scope.name
+		scope.showAddEditModal = (item) ->
+			headerText = (if item? then "Edit " else "Add ") + scope.name
+			if item? and item.fields?
+				originalItem = angular.copy item
+				# remove id and last_updated fields when editing
+				item.fields.shift()
+				item.fields.pop()
+				for field in item.fields
+					field.id--
+			ModalService.showAddEditModal scope.fields, item, scope.defaultFields, scope.defaultDataTypes, scope.userDataTypes, headerText
 				.then (res) ->
 					if res.fields?
 						for field in res.fields
@@ -58,11 +67,20 @@ angular.module "app.directives"
 							editable: false
 							required: true
 							visible: true
-					scope.addDatum res
+					if item?
+						for property of res
+							item[property] = res[property]
+						scope.editDatum res
+					else
+						scope.addDatum res
 					return
 				.catch (err) ->
 					if err isnt "cancel"
-						LoggingService.error "listGrid.showAddModal()", null, err
+						LoggingService.error "listGrid.showAddEditModal()", null, err
+					else
+						if originalItem?
+							for property of originalItem
+								item[property] = originalItem[property]
 					return
 			return
 		return

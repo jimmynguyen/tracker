@@ -2,13 +2,15 @@
 <input type="text"
 		class="form-control"
 		ng-model="search"
-		placeholder="Type here to search..."/>
+		placeholder="Type here to search..."
+		ng-show="filteredData.length"/>
 <table class="table width-auto">
 	<thead>
 		<tr>
 			<th ng-repeat="field in fields | orderBy:'order' | filter:{editable:true} track by field.id">
 				{{ field.display_name }}
 			</th>
+			<th></th>
 		</tr>
 	</thead>
 	<tbody ui-sortable="sortableOptions" ng-model="data" ng-change="">
@@ -16,6 +18,20 @@
 				class="item cursor-move">
 			<td ng-repeat="field in filteredFields = (fields | orderBy:'order' | filter:{editable:true}) track by field.id">
 				{{ datum[field.name] }}
+			</td>
+			<td>
+				<div class="pull-right">
+					<button type="button"
+							class="btn btn-info"
+							ng-click="showAddEditModal(datum)">
+						<span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+					</button>
+					<button type="button"
+							class="btn btn-danger"
+							ng-click="showDeleteModal()">
+						<span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+					</button>
+				</div>
 			</td>
 		</tr>
 		<tr ng-hide="filteredData.length">
@@ -31,6 +47,6 @@
 </p>
 <button type="button"
 		class="btn btn-success"
-		ng-click="showAddModal()">
+		ng-click="showAddEditModal()">
 	Add Field
 </button>
