@@ -2,7 +2,7 @@
 
 angular.module "app.services"
 
-.factory "DatabaseService", (errors, firebaseConfig, firebaseErrorCodes, keys, CacheService, LoggingService, MappingService, $firebaseArray, $q) ->
+.factory "DatabaseService", (errors, firebaseConfig, firebaseErrorCodes, keys, CacheService, LoggingService, MappingService, UtilService, $firebaseArray, $q) ->
 
 	# initialize firebase app if it has not been initialized
 	if firebase.apps.length is 0
@@ -65,17 +65,9 @@ angular.module "app.services"
 			getSystemObjects: (key, parentId, mapper, callback) ->
 				databaseService.util.get key, false, parentId, false, mapper, callback
 				return
-			padZero: (s) ->
-				if s.length is 1 then "0" + s else s
 			setLastUpdatedField: (object) ->
 				now = new Date()
-				m = databaseService.util.padZero (now.getMonth() + 1).toString()
-				d = databaseService.util.padZero now.getDate().toString()
-				y = now.getFullYear().toString()
-				H = databaseService.util.padZero now.getHours().toString()
-				M = databaseService.util.padZero now.getMinutes().toString()
-				S = databaseService.util.padZero now.getSeconds().toString()
-				lastUpdated = m + "/" + d + "/" + y + " " + H + ":" + M + ":" + S
+				lastUpdated = UtilService.date.dateToString(now)
 				object.last_updated = lastUpdated
 				if object.fields?
 					for field in object.fields
