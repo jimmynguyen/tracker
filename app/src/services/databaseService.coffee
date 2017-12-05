@@ -35,6 +35,30 @@ angular.module "app.services"
 	# TODO: write tests
 	databaseService =
 		util:
+			initialize: (callback) ->
+				if not CacheService.get keys.app.dataTypeIdMap
+					databaseService.dataType.getAllDefault (err, defaultDataTypes) ->
+						if err
+							LoggingService.error "DatabaseService.util.initialize()", null, err
+							callback err
+						else
+							dataTypeIdMap = {}
+							defaultDataTypes.forEach (dataType) ->
+								dataTypeIdMap[dataType.id] = dataType
+							databaseService.dataType.getAllByUser (err, userDataTypes) ->
+								if err
+									LoggingService.error "DatabaseService.util.initialize()", null, err
+									callback err
+								else
+									userDataTypes.forEach (dataType) ->
+										dataTypeIdMap[dataType.id] = dataType
+									CacheService.set keys.app.dataTypeIdMap, dataTypeIdMap
+									callback null
+								return
+						return
+				else
+					callback null
+				return
 			getKey: (key, appendUserId, parentId, id) ->
 				_key = key.slice 0
 				if appendUserId
@@ -44,14 +68,14 @@ angular.module "app.services"
 				if id?
 					_key += "/" + id
 				_key
-			get: (key, appendUserId, parentId, overrideCacheService, mapper, callback) ->
+			get: (key, appendUserId, parentId, overrideCacheService, definition, mapper, callback) ->
 				# res = CacheService.get key
 				# if not res or overrideCacheService
 					_key = databaseService.util.getKey key, appendUserId, parentId, null
 					$firebaseArray firebase.database().ref().child _key
 						.$loaded()
 						.then (res) ->
-							mappedRes = mapper.map res
+							mappedRes = mapper.map res, definition
 							CacheService.set key, mappedRes
 							callback null, mappedRes
 						.catch (err) ->
@@ -59,11 +83,11 @@ angular.module "app.services"
 							callback err, null
 				# else
 				# 	callback null, res
-			getUserObjects: (key, parentId, mapper, callback) ->
-				databaseService.util.get key, true, parentId, false, mapper, callback
+			getUserObjects: (key, parentId, definition, mapper, callback) ->
+				databaseService.util.get key, true, parentId, false, definition, mapper, callback
 				return
-			getSystemObjects: (key, parentId, mapper, callback) ->
-				databaseService.util.get key, false, parentId, false, mapper, callback
+			getSystemObjects: (key, parentId, definition, mapper, callback) ->
+				databaseService.util.get key, false, parentId, false, definition, mapper, callback
 				return
 			setLastUpdatedField: (object) ->
 				now = new Date()
@@ -171,7 +195,13 @@ angular.module "app.services"
 		# 		databaseService.util.get keys.user.accounts, true, null, true, MappingService.objectMapper
 		category:
 			getAll: (callback) ->
-				databaseService.util.getUserObjects keys.user.categories, null, MappingService.arrayMapper, callback
+				databaseService.definition.getCategory (err, definition) ->
+					if err
+						LoggingService.error "DatabaseService.category.getAll()", null, err
+						callback err, null
+					else
+						databaseService.util.getUserObjects keys.user.categories, null, definition, MappingService.arrayMapper, callback
+					return
 				return
 			getById: (categoryId, callback) ->
 				databaseService.category.getAll (err, res) ->
@@ -192,51 +222,63 @@ angular.module "app.services"
 							callback null, category
 					return
 				return
-			add: (category, callback) ->
-				databaseService.util.add keys.user.categories, null, category, callback
-				return
-			update: (category, callback) ->
-				databaseService.util.update keys.user.categories, null, category, callback
-				return
-			delete: (category, callback) ->
-				databaseService.util.delete keys.user.categories, null, category, callback
-				return
+		# 	add: (category, callback) ->
+		# 		databaseService.util.add keys.user.categories, null, category, callback
+		# 		return
+		# 	update: (category, callback) ->
+		# 		databaseService.util.update keys.user.categories, null, category, callback
+		# 		return
+		# 	delete: (category, callback) ->
+		# 		databaseService.util.delete keys.user.categories, null, category, callback
+		# 		return
 		dataType:
 			getAllByUser: (callback) ->
-				databaseService.util.getUserObjects keys.user.data_types, null, MappingService.arrayMapper, callback
+				databaseService.util.getUserObjects keys.user.data_types, null, null, MappingService.arrayMapper, callback
 				return
 			getAllDefault: (callback) ->
-				databaseService.util.getSystemObjects keys.system.default.data_types, null, MappingService.arrayMapper, callback
+				databaseService.util.getSystemObjects keys.system.default.data_types, null, null, MappingService.arrayMapper, callback
 				return
 		definition:
-		# 	getAccount: (callback) ->
-		# 		databaseService.util.getSystemObjects keys.system.definition.account, null, MappingService.arrayMapper, callback
-		# 		return
+		# # 	getAccount: (callback) ->
+		# # 		databaseService.util.getSystemObjects keys.system.definition.account, null, MappingService.arrayMapper, callback
+		# # 		return
 			getCategory: (callback) ->
-				databaseService.util.getSystemObjects keys.system.definition.category, null, MappingService.arrayMapper, callback
+				databaseService.definition.getField (err, definition) ->
+					if err
+						LoggingService.error "DatabaseService.definition.getCategory()", null, err
+						callback err, null
+					else
+						databaseService.util.getSystemObjects keys.system.definition.category, null, definition, MappingService.arrayMapper, callback
+					return
 				return
-		# 	getDataType: (callback) ->
-		# 		databaseService.util.getSystemObjects keys.system.definition.data_type, null, MappingService.arrayMapper, callback
-		# 		return
+		# # 	getDataType: (callback) ->
+		# # 		databaseService.util.getSystemObjects keys.system.definition.data_type, null, MappingService.arrayMapper, callback
+		# # 		return
 			getField: (callback) ->
-				databaseService.util.getSystemObjects keys.system.definition.field, null, MappingService.arrayMapper, callback
+				databaseService.util.getSystemObjects keys.system.definition.field, null, null, MappingService.fieldMapper, callback
 				return
 		entry:
-			getAll: (categoryId, callback) ->
-				databaseService.util.getUserObjects keys.user.entries, categoryId, MappingService.arrayMapper, callback
+			getAll: (categoryId, definition, callback) ->
+				databaseService.util.getUserObjects keys.user.entries, categoryId, definition, MappingService.arrayMapper, callback
 				return
-			add: (entry, categoryId, callback) ->
-				databaseService.util.add keys.user.entries, categoryId, entry, callback
-				return
-			update: (entry, categoryId, callback) ->
-				databaseService.util.update keys.user.entries, categoryId, entry, callback
-				return
-			delete: (entry, categoryId, callback) ->
-				databaseService.util.delete keys.user.entries, categoryId, entry, callback
-				return
+		# 	add: (entry, categoryId, callback) ->
+		# 		databaseService.util.add keys.user.entries, categoryId, entry, callback
+		# 		return
+		# 	update: (entry, categoryId, callback) ->
+		# 		databaseService.util.update keys.user.entries, categoryId, entry, callback
+		# 		return
+		# 	delete: (entry, categoryId, callback) ->
+		# 		databaseService.util.delete keys.user.entries, categoryId, entry, callback
+		# 		return
 		field:
 			getAllDefault: (callback) ->
-				databaseService.util.getSystemObjects keys.system.default.fields, null, MappingService.arrayMapper, callback
+				databaseService.definition.getField (err, definition) ->
+					if err
+						LoggingService.error "DatabaseService.field.getAllDefault()", null, err
+						callback err, null
+					else
+						databaseService.util.getSystemObjects keys.system.default.fields, null, definition, MappingService.arrayMapper, callback
+					return
 				return
 
 	databaseService

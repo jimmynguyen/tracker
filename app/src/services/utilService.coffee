@@ -6,6 +6,10 @@ angular.module "app.services"
 
 	utilService =
 		date:
+			datenumToDate: (datenum) ->
+				date = new Date()
+				date.setTime(datenum)
+				date
 			padZero: (s) ->
 				if s.length is 1 then "0" + s else s
 			dateToString: (date) ->
