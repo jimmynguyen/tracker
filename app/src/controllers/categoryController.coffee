@@ -15,7 +15,7 @@ angular.module "app.controllers"
 						display_name: field.display_name
 						name: field.name
 					break
-			DatabaseService.entry.getAll $scope.category.id, (err, res) ->
+			DatabaseService.entry.getAll $scope.category.id, $scope.category.fields, (err, res) ->
 				if err
 					LoggingService.error "CategoryController.getEntries()", null, err
 				else

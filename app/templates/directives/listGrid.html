@@ -69,7 +69,7 @@
 					class="cursor-pointer">
 				<td ng-repeat="field in filteredFields = (fields | orderBy:'order' | filter:{visible:true}) track by field.id"
 						ng-click="viewDatum && viewDatum(datum)">
-					{{ field.data_type === "boolean" ? (datum[field.name] ? "Yes" :  "No") : datum[field.name] }}
+					{{ field.data_type === "boolean" ? (datum[field.name] ? "Yes" :  "No") : datum[field.name] | date:"MM/dd/yyyy hh:mm:ss a" }}
 				</td>
 				<td>
 					<div class="pull-right">

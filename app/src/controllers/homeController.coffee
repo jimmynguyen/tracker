@@ -6,6 +6,12 @@ angular.module "app.controllers"
 
 	LocationService.logPath()
 	AuthenticationService.isLoggedIn()
+	DatabaseService.util.initialize (err) ->
+		if err
+			LoggingService.error "error during database initialization"
+		else
+			LoggingService.log "initialized DatabaseService"
+		$scope.isDatabaseInitialized = true
 	getCategories = ->
 		DatabaseService.category.getAll (err, res) ->
 			if err
@@ -66,15 +72,16 @@ angular.module "app.controllers"
 		DatabaseService.category.delete category, callback
 		return
 	initialize = ->
-		getCategories()
-		getCategoryDefinition()
-		getDefaultFields()
-		getDefaultDataTypes()
-		getUserDataTypes()
-		$scope.viewCategory = viewCategory
-		$scope.addCategory = addCategory
-		$scope.editCategory = editCategory
-		$scope.deleteCategory = deleteCategory
+		$scope.$watch "isDatabaseInitialized", ->
+			getCategories()
+			getCategoryDefinition()
+			getDefaultFields()
+			getDefaultDataTypes()
+			getUserDataTypes()
+			$scope.viewCategory = viewCategory
+			$scope.addCategory = addCategory
+			$scope.editCategory = editCategory
+			$scope.deleteCategory = deleteCategory
 		return
 	initialize()
 

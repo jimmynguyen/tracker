@@ -32,6 +32,8 @@ angular.module "app.constants"
 	selected:
 		category: "selected/category"
 		entry: "selected/entry"
+	app:
+		dataTypeIdMap: "app/dataTypeIdMap"
 
 .constant "errors",
 	INVALID_EMAIL_OR_PASSWORD: "Invalid email or password"
