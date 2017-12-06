@@ -1,0 +1,9 @@
+<select class="form-control"
+		ng-model="dropdown.selectedValue"
+		ng-options="value for value in dropdown.values | orderBy">
+</select>
+<button type="button"
+		class="btn btn-link"
+		ng-click="showAddEditModal()">
+	Manage Dropdown Values
+</button>
