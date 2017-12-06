@@ -5,7 +5,6 @@
 </div>
 <div class="modal-body">
 	<form>
-		<!-- <div ng-repeat="field in modalOptions.fields | orderBy:'order' | filter:{editable:true} | notInArray:modalOptions.defaultFieldNames:'name' track by field.id" -->
 		<div ng-repeat="field in modalOptions.fields | orderBy:'order' | filter:{editable:true} track by field.id"
 				ng-class="{'form-group': modalOptions.dataTypeIdMap[field.data_type_id].name !== 'boolean', 'checkbox': modalOptions.dataTypeIdMap[field.data_type_id].name === 'boolean'}">
 			<!-- boolean -->
@@ -52,16 +51,16 @@
 			<label ng-if="modalOptions.dataTypeIdMap[field.data_type_id].name === 'string'">
 				{{ field.display_name }}
 			</label>
-			<input ng-if="modalOptions.dataTypeIdMap[field.data_type_id].name === 'string'"
+			<input ng-if="modalOptions.dataTypeIdMap[field.data_type_id].name === 'string' && field.name !== 'data_type_id'"
 					type="text"
 					class="form-control"
 					placeholder="{{ field.display_name }}"
 					ng-model="modalOptions.item[field.name]"/>
 			<!-- data_type -->
 			<datatype-input
-					ng-if="modalOptions.dataTypeIdMap[field.data_type_id].name === 'data_type'"
-					data="modalOptions.dataTypes"
-					selected-datum="modalOptions.item[field.name]"/>
+					ng-if="modalOptions.dataTypeIdMap[field.data_type_id].name === 'string' && field.name === 'data_type_id'"
+					datatypes="modalOptions.allDataTypes"
+					selected-data-type-id="modalOptions.item[field.name]"/>
 			<!-- user data type -->
 			<!-- <label ng-if="modalOptions.defaultDataTypes.indexOf(field.data_type) === -1">
 				{{ field.display_name }}

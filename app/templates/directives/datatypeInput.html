@@ -1,4 +1,4 @@
 <select class="form-control"
-		ng-model="selectedDatum"
-		ng-options="datum for datum in data | orderBy">
+		ng-model="selectedDataTypeId"
+		ng-options="dataType.id as dataType.display_name for dataType in dataTypes | orderBy:'display_name' | filter:{visible:true}">
 </select>
