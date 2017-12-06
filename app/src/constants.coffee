@@ -38,6 +38,7 @@ angular.module "app.constants"
 .constant "errors",
 	INVALID_EMAIL_OR_PASSWORD: "Invalid email or password"
 	INVALID_CATEGORY_ID: "Invalid category id"
+	DATABASE_INITIALIZATION: "Error during DatabaseService initialization"
 
 .constant "firebaseErrorCodes",
 	auth:

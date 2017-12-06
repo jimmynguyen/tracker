@@ -69,7 +69,7 @@
 					class="cursor-pointer">
 				<td ng-repeat="field in filteredFields = (fields | orderBy:'order' | filter:{visible:true}) track by field.id"
 						ng-click="viewDatum && viewDatum(datum)">
-					{{ field.data_type === "boolean" ? (datum[field.name] ? "Yes" :  "No") : datum[field.name] | date:"MM/dd/yyyy hh:mm:ss a" }}
+					{{ datum[field.name] | format:dataTypeIdMap[field.data_type_id].name }}
 				</td>
 				<td>
 					<div class="pull-right">
@@ -94,7 +94,7 @@
 		</tbody>
 	</table>
 </div>
-<div class="col-lg-12 margin-top-20px"
+<!-- <div class="col-lg-12 margin-top-20px"
 		ng-show="!showList">
 	<div class="col-lg-3 well margin-bottom-0px cursor-pointer"
 			ng-repeat="datum in filteredData = (data | orderBy:dataOrderByField.name | filter:search) track by datum.id"
@@ -109,4 +109,4 @@
 		<h3>No {{ pluralName }} Found</h3>
 		<p ng-repeat="field in fields | orderBy:'order' | filter:{visible:true} | filter:{name:'!name'} track by field.id">&nbsp;</p>
 	</div>
-</div>
+</div> -->

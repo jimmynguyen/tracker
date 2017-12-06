@@ -6,6 +6,12 @@ angular.module "app.controllers"
 
 	LocationService.logPath()
 	AuthenticationService.isLoggedIn()
+	DatabaseService.util.initialize (err) ->
+		if err
+			LoggingService.error "error during database initialization"
+		else
+			LoggingService.log "initialized DatabaseService"
+		$scope.isDatabaseInitialized = true
 	getEntries = ->
 		$scope.category = null
 		$scope.$watch "category", ->
@@ -69,15 +75,17 @@ angular.module "app.controllers"
 		DatabaseService.entry.delete entry, $scope.category.id, callback
 		return
 	initialize = ->
-		getEntries()
-		getCategory()
-		getDefaultFields()
-		getDefaultDataTypes()
-		getUserDataTypes()
-		$scope.viewEntry = null
-		$scope.addEntry = addEntry
-		$scope.editEntry = editEntry
-		$scope.deleteEntry = deleteEntry
+		$scope.$watch "isDatabaseInitialized", ->
+			getEntries()
+			getCategory()
+			getDefaultFields()
+			getDefaultDataTypes()
+			getUserDataTypes()
+			$scope.viewEntry = null
+			$scope.addEntry = addEntry
+			$scope.editEntry = editEntry
+			$scope.deleteEntry = deleteEntry
+			$scope.dataTypeIdMap = CacheService.get keys.app.dataTypeIdMap
 		return
 	initialize()
 	return

@@ -19,6 +19,7 @@ angular.module "app.directives"
 		defaultFields: "="
 		defaultDataTypes: "="
 		userDataTypes: "="
+		dataTypeIdMap: "=datatypeIdMap"
 	link: (scope) ->
 		scope.showList = true
 		scope.reverseOrderBy = false
