@@ -281,6 +281,15 @@ angular.module "app.services"
 		# # 	getDataType: (callback) ->
 		# # 		databaseService.util.getSystemObjects keys.system.definition.data_type, null, MappingService.arrayMapper, callback
 		# # 		return
+			getDropdown: (callback) ->
+				databaseService.definition.getField (err, definition) ->
+					if err
+						LoggingService.error "DatabaseService.definition.getDropdown()", err
+						callback err, null
+					else
+						databaseService.util.getSystemObjects keys.system.definition.dropdown, null, definition, MappingService.arrayMapper, callback
+					return
+				return
 			getField: (callback) ->
 				databaseService.util.getSystemObjects keys.system.definition.field, null, null, MappingService.fieldMapper, callback
 				return

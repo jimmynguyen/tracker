@@ -23,6 +23,7 @@ angular.module "app.constants"
 			account: "system/definition/account"
 			category: "system/definition/category"
 			data_type: "system/definition/data_type"
+			dropdown: "system/definition/dropdown"
 			field: "system/definition/field"
 	user:
 		accounts: "user/accounts"
