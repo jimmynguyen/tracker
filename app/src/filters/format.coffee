@@ -2,11 +2,15 @@
 
 angular.module "app.filters"
 
-.filter 'format', ($filter) ->
+.filter 'format', (keys, CacheService, $filter) ->
 
-	formatFilter = (value, dataType) ->
+	formatFilter = (value, dataTypeId, isDataTypeField) ->
+		dataTypeIdMap = CacheService.get keys.app.dataTypeIdMap
+		dataType = dataTypeIdMap[dataTypeId].name
 		formattedValue = value
-		if ["date", "datetime"].indexOf(dataType) isnt -1
+		if isDataTypeField
+			formattedValue = dataTypeIdMap[value].display_name
+		else if ["date", "datetime"].indexOf(dataType) isnt -1
 			formattedValue = $filter("date")(value, "MM/dd/yyyy hh:mm:ss a")
 		else if dataType is "boolean"
 			formattedValue = if value then "Yes" else "No"

@@ -2,7 +2,7 @@
 
 angular.module "app.services"
 
-.factory "ModalService", ($uibModal) ->
+.factory "ModalService", (keys, CacheService, $uibModal) ->
 
 	modalDefaults =
 		backdrop: "static"
@@ -15,23 +15,15 @@ angular.module "app.services"
 
 	modalService =
 		showAddEditModal: (fields, item, defaultFields, defaultDataTypes, userDataTypes, name) ->
-			userDataTypeMap = {}
-			for dataType in userDataTypes
-				userDataTypeMap[dataType.name] = dataType
 			customModalOptions =
 				actionButtonText: if item? then "Save changes" else "Add"
 				headerText: (if item? then "Edit " else "Add ") + name
 				fields: fields
 				defaultFields: defaultFields
-				defaultFieldNames: defaultFields.map (field) ->
-					field.name
 				defaultDataTypes: defaultDataTypes
 				userDataTypes: userDataTypes
-				userDataTypeMap: userDataTypeMap
-				dataTypes: defaultDataTypes
-					.filter (dataType) -> ["array", "field"].indexOf(dataType) is -1
-					.concat userDataTypes.map (dataType) ->
-						dataType.name
+				dataTypeIdMap: CacheService.get keys.app.dataTypeIdMap
+				allDataTypes: defaultDataTypes.concat userDataTypes
 				item: if item? then angular.copy(item) else {}
 			customModalDefaults =
 				templateUrl: "app/templates/modals/addEdit.html"
@@ -41,7 +33,7 @@ angular.module "app.services"
 				headerText: "Delete " + name
 				closeButtonText: "Cancel"
 				actionButtonText: "Delete"
-				bodyText: "Are you sure you want to delete " + (if item.name? then "the " else "this ") + name.toLowerCase() + (if item.name? then " \"" + item.name + "\"?" else "?")
+				bodyText: "Are you sure you want to delete " + (if item.display_name? then "the " else "this ") + name.toLowerCase() + (if item.display_name? then " \"" + item.display_name + "\"?" else "?")
 				bootstrapButtonClass: "btn-danger"
 			modalService.showModal {}, customModalOptions
 		showModal: (customModalDefaults, customModalOptions) ->

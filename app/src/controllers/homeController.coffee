@@ -81,7 +81,6 @@ angular.module "app.controllers"
 			$scope.addCategory = addCategory
 			$scope.editCategory = editCategory
 			$scope.deleteCategory = deleteCategory
-			$scope.dataTypeIdMap = CacheService.get keys.app.dataTypeIdMap
 		return
 	initialize()
 

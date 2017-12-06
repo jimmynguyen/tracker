@@ -19,7 +19,6 @@ angular.module "app.directives"
 		defaultFields: "="
 		defaultDataTypes: "="
 		userDataTypes: "="
-		dataTypeIdMap: "=datatypeIdMap"
 	link: (scope) ->
 		setShowList = (showList) ->
 			scope.showList = showList
@@ -48,24 +47,15 @@ angular.module "app.directives"
 				.then (res) ->
 					if res.fields?
 						# add id and last_updated fields after editing
-						res.fields.push
-							id: res.fields.length+1
-							name: "last_updated"
-							display_name: "Last Updated"
-							data_type: "string"
-							order: res.fields.length+1
-							editable: false
-							required: true
-							visible: true
-						res.fields.unshift
-							id: 0
-							name: "id"
-							display_name: "Id"
-							data_type: "number"
-							order: 0
-							editable: false
-							required: true
-							visible: false
+						numFields = res.fields.length
+						for field in scope.defaultFields
+							if field.name is "id"
+								res.fields.unshift field
+							else if field.name is "last_updated"
+								lastUpdatedField = angular.copy field
+								lastUpdatedField.id = numFields+1
+								lastUpdatedField.order = numFields+1
+								res.fields.push lastUpdatedField
 					if item?
 						for property of res
 							item[property] = res[property]

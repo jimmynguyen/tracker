@@ -7,7 +7,7 @@ angular.module "app.directives"
 	restrict: "AE"
 	templateUrl: "app/templates/directives/datatypeInput.html"
 	scope:
-		data: "="
-		selectedDatum: "="
+		dataTypes: "=datatypes"
+		selectedDataTypeId: "="
 	link: (scope) ->
 		return

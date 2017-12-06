@@ -69,7 +69,7 @@
 					class="cursor-pointer">
 				<td ng-repeat="field in filteredFields = (fields | orderBy:'order' | filter:{visible:true}) track by field.id"
 						ng-click="viewDatum && viewDatum(datum)">
-					{{ datum[field.name] | format:dataTypeIdMap[field.data_type_id].name }}
+					{{ datum[field.name] | format:field.data_type_id }}
 				</td>
 				<td>
 					<div class="pull-right">

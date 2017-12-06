@@ -2,8 +2,7 @@
 <input type="text"
 		class="form-control"
 		ng-model="search"
-		placeholder="Type here to search..."
-		ng-show="filteredData.length"/>
+		placeholder="Type here to search..."/>
 <table class="table width-auto">
 	<thead>
 		<tr>
@@ -17,7 +16,7 @@
 		<tr ng-repeat="datum in filteredData = (data | filter:{editable:true} | filter:search) track by datum.id"
 				class="item cursor-move">
 			<td ng-repeat="field in filteredFields = (fields | orderBy:'order' | filter:{editable:true}) track by field.id">
-				{{ field.data_type === "boolean" ? (datum[field.name] ? "Yes" :  "No") : datum[field.name] }}
+				{{ datum[field.name] | format:field.data_type_id:field.name === "data_type_id" }}
 			</td>
 			<td>
 				<div class="pull-right">
