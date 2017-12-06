@@ -15,7 +15,7 @@ angular.module "app.directives"
 		getFieldDefinition = ->
 			DatabaseService.definition.getField (err, res) ->
 				if err
-					LoggingService.error "fieldInput.getFieldDefinition()", null, err
+					LoggingService.error "fieldInput.getFieldDefinition()", err
 				else
 					scope.fields = res
 				return
@@ -51,7 +51,7 @@ angular.module "app.directives"
 					return
 				.catch (err) ->
 					if err isnt "cancel"
-						LoggingService.error "fieldInput.showAddEditModal", null, err
+						LoggingService.error "fieldInput.showAddEditModal()", err
 					scope.fields.push scope.orderField
 					return
 			return
@@ -70,7 +70,7 @@ angular.module "app.directives"
 					return
 				.catch (err) ->
 					if err isnt "cancel"
-						LoggingService.error "fieldInput.showDeleteModal", null, err
+						LoggingService.error "fieldInput.showDeleteModal()", null, err
 					return
 			return
 		initialize = ->
@@ -83,3 +83,4 @@ angular.module "app.directives"
 						datum.order = ndx+1
 			return
 		initialize()
+		return

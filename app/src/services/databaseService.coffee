@@ -10,11 +10,9 @@ angular.module "app.services"
 		# TODO: update to only run the below if running in production mode. otherwise, it will error out in the console. not a big deal, but it's probably bad practice
 		firebase.auth().signInWithEmailAndPassword("jdoe@fakemail.com", "johndoe").catch (err) ->
 			# handle errors
-			LoggingService.error "databaseService", null, err
+			LoggingService.error "firebase.auth().signInWithEmailAndPassword()", err
 			return
 		firebase.auth().onAuthStateChanged (user) ->
-			LoggingService.log "onAuthStateChanged:"
-			LoggingService.log user
 			if user
 				# user is signed in
 				# databaseService.account.get user.uid, (err, account) ->
@@ -39,7 +37,7 @@ angular.module "app.services"
 				if not CacheService.get keys.app.dataTypeIdMap
 					databaseService.dataType.getAllDefault (err, defaultDataTypes) ->
 						if err
-							LoggingService.error "DatabaseService.util.initialize()", null, err
+							LoggingService.error "DatabaseService.util.initialize()", err
 							callback err
 						else
 							dataTypeIdMap = {}
@@ -47,7 +45,7 @@ angular.module "app.services"
 								dataTypeIdMap[dataType.id] = dataType
 							databaseService.dataType.getAllByUser (err, userDataTypes) ->
 								if err
-									LoggingService.error "DatabaseService.util.initialize()", null, err
+									LoggingService.error "DatabaseService.util.initialize()", err
 									callback err
 								else
 									userDataTypes.forEach (dataType) ->
@@ -79,7 +77,7 @@ angular.module "app.services"
 							CacheService.set key, mappedRes
 							callback null, mappedRes
 						.catch (err) ->
-							LoggingService.error "DatabaseService.util.get()", key, err
+							LoggingService.error "DatabaseService.util.get()", err
 							callback err, null
 				# else
 				# 	callback null, res
@@ -110,7 +108,7 @@ angular.module "app.services"
 						callback null, objects
 						return
 					.catch (err) ->
-						LoggingService.error "DatabaseService.add()", key, err
+						LoggingService.error "DatabaseService.util.add()", err
 						callback err, null
 						return
 				return
@@ -129,7 +127,7 @@ angular.module "app.services"
 						callback null, objects
 						return
 					.catch (err) ->
-						LoggingService.error "DatabaseService.update()", key, err
+						LoggingService.error "DatabaseService.util.update()", err
 						callback err, null
 						return
 				return
@@ -146,7 +144,7 @@ angular.module "app.services"
 						callback null, objects
 						return
 					.catch (err) ->
-						LoggingService.error "DatabaseService.delete()", key, err
+						LoggingService.error "DatabaseService.delete()", err
 						callback err, null
 						return
 				return
@@ -159,14 +157,14 @@ angular.module "app.services"
 		# 				CacheService.setUser user
 		# 				databaseService.account.get (err, account) ->
 		# 					if err
-		# 						LoggingService.error "databaseService.util.login()", null, err
+		# 						LoggingService.error "DatabaseService.util.login()", err
 		# 						callback err, false
 		# 					else
 		# 						CacheService.setUser account
 		# 						callback null, true
 		# 					return
 		# 			.catch (err) ->
-		# 				LoggingService.error "databaseService.util.login()", null, err
+		# 				LoggingService.error "DatabaseService.util.login()", err
 		# 				callback err, false
 		# 				return
 		# 	logout: (callback) ->
@@ -175,7 +173,7 @@ angular.module "app.services"
 		# 				callback null
 		# 				return
 		# 			.catch (err) ->
-		# 				LoggingService.error "databaseService.util.logout()", null, err
+		# 				LoggingService.error "DatabaseService.util.logout()", err
 		# 				callback err
 		# 				return
 		# 		return
@@ -186,7 +184,7 @@ angular.module "app.services"
 		# 				callback null, user
 		# 				return
 		# 			.catch (err) ->
-		# 				LoggingService.error "databaseService.signUp()", null, err
+		# 				LoggingService.error "DatabaseService.util.signUp()", err
 		# 				callback err, null
 		# 				return
 		# 		return
@@ -197,7 +195,7 @@ angular.module "app.services"
 			getAll: (callback) ->
 				databaseService.definition.getCategory (err, definition) ->
 					if err
-						LoggingService.error "DatabaseService.category.getAll()", null, err
+						LoggingService.error "DatabaseService.category.getAll()", err
 						callback err, null
 					else
 						databaseService.util.getUserObjects keys.user.categories, null, definition, MappingService.arrayMapper, callback
@@ -206,7 +204,7 @@ angular.module "app.services"
 			getById: (categoryId, callback) ->
 				databaseService.category.getAll (err, res) ->
 					if err
-						LoggingService.error "DatabaseService.category.getById()", null, err
+						LoggingService.error "DatabaseService.category.getById()", err
 						callback err, res
 					else
 						category = null
@@ -216,7 +214,7 @@ angular.module "app.services"
 								break
 						if not category
 							err = errors.INVALID_CATEGORY_ID
-							LoggingService.error "DatabaseService.category.getById()", null, err
+							LoggingService.error "DatabaseService.category.getById()", err
 							callback err, null
 						else
 							callback null, category
@@ -245,7 +243,7 @@ angular.module "app.services"
 			getCategory: (callback) ->
 				databaseService.definition.getField (err, definition) ->
 					if err
-						LoggingService.error "DatabaseService.definition.getCategory()", null, err
+						LoggingService.error "DatabaseService.definition.getCategory()", err
 						callback err, null
 					else
 						databaseService.util.getSystemObjects keys.system.definition.category, null, definition, MappingService.arrayMapper, callback
@@ -274,7 +272,7 @@ angular.module "app.services"
 			getAllDefault: (callback) ->
 				databaseService.definition.getField (err, definition) ->
 					if err
-						LoggingService.error "DatabaseService.field.getAllDefault()", null, err
+						LoggingService.error "DatabaseService.field.getAllDefault()", err
 						callback err, null
 					else
 						databaseService.util.getSystemObjects keys.system.default.fields, null, definition, MappingService.arrayMapper, callback

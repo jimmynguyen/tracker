@@ -21,23 +21,21 @@ angular.module "app.directives"
 		userDataTypes: "="
 		dataTypeIdMap: "=datatypeIdMap"
 	link: (scope) ->
-		scope.showList = true
-		scope.reverseOrderBy = false
-		scope.setShowList = (showList) ->
+		setShowList = (showList) ->
 			scope.showList = showList
 			return
-		scope.setDataOrderByField = (field) ->
+		setDataOrderByField = (field) ->
 			scope.dataOrderByField.display_name = field.display_name
 			scope.dataOrderByField.name = field.name
 			scope.reverseOrderBy = false
 			return
-		scope.reverseDataOrderByField = ->
+		reverseDataOrderByField = ->
 			if "-" is scope.dataOrderByField.name.charAt 0
 				scope.dataOrderByField.name = scope.dataOrderByField.name.substr(1)
 			else
 				scope.dataOrderByField.name = "-" + scope.dataOrderByField.name
 			return
-		scope.showAddEditModal = (item) ->
+		showAddEditModal = (item) ->
 			if item? and item.fields?
 				originalItem = angular.copy item
 				# remove id and last_updated fields when editing
@@ -73,7 +71,7 @@ angular.module "app.directives"
 							item[property] = res[property]
 						scope.editDatum res, (err, res) ->
 							if err
-								LoggingService.error "listGrid.editDatum()", null, err
+								LoggingService.error "listGrid.showAddEditModal()", err
 							else
 								scope.data = res
 								scope.$apply()
@@ -81,7 +79,7 @@ angular.module "app.directives"
 					else
 						scope.addDatum res, (err, res) ->
 							if err
-								LoggingService.error "listGrid.addDatum()", null, err
+								LoggingService.error "listGrid.showAddEditModal()", err
 							else
 								scope.data = res
 								scope.$apply()
@@ -89,19 +87,19 @@ angular.module "app.directives"
 					return
 				.catch (err) ->
 					if err isnt "cancel"
-						LoggingService.error "listGrid.showAddEditModal()", null, err
+						LoggingService.error "listGrid.showAddEditModal()", err
 					else
 						if originalItem?
 							for property of originalItem
 								item[property] = originalItem[property]
 					return
 			return
-		scope.showDeleteModal = (item) ->
+		showDeleteModal = (item) ->
 			ModalService.showDeleteModal item, scope.name
 				.then ->
 					scope.deleteDatum item, (err, res) ->
 						if err
-							LoggingService.error "listGrid.deleteDatum()", null, err
+							LoggingService.error "listGrid.showDeleteModal()", err
 						else
 							scope.data = res
 							scope.$apply()
@@ -109,7 +107,16 @@ angular.module "app.directives"
 					return
 				.catch (err) ->
 					if err isnt "cancel"
-						LoggingService.error "listGrid.showDeleteModal", null, err
+						LoggingService.error "listGrid.showDeleteModal", err
 					return
 			return
+		initialize = ->
+			scope.showList = true
+			scope.reverseOrderBy = false
+			scope.setShowList = setShowList
+			scope.setDataOrderByField = setDataOrderByField
+			scope.reverseDataOrderByField = reverseDataOrderByField
+			scope.showAddEditModal = showAddEditModal
+			scope.showDeleteModal = showDeleteModal
+		initialize()
 		return
