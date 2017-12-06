@@ -19,7 +19,6 @@ angular.module "app.directives"
 		defaultFields: "="
 		defaultDataTypes: "="
 		userDataTypes: "="
-		dataTypeIdMap: "=datatypeIdMap"
 	link: (scope) ->
 		setShowList = (showList) ->
 			scope.showList = showList

@@ -2,7 +2,7 @@
 
 angular.module "app.services"
 
-.factory "ModalService", ($uibModal) ->
+.factory "ModalService", (keys, CacheService, $uibModal) ->
 
 	modalDefaults =
 		backdrop: "static"
@@ -15,23 +15,24 @@ angular.module "app.services"
 
 	modalService =
 		showAddEditModal: (fields, item, defaultFields, defaultDataTypes, userDataTypes, name) ->
-			userDataTypeMap = {}
-			for dataType in userDataTypes
-				userDataTypeMap[dataType.name] = dataType
+			# userDataTypeMap = {}
+			# for dataType in userDataTypes
+			# 	userDataTypeMap[dataType.name] = dataType
 			customModalOptions =
 				actionButtonText: if item? then "Save changes" else "Add"
 				headerText: (if item? then "Edit " else "Add ") + name
 				fields: fields
 				defaultFields: defaultFields
-				defaultFieldNames: defaultFields.map (field) ->
-					field.name
 				defaultDataTypes: defaultDataTypes
 				userDataTypes: userDataTypes
-				userDataTypeMap: userDataTypeMap
-				dataTypes: defaultDataTypes
-					.filter (dataType) -> ["array", "field"].indexOf(dataType) is -1
-					.concat userDataTypes.map (dataType) ->
-						dataType.name
+				dataTypeIdMap: CacheService.get keys.app.dataTypeIdMap
+				# defaultFieldNames: defaultFields.map (field) ->
+				# 	field.name
+				# userDataTypeMap: userDataTypeMap
+				# dataTypes: defaultDataTypes
+				# 	.filter (dataType) -> ["array", "field"].indexOf(dataType) is -1
+				# 	.concat userDataTypes.map (dataType) ->
+				# 		dataType.name
 				item: if item? then angular.copy(item) else {}
 			customModalDefaults =
 				templateUrl: "app/templates/modals/addEdit.html"

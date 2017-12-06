@@ -84,7 +84,6 @@ angular.module "app.controllers"
 			$scope.addEntry = addEntry
 			$scope.editEntry = editEntry
 			$scope.deleteEntry = deleteEntry
-			$scope.dataTypeIdMap = CacheService.get keys.app.dataTypeIdMap
 		return
 	initialize()
 
