@@ -1,28 +1,31 @@
 <div ng-class="{'form-group': dataTypeIdMap[field.data_type_id].name !== 'boolean', 'checkbox': dataTypeIdMap[field.data_type_id].name === 'boolean'}">
 	<!-- boolean -->
 	<label ng-if="dataTypeIdMap[field.data_type_id].name === 'boolean'">
-	<input type="checkbox"
-			ng-model="item[field.name]"/>{{ field.display_name }}
+		<input type="checkbox"
+				ng-model="item[field.name]"/>{{ field.display_name }}
 	</label>
 	<!-- date -->
 	<label ng-if="dataTypeIdMap[field.data_type_id].name === 'date'">
 		{{ field.display_name }}
 	</label>
 	<input ng-if="dataTypeIdMap[field.data_type_id].name === 'date'"
-		type="date"
-		class="form-control"
-		placeholder="{{ field.display_name }}"
-		ng-model="item[field.name]"/>
+			type="date"
+			class="form-control"
+			placeholder="{{ field.display_name }}"
+			ng-model="item[field.name]"/>
 	<!-- datetime -->
 	<label ng-if="dataTypeIdMap[field.data_type_id].name === 'datetime'">
 		{{ field.display_name }}
 	</label>
 	<input ng-if="dataTypeIdMap[field.data_type_id].name === 'datetime'"
-		type="datetime-local"
-		class="form-control"
-		placeholder="{{ field.display_name }}"
-		ng-model="item[field.name]"/>
+			type="datetime-local"
+			class="form-control"
+			placeholder="{{ field.display_name }}"
+			ng-model="item[field.name]"/>
 	<!-- field -->
+	<label ng-if="dataTypeIdMap[field.data_type_id].name === 'field'">
+		{{ field.display_name }}
+	</label>
 	<field-input ng-if="dataTypeIdMap[field.data_type_id].name === 'field'"
 			name="Field"
 			plural-name="Fields"
@@ -35,32 +38,35 @@
 		{{ field.display_name }}
 	</label>
 	<input ng-if="dataTypeIdMap[field.data_type_id].name === 'number'"
-		type="number"
-		class="form-control"
-		placeholder="{{ field.display_name }}"
-		ng-model="item[field.name]"/>
+			type="number"
+			class="form-control"
+			placeholder="{{ field.display_name }}"
+			ng-model="item[field.name]"/>
 	<!-- string -->
 	<label ng-if="dataTypeIdMap[field.data_type_id].name === 'string'">
 		{{ field.display_name }}
 	</label>
-	<input ng-if="dataTypeIdMap[field.data_type_id].name === 'string' && field.name !== 'data_type_id'"
-		type="text"
-		class="form-control"
-		placeholder="{{ field.display_name }}"
-		ng-model="item[field.name]"/>
+	<input ng-if="dataTypeIdMap[field.data_type_id].name === 'string'"
+			type="text"
+			class="form-control"
+			placeholder="{{ field.display_name }}"
+			ng-model="item[field.name]"/>
 	<!-- data_type -->
-	<datatype-input
-		ng-if="dataTypeIdMap[field.data_type_id].name === 'string' && field.name === 'data_type_id'"
-		datatypes="allDataTypes"
-		selected-data-type-id="item[field.name]"/>
-	<!-- user data type -->
-	<!-- <label ng-if="defaultDataTypes.indexOf(field.data_type) === -1">
-	{{ field.display_name }}
+	<label ng-if="dataTypeIdMap[field.data_type_id].name === 'data_type'">
+		{{ field.display_name }}
 	</label>
-	<select ng-if="defaultDataTypes.indexOf(field.data_type) === -1"
-		class="form-control"
-		name="field.name"
-		ng-model="item[field.name]"
-		ng-options="value for value in userDataTypeMap[field.data_type].values">
-	</select> -->
+	<datatype-input
+			ng-if="dataTypeIdMap[field.data_type_id].name === 'data_type'"
+			datatypes="allDataTypes"
+			selected-data-type-id="item[field.name]"/>
+	<!-- dropdown -->
+	<label ng-if="dataTypeIdMap[field.data_type_id].name === 'dropdown'">
+		{{ field.display_name }}
+	</label>
+	<dropdown-input
+			ng-if="dataTypeIdMap[field.data_type_id].name === 'dropdown'"
+			dropdown-data="item[field.name]"
+			default-fields="defaultFields"
+			default-data-types="defaultDataTypes"
+			user-data-types="userDataTypes"/>
 </div>

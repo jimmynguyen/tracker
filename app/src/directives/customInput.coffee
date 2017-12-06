@@ -16,5 +16,6 @@ angular.module "app.directives"
 	link: (scope) ->
 		initialize = ->
 			scope.dataTypeIdMap = CacheService.get keys.app.dataTypeIdMap
+			return
 		initialize()
 		return
