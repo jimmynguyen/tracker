@@ -8,9 +8,7 @@ angular.module "app.services"
 		log: (arg) ->
 			$log.log arg
 			return
-		error: (source, key, err) ->
-			msg = "error in " + source
-			msg += if key then " for key '" + key + "':" else ":"
+		error: (msg, err) ->
 			$log.error msg, err
 			return
 
