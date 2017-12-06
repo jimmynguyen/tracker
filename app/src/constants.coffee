@@ -46,3 +46,5 @@ angular.module "app.constants"
 		INVALID_EMAIL: "auth/invalid-email"
 		OPERATION_NOT_ALLOWED: "auth/operation-not-allowed"
 		WEAK_PASSWORD: "auth/weak-password"
+
+.constant "overrideCacheService", true

@@ -33,7 +33,7 @@ angular.module "app.services"
 				headerText: "Delete " + name
 				closeButtonText: "Cancel"
 				actionButtonText: "Delete"
-				bodyText: "Are you sure you want to delete " + (if item.name? then "the " else "this ") + name.toLowerCase() + (if item.display_name? then " \"" + item.display_name + "\"?" else "?")
+				bodyText: "Are you sure you want to delete " + (if item.display_name? then "the " else "this ") + name.toLowerCase() + (if item.display_name? then " \"" + item.display_name + "\"?" else "?")
 				bootstrapButtonClass: "btn-danger"
 			modalService.showModal {}, customModalOptions
 		showModal: (customModalDefaults, customModalOptions) ->

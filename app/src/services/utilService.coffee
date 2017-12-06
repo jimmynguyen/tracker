@@ -10,6 +10,10 @@ angular.module "app.services"
 				date = new Date()
 				date.setTime(datenum)
 				date
+			dateToDatenum: (date) ->
+				if date not instanceof Date
+					date = new Date(date)
+				date.getTime()
 			padZero: (s) ->
 				if s.length is 1 then "0" + s else s
 			dateToString: (date) ->

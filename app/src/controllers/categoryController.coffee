@@ -58,13 +58,13 @@ angular.module "app.controllers"
 			return
 		return
 	addEntry = (entry, callback) ->
-		DatabaseService.entry.add entry, $scope.category.id, callback
+		DatabaseService.entry.add $scope.category.id, entry, $scope.category.fields, callback
 		return
 	editEntry = (entry, callback) ->
-		DatabaseService.entry.update entry, $scope.category.id, callback
+		DatabaseService.entry.update $scope.category.id, entry, $scope.category.fields, callback
 		return
 	deleteEntry = (entry, callback) ->
-		DatabaseService.entry.delete entry, $scope.category.id, callback
+		DatabaseService.entry.delete $scope.category.id, entry, callback
 		return
 	initialize = ->
 		LocationService.logPath()
