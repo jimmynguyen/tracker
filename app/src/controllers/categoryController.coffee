@@ -2,16 +2,8 @@
 
 angular.module "app.controllers"
 
-.controller "CategoryController", (keys, AuthenticationService, CacheService, DatabaseService, LocationService, LoggingService, $scope, $routeParams) ->
+.controller "CategoryController", (errors, keys, AuthenticationService, CacheService, DatabaseService, LocationService, LoggingService, $scope, $routeParams) ->
 
-	LocationService.logPath()
-	AuthenticationService.isLoggedIn()
-	DatabaseService.util.initialize (err) ->
-		if err
-			LoggingService.error "error during database initialization"
-		else
-			LoggingService.log "initialized DatabaseService"
-		$scope.isDatabaseInitialized = true
 	getEntries = ->
 		$scope.category = null
 		$scope.$watch "category", ->
@@ -23,7 +15,7 @@ angular.module "app.controllers"
 					break
 			DatabaseService.entry.getAll $scope.category.id, $scope.category.fields, (err, res) ->
 				if err
-					LoggingService.error "CategoryController.getEntries()", null, err
+					LoggingService.error "CategoryController.getEntries()", err
 				else
 					$scope.entries = res
 				return
@@ -34,7 +26,7 @@ angular.module "app.controllers"
 		if not category or category.id.toString() isnt $routeParams.categoryId
 			DatabaseService.category.getById $routeParams.categoryId, (err, res) ->
 				if err
-					LoggingService.error "CategoryController.getCategory()", null, err
+					LoggingService.error "CategoryController.getCategory()", err
 				else
 					$scope.category = res
 				return
@@ -44,7 +36,7 @@ angular.module "app.controllers"
 	getDefaultFields = ->
 		DatabaseService.field.getAllDefault (err, res) ->
 			if err
-				LoggingService.error "CategoryController.getDefaultFields()", null, err
+				LoggingService.error "CategoryController.getDefaultFields()", err
 			else
 				$scope.defaultFields = res
 			return
@@ -52,7 +44,7 @@ angular.module "app.controllers"
 	getDefaultDataTypes = ->
 		DatabaseService.dataType.getAllDefault (err, res) ->
 			if err
-				LoggingService.error "CategoryController.getDefaultDataTypes()", null, err
+				LoggingService.error "CategoryController.getDefaultDataTypes()", err
 			else
 				$scope.defaultDataTypes = res
 			return
@@ -60,7 +52,7 @@ angular.module "app.controllers"
 	getUserDataTypes = ->
 		DatabaseService.dataType.getAllByUser (err, res) ->
 			if err
-				LoggingService.error "CategoryController.getUserDataTypes()", null, err
+				LoggingService.error "CategoryController.getUserDataTypes()", err
 			else
 				$scope.userDataTypes = res
 			return
@@ -75,6 +67,13 @@ angular.module "app.controllers"
 		DatabaseService.entry.delete entry, $scope.category.id, callback
 		return
 	initialize = ->
+		LocationService.logPath()
+		AuthenticationService.isLoggedIn()
+		DatabaseService.util.initialize (err) ->
+			if err
+				LoggingService.error errors.DATABASE_SERVICE_INITIALIZATION, err
+			$scope.isDatabaseInitialized = true
+			return
 		$scope.$watch "isDatabaseInitialized", ->
 			getEntries()
 			getCategory()
@@ -88,4 +87,5 @@ angular.module "app.controllers"
 			$scope.dataTypeIdMap = CacheService.get keys.app.dataTypeIdMap
 		return
 	initialize()
+
 	return

@@ -2,9 +2,11 @@
 
 angular.module "app.directives"
 
-.directive "navbar", () ->
+.directive "navbar", ->
 
 	restrict: "AE"
 	templateUrl: "app/templates/directives/navbar.html"
 	scope:
 		route: "="
+	link: (scope) ->
+		return

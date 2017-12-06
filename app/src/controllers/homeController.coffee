@@ -2,20 +2,12 @@
 
 angular.module "app.controllers"
 
-.controller "HomeController", (keys, AuthenticationService, CacheService, DatabaseService, LocationService, LoggingService, $scope) ->
+.controller "HomeController", (errors, keys, AuthenticationService, CacheService, DatabaseService, LocationService, LoggingService, $scope) ->
 
-	LocationService.logPath()
-	AuthenticationService.isLoggedIn()
-	DatabaseService.util.initialize (err) ->
-		if err
-			LoggingService.error "error during database initialization"
-		else
-			LoggingService.log "initialized DatabaseService"
-		$scope.isDatabaseInitialized = true
 	getCategories = ->
 		DatabaseService.category.getAll (err, res) ->
 			if err
-				LoggingService.error "HomeController.getCategories()", null, err
+				LoggingService.error "HomeController.getCategories()", err
 			else
 				$scope.categories = res
 			return
@@ -23,7 +15,7 @@ angular.module "app.controllers"
 	getCategoryDefinition = ->
 		DatabaseService.definition.getCategory (err, res) ->
 			if err
-				LoggingService.error "HomeController.getCategoryDefinition()", null, err
+				LoggingService.error "HomeController.getCategoryDefinition()", err
 			else
 				$scope.categoryDefinition = res
 				for field in $scope.categoryDefinition
@@ -37,7 +29,7 @@ angular.module "app.controllers"
 	getDefaultFields = ->
 		DatabaseService.field.getAllDefault (err, res) ->
 			if err
-				LoggingService.error "HomeController.getDefaultFields()", null, err
+				LoggingService.error "HomeController.getDefaultFields()", err
 			else
 				$scope.defaultFields = res
 			return
@@ -45,7 +37,7 @@ angular.module "app.controllers"
 	getDefaultDataTypes = ->
 		DatabaseService.dataType.getAllDefault (err, res) ->
 			if err
-				LoggingService.error "HomeController.getDefaultDataTypes()", null, err
+				LoggingService.error "HomeController.getDefaultDataTypes()", err
 			else
 				$scope.defaultDataTypes = res
 			return
@@ -53,7 +45,7 @@ angular.module "app.controllers"
 	getUserDataTypes = ->
 		DatabaseService.dataType.getAllByUser (err, res) ->
 			if err
-				LoggingService.error "HomeController.getUserDataTypes()", null, err
+				LoggingService.error "HomeController.getUserDataTypes()", err
 			else
 				$scope.userDataTypes = res
 			return
@@ -72,6 +64,13 @@ angular.module "app.controllers"
 		DatabaseService.category.delete category, callback
 		return
 	initialize = ->
+		LocationService.logPath()
+		AuthenticationService.isLoggedIn()
+		DatabaseService.util.initialize (err) ->
+			if err
+				LoggingService.error errors.DATABASE_SERVICE_INITIALIZATION, err
+			$scope.isDatabaseInitialized = true
+			return
 		$scope.$watch "isDatabaseInitialized", ->
 			getCategories()
 			getCategoryDefinition()

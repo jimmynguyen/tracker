@@ -91,4 +91,5 @@ angular.module "app.services"
 					if Object.keys(r).length isnt 0
 						res.push r
 				res
+
 	mappingService

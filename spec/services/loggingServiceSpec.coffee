@@ -23,17 +23,10 @@ describe "LoggingServiceTest", ->
 	describe "when LoggingService.error()", ->
 		beforeEach ->
 			spyOn this.$log, "error"
-		it "if there is no key, then log the error without the key", ->
-			msg = "error in " + this.src + ":"
-			this.loggingService.error this.src, null, this.err
+		it "if there is no key, then log the error", ->
+			this.loggingService.error this.msg, this.err
 			expect this.$log.error
-				.toHaveBeenCalledWith msg, this.err
-			return
-		it "if there is a key, then log the error with the key", ->
-			msg = "error in " + this.src + " for key '" + this.key + "':"
-			this.loggingService.error this.src, this.key, this.err
-			expect this.$log.error
-				.toHaveBeenCalledWith msg, this.err
+				.toHaveBeenCalledWith this.msg, this.err
 			return
 		return
 	return
