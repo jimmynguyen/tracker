@@ -8,6 +8,9 @@ describe "CacheServiceTest", ->
 			this.$cookies = _$cookies_
 			return
 		return
+	###
+	CacheService.getUser
+	###
 	describe "when CacheService.getUser()", ->
 		it "then get user", ->
 			spyOn this.$cookies, "getObject"
@@ -16,6 +19,9 @@ describe "CacheServiceTest", ->
 				.toHaveBeenCalledWith this.keys.user.accounts
 			return
 		return
+	###
+	CacheService.setUser
+	###
 	describe "when CacheService.setUser()", ->
 		it "then set user", ->
 			user = {}
@@ -25,6 +31,9 @@ describe "CacheServiceTest", ->
 				.toHaveBeenCalledWith this.keys.user.accounts, user
 			return
 		return
+	###
+	CacheService.removeUser
+	###
 	describe "when CacheService.removeUser()", ->
 		it "then remove user", ->
 			spyOn this.$cookies, "remove"
@@ -33,6 +42,9 @@ describe "CacheServiceTest", ->
 				.toHaveBeenCalledWith this.keys.user.accounts
 			return
 		return
+	###
+	CacheService.get
+	###
 	describe "when CacheService.get()", ->
 		it "then get from localStorageService", ->
 			key = "key"
@@ -45,6 +57,9 @@ describe "CacheServiceTest", ->
 				.toHaveBeenCalledWith key
 			return
 		return
+	###
+	CacheService.set
+	###
 	describe "when CacheService.set()", ->
 		it "then set in localStorageService", ->
 			key = "key"
@@ -55,6 +70,9 @@ describe "CacheServiceTest", ->
 				.toHaveBeenCalledWith key, obj
 			return
 		return
+	###
+	CacheService.remove
+	###
 	describe "when CacheService.remove()", ->
 		it "then remove from localStorageService", ->
 			key = "key"

@@ -8,6 +8,9 @@ describe "NotificationServiceTest", ->
 		this.msg = "msg"
 		this.title = "title"
 		return
+	###
+	LoggingService.success
+	###
 	describe "when NotificationService.success()", ->
 		it "then create a success toast", ->
 			spyOn this.toastr, "success"
@@ -16,6 +19,9 @@ describe "NotificationServiceTest", ->
 				.toHaveBeenCalledWith this.msg, this.title
 			return
 		return
+	###
+	LoggingService.info
+	###
 	describe "when NotificationService.info()", ->
 		it "then create an info toast", ->
 			spyOn this.toastr, "info"
@@ -24,6 +30,9 @@ describe "NotificationServiceTest", ->
 				.toHaveBeenCalledWith this.msg, this.title
 			return
 		return
+	###
+	LoggingService.error
+	###
 	describe "when NotificationService.error()", ->
 		it "then create an error toast", ->
 			spyOn this.toastr, "error"
@@ -32,6 +41,9 @@ describe "NotificationServiceTest", ->
 				.toHaveBeenCalledWith this.msg, this.title
 			return
 		return
+	###
+	LoggingService.warning
+	###
 	describe "when NotificationService.warning()", ->
 		it "then create an warning toast", ->
 			spyOn this.toastr, "warning"
