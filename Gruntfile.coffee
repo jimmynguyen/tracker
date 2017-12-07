@@ -63,9 +63,11 @@ module.exports = (grunt) ->
 					"node_modules/angular-cookies/angular-cookies.min.js"
 					"node_modules/angular-route/angular-route.min.js"
 					"node_modules/angularfire/dist/angularfire.min.js"
+					"node_modules/angular-animate/angular-animate.min.js"
 					"node_modules/bootstrap/dist/js/bootstrap.min.js"
-					"node_modules/angular-ui-bootstrap/dist/ui-bootstrap.js"
+					"node_modules/angular-ui-bootstrap/dist/ui-bootstrap-tpls.js"
 					"node_modules/angular-ui-sortable/dist/sortable.js"
+					"node_modules/angular-toastr/dist/angular-toastr.tpls.min.js"
 					"node_modules/angular-local-storage/dist/angular-local-storage.min.js"
 				]
 				dest: "build/dependencies.js"
@@ -90,6 +92,7 @@ module.exports = (grunt) ->
 					"node_modules/bootstrap/dist/css/bootstrap-theme.min.css"
 					"node_modules/angular-ui-bootstrap/dist/ui-bootstrap.css"
 					"node_modules/jquery-ui-dist/jquery-ui.min.css"
+					"node_modules/angular-toastr/dist/angular-toastr.min.css"
 					"app/css/**/*.css"
 				]
 				dest: "build/app.min.css"

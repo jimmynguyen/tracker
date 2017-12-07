@@ -2,7 +2,7 @@
 
 angular.module "app.controllers"
 
-.controller "HomeController", (errors, keys, AuthenticationService, CacheService, DatabaseService, LocationService, LoggingService, $scope) ->
+.controller "HomeController", (errors, keys, AuthenticationService, CacheService, DatabaseService, LocationService, LoggingService, NotificationService, $scope) ->
 
 	getCategories = ->
 		DatabaseService.category.getAll (err, res) ->

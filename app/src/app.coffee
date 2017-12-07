@@ -20,6 +20,8 @@ angular.module "app.services", [
 	"app.constants"
 	"firebase"
 	"LocalStorageModule"
+	"ngAnimate"
 	"ngCookies"
+	"toastr"
 	"ui.bootstrap"
 ]
