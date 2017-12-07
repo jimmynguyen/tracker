@@ -18,9 +18,15 @@ angular.module "app.directives"
 		deleteDatum: "="
 		defaultFields: "="
 		defaultDataTypes: "="
+		allowGridView: "="
 	link: (scope) ->
 		setShowList = (showList) ->
 			scope.showList = showList
+			if showList
+				scope.search = ""
+			else
+				scope.search =
+					name: ""
 			return
 		setDataOrderByField = (field) ->
 			scope.dataOrderByField.display_name = field.display_name

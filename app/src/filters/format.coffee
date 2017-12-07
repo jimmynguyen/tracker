@@ -12,7 +12,7 @@ angular.module "app.filters"
 			if isDataTypeField
 				formattedValue = dataTypeIdMap[value].display_name
 			else if ["date", "datetime"].indexOf(dataType) isnt -1
-				formattedValue = $filter("date")(value, "MM/dd/yyyy hh:mm:ss a")
+				formattedValue = $filter("date")(value, "MM/dd/yyyy HH:mm:ss")
 			else if dataType is "boolean"
 				formattedValue = if value then "Yes" else "No"
 			else if dataType is "number"
