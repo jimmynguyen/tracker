@@ -2,12 +2,12 @@
 
 angular.module "app.directives"
 
-.directive "dropdownInput", (DatabaseService, LoggingService, ModalService) ->
+.directive "dropdownInput", (DatabaseService, LoggingService, ModalService, UtilService) ->
 
 	restrict: "AE"
 	templateUrl: "app/templates/directives/dropdownInput.html"
 	scope:
-		dropdownData: "="
+		data: "="
 		defaultFields: "="
 		defaultDataTypes: "="
 		userDataTypes: "="
@@ -21,9 +21,10 @@ angular.module "app.directives"
 				return
 			return
 		showAddEditModal = ->
-			ModalService.showAddEditModal scope.definition, scope.dropdownData, scope.defaultFields, scope.defaultDataTypes, scope.userDataTypes, "Dropdown"
+			scope.data = UtilService.definition.initializeItemFields scope.data, scope.definition
+			ModalService.showAddEditModal scope.definition, scope.data, scope.defaultFields, scope.defaultDataTypes, scope.userDataTypes, "Dropdown"
 				.then (res) ->
-					# TODO: implement
+					scope.data = res
 					return
 				.catch (err) ->
 					if err isnt "cancel"

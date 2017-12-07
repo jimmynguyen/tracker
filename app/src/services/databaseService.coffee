@@ -34,7 +34,9 @@ angular.module "app.services"
 	databaseService =
 		util:
 			initialize: (callback) ->
-				if not CacheService.get keys.app.dataTypeIdMap
+				if CacheService.get(keys.app.dataTypeIdMap)?
+					callback null
+				else
 					databaseService.dataType.getAllDefault (err, defaultDataTypes) ->
 						if err
 							LoggingService.error "DatabaseService.util.initialize()", err
@@ -54,8 +56,6 @@ angular.module "app.services"
 									callback null
 								return
 						return
-				else
-					callback null
 				return
 			getKey: (key, appendUserId, parentId, id) ->
 				_key = key.slice 0
