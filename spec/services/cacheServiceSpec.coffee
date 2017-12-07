@@ -1,7 +1,6 @@
 describe "CacheServiceTest", ->
 	beforeEach ->
 		angular.mock.module "app.services"
-		angular.mock.module "app.constants"
 		angular.mock.inject (CacheService, _keys_, _localStorageService_, _$cookies_) ->
 			this.cacheService = CacheService
 			this.keys = _keys_
