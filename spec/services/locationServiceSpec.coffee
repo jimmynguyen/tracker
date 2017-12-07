@@ -8,6 +8,9 @@ describe "LocationServiceTest", ->
 			spyOn this.$location, "url"
 			return
 		return
+	###
+	LocationService.goToCategory
+	###
 	describe "when LocationService.goToCategory()", ->
 		categoryId = 0
 		path = "/category/" + categoryId
@@ -17,6 +20,9 @@ describe "LocationServiceTest", ->
 				.toHaveBeenCalledWith path
 			return
 		return
+	###
+	LocationService.goToHome
+	###
 	describe "when LocationService.goToHome()", ->
 		path = "/home"
 		it "then redirect to \"" + path + "\"", ->
@@ -25,6 +31,9 @@ describe "LocationServiceTest", ->
 				.toHaveBeenCalledWith path
 			return
 		return
+	###
+	LocationService.goToLogin
+	###
 	describe "when LocationService.goToLogin()", ->
 		path = "/login"
 		it "then redirect to \"" + path + "\"", ->
@@ -33,6 +42,9 @@ describe "LocationServiceTest", ->
 				.toHaveBeenCalledWith path
 			return
 		return
+	###
+	LocationService.logPath
+	###
 	describe "when LocationService.logPath()", ->
 		it "then log the path", ->
 			spyOn this.$location, "path"

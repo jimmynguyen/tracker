@@ -10,6 +10,9 @@ describe "LoggingServiceTest", ->
 		this.key = "key"
 		this.err = "err"
 		return
+	###
+	LoggingService.log
+	###
 	describe "when LoggingService.log()", ->
 		beforeEach ->
 			spyOn this.$log, "log"
@@ -19,6 +22,9 @@ describe "LoggingServiceTest", ->
 				.toHaveBeenCalledWith this.msg
 			return
 		return
+	###
+	LoggingService.error
+	###
 	describe "when LoggingService.error()", ->
 		beforeEach ->
 			spyOn this.$log, "error"
