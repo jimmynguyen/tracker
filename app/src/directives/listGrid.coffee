@@ -2,7 +2,7 @@
 
 angular.module "app.directives"
 
-.directive "listGrid", (ModalService, LoggingService) ->
+.directive "listGrid", (LoggingService, ModalService, UtilService) ->
 
 	restrict: "AE"
 	templateUrl: "app/templates/directives/listGrid.html"
@@ -35,27 +35,15 @@ angular.module "app.directives"
 				scope.dataOrderByField.name = "-" + scope.dataOrderByField.name
 			return
 		showAddEditModal = (item) ->
-			if item? and item.fields?
+			if item?
+				item = UtilService.definition.initializeItemFields item, scope.fields
 				originalItem = angular.copy item
-				# remove id and last_updated fields when editing
-				fields = []
-				for field in item.fields
-					if field.name isnt "id" and field.name isnt "last_updated"
-						fields.push field
-				item.fields = fields
+				if item.fields?
+					item.fields = UtilService.definition.deleteDefaultFields item.fields, scope.defaultFields
 			ModalService.showAddEditModal scope.fields, item, scope.defaultFields, scope.defaultDataTypes, scope.userDataTypes, scope.name
 				.then (res) ->
 					if res.fields?
-						# add id and last_updated fields after editing
-						numFields = res.fields.length
-						for field in scope.defaultFields
-							if field.name is "id"
-								res.fields.unshift field
-							else if field.name is "last_updated"
-								lastUpdatedField = angular.copy field
-								lastUpdatedField.id = numFields+1
-								lastUpdatedField.order = numFields+1
-								res.fields.push lastUpdatedField
+						res.fields = UtilService.definition.addDefaultFields res.fields, scope.defaultFields
 					if item?
 						for property of res
 							item[property] = res[property]

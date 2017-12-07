@@ -73,7 +73,7 @@ angular.module "app.services"
 					r = {}
 					for field in definition
 						if o[field.name]?
-							if ["date","datetime"].indexOf(dataTypeIdMap[field.data_type_id].name) isnt -1
+							if field.name is "last_updated" or (dataTypeIdMap? and ["date","datetime"].indexOf(dataTypeIdMap[field.data_type_id].name) isnt -1)
 								r[field.name] = UtilService.date.datenumToDate o[field.name]
 							else
 								r[field.name] = o[field.name]

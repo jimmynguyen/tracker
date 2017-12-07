@@ -65,8 +65,15 @@
 	</label>
 	<dropdown-input
 			ng-if="dataTypeIdMap[field.data_type_id].name === 'dropdown'"
-			dropdown-data="item[field.name]"
+			data="item[field.name]"
 			default-fields="defaultFields"
 			default-data-types="defaultDataTypes"
 			user-data-types="userDataTypes"/>
+	<!-- array -->
+	<label ng-if="dataTypeIdMap[field.data_type_id].name === 'array'">
+		{{ field.display_name }}
+	</label>
+	<array-input
+			ng-if="dataTypeIdMap[field.data_type_id].name === 'array'"
+			values="item[field.name]"/>
 </div>
