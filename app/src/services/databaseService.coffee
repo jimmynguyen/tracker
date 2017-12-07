@@ -45,16 +45,7 @@ angular.module "app.services"
 							dataTypeIdMap = {}
 							defaultDataTypes.forEach (dataType) ->
 								dataTypeIdMap[dataType.id] = dataType
-							databaseService.dataType.getAllByUser (err, userDataTypes) ->
-								if err
-									LoggingService.error "DatabaseService.util.initialize()", err
-									callback err
-								else
-									userDataTypes.forEach (dataType) ->
-										dataTypeIdMap[dataType.id] = dataType
-									CacheService.set keys.app.dataTypeIdMap, dataTypeIdMap
-									callback null
-								return
+							CacheService.set keys.app.dataTypeIdMap, dataTypeIdMap
 						return
 				return
 			getKey: (key, appendUserId, parentId, id) ->

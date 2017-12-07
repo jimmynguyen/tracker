@@ -14,16 +14,14 @@ angular.module "app.services"
 		bootstrapButtonClass: "btn-success"
 
 	modalService =
-		showAddEditModal: (fields, item, defaultFields, defaultDataTypes, userDataTypes, name) ->
+		showAddEditModal: (fields, item, defaultFields, defaultDataTypes, name) ->
 			customModalOptions =
 				actionButtonText: if item? then "Save changes" else "Add"
 				headerText: (if item? then "Edit " else "Add ") + name
 				fields: fields
 				defaultFields: defaultFields
 				defaultDataTypes: defaultDataTypes
-				userDataTypes: userDataTypes
 				dataTypeIdMap: CacheService.get keys.app.dataTypeIdMap
-				allDataTypes: defaultDataTypes.concat userDataTypes
 				item: if item? then angular.copy(item) else {}
 			customModalDefaults =
 				templateUrl: "app/templates/modals/addEdit.html"

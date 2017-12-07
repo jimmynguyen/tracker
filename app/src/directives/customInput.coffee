@@ -11,8 +11,6 @@ angular.module "app.directives"
 		item: "="
 		defaultFields: "="
 		defaultDataTypes: "="
-		userDataTypes: "="
-		allDataTypes: "="
 	link: (scope) ->
 		initialize = ->
 			scope.dataTypeIdMap = CacheService.get keys.app.dataTypeIdMap

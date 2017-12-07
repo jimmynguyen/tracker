@@ -49,14 +49,6 @@ angular.module "app.controllers"
 				$scope.defaultDataTypes = res
 			return
 		return
-	getUserDataTypes = ->
-		DatabaseService.dataType.getAllByUser (err, res) ->
-			if err
-				LoggingService.error "CategoryController.getUserDataTypes()", err
-			else
-				$scope.userDataTypes = res
-			return
-		return
 	addEntry = (entry, callback) ->
 		DatabaseService.entry.add $scope.category.id, entry, $scope.category.fields, callback
 		return
@@ -79,7 +71,6 @@ angular.module "app.controllers"
 			getCategory()
 			getDefaultFields()
 			getDefaultDataTypes()
-			getUserDataTypes()
 			$scope.viewEntry = null
 			$scope.addEntry = addEntry
 			$scope.editEntry = editEntry

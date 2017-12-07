@@ -31,8 +31,7 @@
 			plural-name="Fields"
 			data="item[field.name]"
 			default-fields="defaultFields"
-			default-data-types="defaultDataTypes"
-			user-data-types="userDataTypes"/>
+			default-data-types="defaultDataTypes"/>
 	<!-- number -->
 	<label ng-if="dataTypeIdMap[field.data_type_id].name === 'number'">
 		{{ field.display_name }}
@@ -57,7 +56,7 @@
 	</label>
 	<datatype-input
 			ng-if="dataTypeIdMap[field.data_type_id].name === 'data_type'"
-			datatypes="allDataTypes"
+			datatypes="defaultDataTypes"
 			selected-data-type-id="item[field.name]"/>
 	<!-- dropdown -->
 	<label ng-if="dataTypeIdMap[field.data_type_id].name === 'dropdown'">
@@ -67,8 +66,7 @@
 			ng-if="dataTypeIdMap[field.data_type_id].name === 'dropdown'"
 			data="item[field.name]"
 			default-fields="defaultFields"
-			default-data-types="defaultDataTypes"
-			user-data-types="userDataTypes"/>
+			default-data-types="defaultDataTypes"/>
 	<!-- array -->
 	<label ng-if="dataTypeIdMap[field.data_type_id].name === 'array'">
 		{{ field.display_name }}
