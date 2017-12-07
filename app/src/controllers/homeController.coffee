@@ -42,14 +42,6 @@ angular.module "app.controllers"
 				$scope.defaultDataTypes = res
 			return
 		return
-	getUserDataTypes = ->
-		DatabaseService.dataType.getAllByUser (err, res) ->
-			if err
-				LoggingService.error "HomeController.getUserDataTypes()", err
-			else
-				$scope.userDataTypes = res
-			return
-		return
 	viewCategory = (category) ->
 		CacheService.set keys.selected.category, category
 		LocationService.goToCategory category.id
@@ -76,7 +68,6 @@ angular.module "app.controllers"
 			getCategoryDefinition()
 			getDefaultFields()
 			getDefaultDataTypes()
-			getUserDataTypes()
 			$scope.viewCategory = viewCategory
 			$scope.addCategory = addCategory
 			$scope.editCategory = editCategory

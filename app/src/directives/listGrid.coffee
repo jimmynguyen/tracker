@@ -18,7 +18,6 @@ angular.module "app.directives"
 		deleteDatum: "="
 		defaultFields: "="
 		defaultDataTypes: "="
-		userDataTypes: "="
 	link: (scope) ->
 		setShowList = (showList) ->
 			scope.showList = showList
@@ -40,7 +39,7 @@ angular.module "app.directives"
 				originalItem = angular.copy item
 				if item.fields?
 					item.fields = UtilService.definition.deleteDefaultFields item.fields, scope.defaultFields
-			ModalService.showAddEditModal scope.fields, item, scope.defaultFields, scope.defaultDataTypes, scope.userDataTypes, scope.name
+			ModalService.showAddEditModal scope.fields, item, scope.defaultFields, scope.defaultDataTypes, scope.name
 				.then (res) ->
 					if res.fields?
 						res.fields = UtilService.definition.addDefaultFields res.fields, scope.defaultFields

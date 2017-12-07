@@ -10,7 +10,6 @@ angular.module "app.directives"
 		data: "="
 		defaultFields: "="
 		defaultDataTypes: "="
-		userDataTypes: "="
 	link: (scope) ->
 		getDropdownDefinition = ->
 			DatabaseService.definition.getDropdown (err, res) ->
@@ -22,7 +21,7 @@ angular.module "app.directives"
 			return
 		showAddEditModal = ->
 			scope.data = UtilService.definition.initializeItemFields scope.data, scope.definition
-			ModalService.showAddEditModal scope.definition, scope.data, scope.defaultFields, scope.defaultDataTypes, scope.userDataTypes, "Dropdown"
+			ModalService.showAddEditModal scope.definition, scope.data, scope.defaultFields, scope.defaultDataTypes, "Dropdown"
 				.then (res) ->
 					scope.data = res
 					return

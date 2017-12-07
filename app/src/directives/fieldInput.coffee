@@ -10,7 +10,6 @@ angular.module "app.directives"
 		data: "="
 		defaultFields: "="
 		defaultDataTypes: "="
-		userDataTypes: "="
 	link: (scope) ->
 		getFieldDefinition = ->
 			DatabaseService.definition.getField (err, res) ->
@@ -25,7 +24,7 @@ angular.module "app.directives"
 				if scope.fields[i].name is 'order'
 					scope.orderField = scope.fields.splice(i, 1)[0]
 					break
-			ModalService.showAddEditModal scope.fields, item, scope.defaultFields, scope.defaultDataTypes, scope.userDataTypes, "Field"
+			ModalService.showAddEditModal scope.fields, item, scope.defaultFields, scope.defaultDataTypes, "Field"
 				.then (res) ->
 					if not item?
 						if not scope.data?
