@@ -1,6 +1,5 @@
 describe "LoggingServiceTest", ->
 	beforeEach ->
-		angular.mock.module "app"
 		angular.mock.module "app.services"
 		angular.mock.inject (LoggingService, _$log_) ->
 			this.loggingService = LoggingService
