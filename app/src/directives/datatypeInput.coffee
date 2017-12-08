@@ -7,7 +7,21 @@ angular.module "app.directives"
 	restrict: "AE"
 	templateUrl: "app/templates/directives/datatypeInput.html"
 	scope:
+		name: "="
 		dataTypes: "=datatypes"
 		selectedDataTypeId: "="
 	link: (scope) ->
+		setUpSelectPicker = ->
+			scope.$watch scope.selectedDataTypeId, ->
+				if not scope.selectedDataTypeId?
+					scope.selectedDataTypeId = undefined
+			scope.$watch scope.name, ->
+				scope.id = "#selectpicker-#{scope.name}"
+				$(scope.id).selectpicker()
+				return
+			return
+		initialize = ->
+			setUpSelectPicker()
+			return
+		initialize()
 		return

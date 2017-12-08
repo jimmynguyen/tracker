@@ -56,6 +56,7 @@
 	</label>
 	<datatype-input
 			ng-if="dataTypeIdMap[field.data_type_id].name === 'data_type'"
+			name="field.name"
 			datatypes="defaultDataTypes"
 			selected-data-type-id="item[field.name]"/>
 	<!-- dropdown -->
@@ -64,6 +65,7 @@
 	</label>
 	<dropdown-input
 			ng-if="dataTypeIdMap[field.data_type_id].name === 'dropdown'"
+			name="field.name"
 			data="item[field.name]"
 			default-fields="defaultFields"
 			default-data-types="defaultDataTypes"/>

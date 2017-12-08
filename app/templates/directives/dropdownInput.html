@@ -1,9 +1,10 @@
-<select class="form-control"
+<select id="selectpicker-{{ name }}"
+		class="selectpicker form-control"
 		ng-model="data.selectedValue"
-		ng-options="v as v for v in data.values">
+		data-show-tick="true"
+		data-dropup-auto="true"
+		show-menu-arrow>
+	<option ng-repeat="value in data.values" value="{{ value }}">{{ value }}</option>
+	<option data-divider="true"></option>
+	<option value="[Manage Values]">Manage Values</option>
 </select>
-<button type="button"
-		class="btn btn-link"
-		ng-click="showAddEditModal()">
-	Manage Values
-</button>
