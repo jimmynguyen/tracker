@@ -1,4 +1,9 @@
-<select class="form-control"
+<select id="selectpicker-{{ name }}"
+		class="selectpicker form-control"
 		ng-model="selectedDataTypeId"
+		data-show-tick="true"
+		data-dropup-auto="true"
+		show-menu-arrow
 		ng-options="dataType.id as dataType.display_name for dataType in dataTypes | orderBy:'display_name' | filter:{visible:true}">
+	<option ng-selected="true" value="">--Select Data Type--</option>
 </select>
