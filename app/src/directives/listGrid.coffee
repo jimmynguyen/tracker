@@ -50,48 +50,22 @@ angular.module "app.directives"
 					if res.fields?
 						res.fields = UtilService.definition.addDefaultFields res.fields, scope.defaultFields
 					if item?
-						for property of res
-							item[property] = res[property]
-						scope.editDatum res, (err, res) ->
-							if err
-								LoggingService.error "listGrid.showAddEditModal()", err
-							else
-								scope.data = res
-								scope.$apply()
-							return
+						UtilService.object.copyProperties res, item
+						scope.editDatum res, UtilService.callback.default "listGrid.showAddEditModal()", null, null, scope, "data", true
 					else
-						scope.addDatum res, (err, res) ->
-							if err
-								LoggingService.error "listGrid.showAddEditModal()", err
-							else
-								scope.data = res
-								scope.$apply()
-							return
+						scope.addDatum res, UtilService.callback.default "listGrid.showAddEditModal()", null, null, scope, "data", true
 					return
-				.catch (err) ->
-					if err isnt "cancel"
-						LoggingService.error "listGrid.showAddEditModal()", err
-					else
+				.catch UtilService.callback.modal.catch "listGrid.showAddEditModal()", ->
 						if originalItem?
-							for property of originalItem
-								item[property] = originalItem[property]
-					return
+							UtilService.object.copyProperties originalItem, item
+						return
 			return
 		showDeleteModal = (item) ->
 			ModalService.showDeleteModal item, scope.name
 				.then ->
-					scope.deleteDatum item, (err, res) ->
-						if err
-							LoggingService.error "listGrid.showDeleteModal()", err
-						else
-							scope.data = res
-							scope.$apply()
-						return
+					scope.deleteDatum item, UtilService.callback.default "listGrid.showAddEditModal()", null, null, scope, "data", true
 					return
-				.catch (err) ->
-					if err isnt "cancel"
-						LoggingService.error "listGrid.showDeleteModal", err
-					return
+				.catch UtilService.callback.modal.catch "listGrid.showDeleteModal()"
 			return
 		initialize = ->
 			scope.showList = true
