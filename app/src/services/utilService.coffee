@@ -73,6 +73,17 @@ angular.module "app.services"
 					for property of src
 						dst[property] = src[property]
 				return
+			getNewField: (data, res) ->
+				nextId = utilService.data.getNextId data
+				field =
+					id: nextId
+					name: res.display_name.toLowerCase().replace(/[^0-9a-z ]/g, '').replace /\s/g, '_'
+					order: nextId
+					editable: true
+					required: res.required? and res.required
+					visible: true
+				utilService.object.copyProperties res, field
+				field
 		data:
 			setDataOrderByIndex: (data, indexOffset) ->
 				for d, i in data
@@ -111,6 +122,12 @@ angular.module "app.services"
 				for d in data
 					map[d.id] = d
 				map
+			getNextId: (data) ->
+				nextId = -1
+				for d in data
+					if d.id > nextId
+						nextId = d.id
+				if nextId is -1 then 1 else nextId+1
 		callback:
 			default: (src, errorCallback, successCallback, scope, scopeVariableToAssign, callScopeApply) ->
 				(err, res) ->

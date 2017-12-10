@@ -108,6 +108,7 @@ describe "UtilServiceTest", ->
 			expect fields[fields.length-1].name
 				.toBe "last_updated"
 			return
+		return
 	###
 	UtilService.definition.deleteDefaultFields
 	###
@@ -278,6 +279,7 @@ describe "UtilServiceTest", ->
 			expect field
 				.toEqual this.fields[0]
 			return
+		return
 	###
 	UtilService.definition.removeFieldByName
 	###
@@ -319,6 +321,7 @@ describe "UtilServiceTest", ->
 			expect field.name
 				.toBe fieldName
 			return
+		return
 	###
 	UtilService.object.copyProperties
 	###
@@ -349,6 +352,37 @@ describe "UtilServiceTest", ->
 			expect this.dst.property2
 				.toBe "val2"
 			return
+		return
+	###
+	UtilService.object.getNewField
+	###
+	describe "when UtilService.object.getNewField()", ->
+		beforeEach ->
+			this.data = []
+			this.res =
+				display_name: "Display Name"
+				required: true
+			spyOn this.utilService, "object"
+			spyOn this.utilService.object, "copyProperties"
+			return
+		it "if valid, then get new field", ->
+			field = this.utilService.object.getNewField this.data, this.res
+			expect this.utilService.object.copyProperties
+				.toHaveBeenCalledWith this.res, field
+			expect field.id
+				.toBe 1
+			expect field.name
+				.toBe "display_name"
+			expect field.order
+				.toBe 1
+			expect field.editable
+				.toBe true
+			expect field.required
+				.toBe true
+			expect field.visible
+				.toBe true
+			return
+		return
 	###
 	UtilService.data.setDataOrderByIndex
 	###
@@ -369,6 +403,7 @@ describe "UtilServiceTest", ->
 			expect this.data[1].order
 				.toBe 1
 			return
+		return
 	###
 	UtilService.data.getById
 	###
@@ -401,6 +436,7 @@ describe "UtilServiceTest", ->
 			expect datum
 				.toBe this.data[1]
 			return
+		return
 	###
 	UtilService.data.getIndexById
 	###
@@ -429,6 +465,7 @@ describe "UtilServiceTest", ->
 			expect index
 				.toBe 1
 			return
+		return
 	###
 	UtilService.data.deleteById
 	###
@@ -519,6 +556,7 @@ describe "UtilServiceTest", ->
 					id: 1
 					order: 0
 			return
+		return
 	###
 	UtilService.data.decrementFieldGreaterThanValue
 	###
@@ -577,6 +615,7 @@ describe "UtilServiceTest", ->
 			expect this.data[1]
 				.toEqual this.originalData[1]
 			return
+		return
 	###
 	UtilService.data.getIdMap
 	###
@@ -602,6 +641,29 @@ describe "UtilServiceTest", ->
 				expect map[datum.id]
 					.toBe datum
 			return
+		return
+	###
+	UtilService.data.getNextId
+	###
+	describe "when UtilService.data.getNextId()", ->
+		beforeEach ->
+			this.data = [
+				{
+					id: 1
+				},{
+					id: 2
+				}
+			]
+			return
+		it "if data is empty, then return 1", ->
+			expect this.utilService.data.getNextId []
+				.toBe 1
+			return
+		it "if valid, then return next id", ->
+			expect this.utilService.data.getNextId this.data
+				.toBe 3
+			return
+		return
 	###
 	UtilService.callback.default
 	###
@@ -751,6 +813,7 @@ describe "UtilServiceTest", ->
 					.toHaveBeenCalled()
 				return
 			return
+		return
 	###
 	UtilService.callback.firebase.catch
 	###

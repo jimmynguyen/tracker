@@ -18,25 +18,12 @@ angular.module "app.directives"
 			scope.orderField = UtilService.definition.removeFieldByName scope.fields, "order"
 			ModalService.showAddEditModal scope.fields, item, scope.defaultFields, scope.defaultDataTypes, "Field"
 				.then (res) ->
-					if not item?
-						if not scope.data?
-							scope.data = []
-							scope.nextDatumId = 1
-						else
-							scope.nextDatumId = -1
-							for datum in scope.data
-								if datum.id > scope.nextDatumId
-									scope.nextDatumId = datum.id
-							scope.nextDatumId++
-						res.id = scope.nextDatumId
-						res.name = res.display_name.toLowerCase().replace(/[^0-9a-z ]/g, '').replace /\s/g, '_'
-						res.order = scope.nextDatumId
-						res.editable = true
-						res.required = if res.required? then res.required else false
-						res.visible = true
-						scope.data.push res
-					else
+					if item?
 						UtilService.object.copyProperties res, item
+					else
+						scope.data = if scope.data? then scope.data else []
+						res = UtilService.object.getNewField scope.data, res
+						scope.data.push res
 					return
 				.catch UtilService.callback.modal.catch "fieldInput.showAddEditModal()"
 				.finally ->
