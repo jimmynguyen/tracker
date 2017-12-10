@@ -2,7 +2,7 @@
 
 angular.module "app.directives"
 
-.directive "fieldInput", (DatabaseService, ModalService, LoggingService) ->
+.directive "fieldInput", (DatabaseService, ModalService, LoggingService, UtilService) ->
 
 	restrict: "AE"
 	templateUrl: "app/templates/directives/fieldInput.html"
@@ -12,65 +12,29 @@ angular.module "app.directives"
 		defaultDataTypes: "="
 	link: (scope) ->
 		getFieldDefinition = ->
-			DatabaseService.definition.getField (err, res) ->
-				if err
-					LoggingService.error "fieldInput.getFieldDefinition()", err
-				else
-					scope.fields = res
-				return
+			DatabaseService.definition.getField UtilService.callback.default "fieldInput.getFieldDefinition()", null, null, scope, "fields"
 			return
 		showAddEditModal = (item) ->
-			for i in [scope.fields.length-1..0] by -1
-				if scope.fields[i].name is 'order'
-					scope.orderField = scope.fields.splice(i, 1)[0]
-					break
+			scope.orderField = UtilService.definition.removeFieldByName scope.fields, "order"
 			ModalService.showAddEditModal scope.fields, item, scope.defaultFields, scope.defaultDataTypes, "Field"
 				.then (res) ->
-					if not item?
-						if not scope.data?
-							scope.data = []
-							scope.nextDatumId = 1
-						else
-							scope.nextDatumId = -1
-							for datum in scope.data
-								if datum.id > scope.nextDatumId
-									scope.nextDatumId = datum.id
-							scope.nextDatumId++
-						res.id = scope.nextDatumId
-						res.name = res.display_name.toLowerCase().replace(/[^0-9a-z ]/g, '').replace /\s/g, '_'
-						res.order = scope.nextDatumId
-						res.editable = true
-						res.required = if res.required? then res.required else false
-						res.visible = true
-						scope.data.push res
+					if item?
+						UtilService.object.copyProperties res, item
 					else
-						for property of res
-							item[property] = res[property]
-					scope.fields.push scope.orderField
+						scope.data = if scope.data? then scope.data else []
+						res = UtilService.object.getNewField scope.data, res
+						scope.data.push res
 					return
-				.catch (err) ->
-					if err isnt "cancel"
-						LoggingService.error "fieldInput.showAddEditModal()", err
+				.catch UtilService.callback.modal.catch "fieldInput.showAddEditModal()"
+				.finally ->
 					scope.fields.push scope.orderField
-					return
 			return
 		showDeleteModal = (item) ->
 			ModalService.showDeleteModal item, "Field"
 				.then ->
-					for datum, index in scope.data
-						if datum.id is item.id
-							datumIndex = index
-							break
-					scope.data.splice index, 1
-					if scope.data.length-1 >= datumIndex
-						for index in [datumIndex..scope.data.length-1]
-							scope.data[index].id--
-							scope.data[index].order--
+					UtilService.data.deleteById scope.data, item.id, ["id", "order"]
 					return
-				.catch (err) ->
-					if err isnt "cancel"
-						LoggingService.error "fieldInput.showDeleteModal()", null, err
-					return
+				.catch  UtilService.callback.modal.catch "fieldInput.showDeleteModal()"
 			return
 		initialize = ->
 			getFieldDefinition()
@@ -78,8 +42,8 @@ angular.module "app.directives"
 			scope.showDeleteModal = showDeleteModal
 			scope.sortableOptions =
 				stop: (e, ui) ->
-					for datum, ndx in scope.data
-						datum.order = ndx+1
+					UtilService.data.setOrderByIndex scope.data, 1
+					return
 			return
 		initialize()
 		return

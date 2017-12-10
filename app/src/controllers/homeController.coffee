@@ -2,45 +2,22 @@
 
 angular.module "app.controllers"
 
-.controller "HomeController", (errors, keys, AuthenticationService, CacheService, DatabaseService, LocationService, LoggingService, NotificationService, $scope) ->
+.controller "HomeController", (errors, keys, AuthenticationService, CacheService, DatabaseService, LocationService, LoggingService, NotificationService, UtilService, $scope) ->
 
 	getCategories = ->
-		DatabaseService.category.getAll (err, res) ->
-			if err
-				LoggingService.error "HomeController.getCategories()", err
-			else
-				$scope.categories = res
-			return
+		DatabaseService.category.getAll UtilService.callback.default "HomeController.getCategories()", null, null, $scope, "categories"
 		return
 	getCategoryDefinition = ->
-		DatabaseService.definition.getCategory (err, res) ->
-			if err
-				LoggingService.error "HomeController.getCategoryDefinition()", err
-			else
-				$scope.categoryDefinition = res
-				for field in $scope.categoryDefinition
-					if field.order is 1
-						$scope.categoryOrderByField =
-							display_name: field.display_name
-							name: field.name
-						break
+		successCallback = (err, res) ->
+			$scope.categoryOrderByField = UtilService.definition.getFieldByOrder $scope.categoryDefinition, 1, true
 			return
+		DatabaseService.definition.getCategory UtilService.callback.default "HomeController.getCategories()", null, successCallback, $scope, "categoryDefinition"
 		return
 	getDefaultFields = ->
-		DatabaseService.field.getAllDefault (err, res) ->
-			if err
-				LoggingService.error "HomeController.getDefaultFields()", err
-			else
-				$scope.defaultFields = res
-			return
+		DatabaseService.field.getAllDefault UtilService.callback.default "HomeController.getDefaultFields()", null, null, $scope, "defaultFields"
 		return
 	getDefaultDataTypes = ->
-		DatabaseService.dataType.getAllDefault (err, res) ->
-			if err
-				LoggingService.error "HomeController.getDefaultDataTypes()", err
-			else
-				$scope.defaultDataTypes = res
-			return
+		DatabaseService.dataType.getAllDefault UtilService.callback.default "HomeController.getDefaultDataTypes()", null, null, $scope, "defaultDataTypes"
 		return
 	viewCategory = (category) ->
 		CacheService.set keys.selected.category, category
@@ -58,11 +35,7 @@ angular.module "app.controllers"
 	initialize = ->
 		LocationService.logPath()
 		AuthenticationService.isLoggedIn()
-		DatabaseService.util.initialize (err) ->
-			if err
-				LoggingService.error errors.DATABASE_SERVICE_INITIALIZATION, err
-			$scope.isDatabaseInitialized = true
-			return
+		DatabaseService.util.initialize $scope
 		$scope.$watch "isDatabaseInitialized", ->
 			getCategories()
 			getCategoryDefinition()

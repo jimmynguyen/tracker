@@ -13,12 +13,7 @@ angular.module "app.directives"
 		defaultDataTypes: "="
 	link: (scope, element, attrs) ->
 		getDropdownDefinition = ->
-			DatabaseService.definition.getDropdown (err, res) ->
-				if err
-					LoggingService.error "dropdownInput.getDropdownDefinition()", err
-				else
-					scope.definition = res
-				return
+			DatabaseService.definition.getDropdown UtilService.callback.default "dropdownInput.getDropdownDefinition()", null, null, scope, "definition"
 			return
 		showAddEditModal = ->
 			scope.data = UtilService.definition.initializeItemFields scope.data, scope.definition
@@ -26,10 +21,7 @@ angular.module "app.directives"
 				.then (res) ->
 					scope.data = res
 					return
-				.catch (err) ->
-					if err isnt "cancel"
-						LoggingService.error "dropdownInput.showAddEditModal()", err
-					return
+				.catch UtilService.callback.modal.catch "dropdownInput.showAddEditModal()"
 				.finally ->
 					scope.data.selectedValue = scope.oldSelectedValue
 					scope.isAddEditModalShown = false

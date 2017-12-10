@@ -33,29 +33,27 @@ angular.module "app.services"
 	# TODO: write tests
 	databaseService =
 		util:
-			initialize: (callback) ->
+			initialize: (scope) ->
 				if CacheService.get(keys.app.dataTypeIdMap)?
-					callback null
+					scope.isDatabaseInitialized = true
 				else
 					databaseService.dataType.getAllDefault (err, defaultDataTypes) ->
 						if err
-							LoggingService.error "DatabaseService.util.initialize()", err
-							callback err
+							LoggingService.error errors.DATABASE_SERVICE_INITIALIZATION, err
+							scope.isDatabaseInitialized = false
 						else
-							dataTypeIdMap = {}
-							defaultDataTypes.forEach (dataType) ->
-								dataTypeIdMap[dataType.id] = dataType
-							CacheService.set keys.app.dataTypeIdMap, dataTypeIdMap
+							CacheService.set keys.app.dataTypeIdMap, UtilService.data.getIdMap defaultDataTypes
+							scope.isDatabaseInitialized = true
 						return
 				return
 			getKey: (key, appendUserId, parentId, id) ->
-				_key = key.slice 0
+				_key = angular.copy key
 				if appendUserId
-					_key += "/" + CacheService.getUser().id
+					_key += "/#{CacheService.getUser().id}"
 				if parentId?
-					_key += "/" + parentId
+					_key += "/#{parentId}"
 				if id?
-					_key += "/" + id
+					_key += "/#{id}"
 				_key
 			get: (key, appendUserId, parentId, overrideCacheService, definition, mapper, callback) ->
 				key = databaseService.util.getKey key, appendUserId, parentId, null
@@ -67,9 +65,7 @@ angular.module "app.services"
 							mappedRes = mapper.map res, definition
 							CacheService.set key, mappedRes
 							callback null, mappedRes
-						.catch (err) ->
-							LoggingService.error "DatabaseService.util.get()", err
-							callback err, null
+						.catch UtilService.callback.firebase.catch "DatabaseService.util.get()", callback
 				else
 					callback null, res
 			getUserObjects: (key, parentId, definition, mapper, callback) ->
@@ -99,10 +95,7 @@ angular.module "app.services"
 						CacheService.set key, objects
 						callback null, objects
 						return
-					.catch (err) ->
-						LoggingService.error "DatabaseService.util.add()", err
-						callback err, null
-						return
+					.catch UtilService.callback.firebase.catch "DatabaseService.util.add()", callback
 				return
 			update: (key, parentId, object, definition, mapper, callback) ->
 				key = databaseService.util.getKey key, true, parentId, null
@@ -113,18 +106,11 @@ angular.module "app.services"
 					.then ->
 						objects = CacheService.get key
 						object = mapper.map([object], definition)[0]
-						for o in objects
-							if o.id is object.id
-								for property of o
-									o[property] = object[property]
-								break
+						UtilService.object.copyProperties object, UtilService.data.getById objects, object.id
 						CacheService.set key, objects
 						callback null, objects
 						return
-					.catch (err) ->
-						LoggingService.error "DatabaseService.util.update()", err
-						callback err, null
-						return
+					.catch UtilService.callback.firebase.catch "DatabaseService.util.update()", callback
 				return
 			delete: (key, parentId, object, callback) ->
 				key = databaseService.util.getKey key, true, parentId, null
@@ -136,20 +122,14 @@ angular.module "app.services"
 					.then ->
 						if object?
 							objects = CacheService.get key
-							for o, i in objects
-								if o.id is object.id
-									objects.splice i, 1
-									break
+							UtilService.data.deleteById objects, object.id
 							CacheService.set key, objects
 							callback null, objects
 						else
 							CacheService.remove key
 							callback null, null
 						return
-					.catch (err) ->
-						LoggingService.error "DatabaseService.delete()", err
-						callback err, null
-						return
+					.catch UtilService.callback.firebase.catch "DatabaseService.util.delete()", callback
 				return
 		# authentication:
 		# 	login: (email, password) ->
@@ -196,57 +176,31 @@ angular.module "app.services"
 		# 		databaseService.util.get keys.user.accounts, true, null, true, MappingService.objectMapper
 		category:
 			getAll: (callback) ->
-				databaseService.definition.getCategory (err, definition) ->
-					if err
-						LoggingService.error "DatabaseService.category.getAll()", err
-						callback err, null
-					else
-						databaseService.util.getUserObjects keys.user.categories, null, definition, MappingService.arrayMapper, callback
+				databaseService.definition.getCategory UtilService.callback.default "DatabaseService.category.getAll()", callback, (err, res) ->
+					databaseService.util.getUserObjects keys.user.categories, null, res, MappingService.arrayMapper, callback
 					return
 				return
 			getById: (categoryId, callback) ->
-				databaseService.category.getAll (err, res) ->
-					if err
-						LoggingService.error "DatabaseService.category.getById()", err
-						callback err, res
-					else
-						category = null
-						for c in res
-							if c.id is categoryId
-								category = c
-								break
-						if not category
-							err = errors.INVALID_CATEGORY_ID
-							LoggingService.error "DatabaseService.category.getById()", err
-							callback err, null
-						else
-							callback null, category
+				databaseService.category.getAll UtilService.callback.default "DatabaseService.category.getById()", callback, (err, res) ->
+					res = UtilService.data.getById res, categoryId
+					if not res
+						err = errors.INVALID_CATEGORY_ID
+					callback err, res
 					return
 				return
 			add: (category, callback) ->
-				databaseService.definition.getCategory (err, definition) ->
-					if err
-						LoggingService.error "DatabaseService.category.add()", err
-						callback err, null
-					else
-						databaseService.util.add keys.user.categories, null, category, definition, MappingService.arrayMapper, callback
+				databaseService.definition.getCategory UtilService.callback.default "DatabaseService.category.add()", callback, (err, res) ->
+					databaseService.util.add keys.user.categories, null, category, res, MappingService.arrayMapper, callback
 					return
 				return
 			update: (category, callback) ->
-				databaseService.definition.getCategory (err, definition) ->
-					if err
-						LoggingService.error "DatabaseService.category.add()", err
-						callback err, null
-					else
-						databaseService.util.update keys.user.categories, null, category, definition, MappingService.arrayMapper, callback
+				databaseService.definition.getCategory UtilService.callback.default "DatabaseService.category.update()", callback, (err, res) ->
+					databaseService.util.update keys.user.categories, null, category, res, MappingService.arrayMapper, callback
 					return
 				return
 			delete: (category, callback) ->
-				databaseService.util.delete keys.user.entries, category.id, null, (err, res) ->
-					if err
-						LoggingService.error "DatabaseService.category.delete()", err
-					else
-						databaseService.util.delete keys.user.categories, null, category, callback
+				databaseService.util.delete keys.user.entries, category.id, null, UtilService.callback.default "DatabaseService.category.delete()", callback, (err, res) ->
+					databaseService.util.delete keys.user.categories, null, category, callback
 					return
 				return
 		dataType:
@@ -261,24 +215,16 @@ angular.module "app.services"
 		# # 		databaseService.util.getSystemObjects keys.system.definition.account, null, MappingService.arrayMapper, callback
 		# # 		return
 			getCategory: (callback) ->
-				databaseService.definition.getField (err, definition) ->
-					if err
-						LoggingService.error "DatabaseService.definition.getCategory()", err
-						callback err, null
-					else
-						databaseService.util.getSystemObjects keys.system.definition.category, null, definition, MappingService.arrayMapper, callback
+				databaseService.definition.getField UtilService.callback.default "DatabaseService.definition.getCategory)", callback, (err, res) ->
+					databaseService.util.getSystemObjects keys.system.definition.category, null, res, MappingService.arrayMapper, callback
 					return
 				return
 		# # 	getDataType: (callback) ->
 		# # 		databaseService.util.getSystemObjects keys.system.definition.data_type, null, MappingService.arrayMapper, callback
 		# # 		return
 			getDropdown: (callback) ->
-				databaseService.definition.getField (err, definition) ->
-					if err
-						LoggingService.error "DatabaseService.definition.getDropdown()", err
-						callback err, null
-					else
-						databaseService.util.getSystemObjects keys.system.definition.dropdown, null, definition, MappingService.arrayMapper, callback
+				databaseService.definition.getField UtilService.callback.default "DatabaseService.definition.getDropdown)", callback, (err, res) ->
+					databaseService.util.getSystemObjects keys.system.definition.dropdown, null, res, MappingService.arrayMapper, callback
 					return
 				return
 			getField: (callback) ->
@@ -299,12 +245,8 @@ angular.module "app.services"
 				return
 		field:
 			getAllDefault: (callback) ->
-				databaseService.definition.getField (err, definition) ->
-					if err
-						LoggingService.error "DatabaseService.field.getAllDefault()", err
-						callback err, null
-					else
-						databaseService.util.getSystemObjects keys.system.default.fields, null, definition, MappingService.arrayMapper, callback
+				databaseService.definition.getField UtilService.callback.default "DatabaseService.field.getAllDefault)", callback, (err, res) ->
+					databaseService.util.getSystemObjects keys.system.default.fields, null, res, MappingService.arrayMapper, callback
 					return
 				return
 

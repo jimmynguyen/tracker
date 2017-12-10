@@ -15,6 +15,7 @@ angular.module "app.directives"
 			scope.$watch scope.selectedDataTypeId, ->
 				if not scope.selectedDataTypeId?
 					scope.selectedDataTypeId = undefined
+				return
 			scope.$watch scope.name, ->
 				scope.id = "#selectpicker-#{scope.name}"
 				$(scope.id).selectpicker()
