@@ -4,7 +4,7 @@ describe "AuthenticationServiceTest", ->
 		angular.mock.inject (AuthenticationService, _errors_, CacheService, DatabaseService) ->
 			this.authenticationService = AuthenticationService
 			this.errors = _errors_
-			this.cookieService = CacheService
+			this.cacheService = CacheService
 			this.databaseService = DatabaseService
 			return
 		this.callback = jasmine.createSpy "callback"
@@ -47,9 +47,9 @@ describe "AuthenticationServiceTest", ->
 	# 	return
 	describe "when AuthenticationService.logout()", ->
 		it "then the user should be logged out", ->
-			spyOn this.cookieService, "removeUser"
+			spyOn this.cacheService, "removeUser"
 			this.authenticationService.logout()
-			expect this.cookieService.removeUser
+			expect this.cacheService.removeUser
 				.toHaveBeenCalled()
 			return
 		return
