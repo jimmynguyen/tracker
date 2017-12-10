@@ -65,7 +65,7 @@ angular.module "app.services"
 							mappedRes = mapper.map res, definition
 							CacheService.set key, mappedRes
 							callback null, mappedRes
-						.catch UtilService.callback.database.catch "DatabaseService.util.get()", callback
+						.catch UtilService.callback.firebase.catch "DatabaseService.util.get()", callback
 				else
 					callback null, res
 			getUserObjects: (key, parentId, definition, mapper, callback) ->
@@ -95,7 +95,7 @@ angular.module "app.services"
 						CacheService.set key, objects
 						callback null, objects
 						return
-					.catch UtilService.callback.database.catch "DatabaseService.util.add()", callback
+					.catch UtilService.callback.firebase.catch "DatabaseService.util.add()", callback
 				return
 			update: (key, parentId, object, definition, mapper, callback) ->
 				key = databaseService.util.getKey key, true, parentId, null
@@ -110,7 +110,7 @@ angular.module "app.services"
 						CacheService.set key, objects
 						callback null, objects
 						return
-					.catch UtilService.callback.database.catch "DatabaseService.util.update()", callback
+					.catch UtilService.callback.firebase.catch "DatabaseService.util.update()", callback
 				return
 			delete: (key, parentId, object, callback) ->
 				key = databaseService.util.getKey key, true, parentId, null
@@ -129,7 +129,7 @@ angular.module "app.services"
 							CacheService.remove key
 							callback null, null
 						return
-					.catch UtilService.callback.database.catch "DatabaseService.util.delete()", callback
+					.catch UtilService.callback.firebase.catch "DatabaseService.util.delete()", callback
 				return
 		# authentication:
 		# 	login: (email, password) ->
