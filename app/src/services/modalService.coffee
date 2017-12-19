@@ -14,32 +14,6 @@ angular.module "app.services"
 		bootstrapButtonClass: "btn-success"
 
 	modalService =
-		showAddEditModal: (fields, item, defaultFields, defaultDataTypes, name) ->
-			customModalOptions =
-				actionButtonText: if item? then "Save changes" else "Add"
-				headerText: (if item? then "Edit " else "Add ") + name
-				fields: fields
-				defaultFields: defaultFields
-				defaultDataTypes: defaultDataTypes
-				dataTypeIdMap: CacheService.get keys.app.dataTypeIdMap
-				item: if item? then angular.copy(item) else {}
-			customModalDefaults =
-				templateUrl: "app/templates/modals/addEdit.html"
-			modalService.showModal customModalDefaults, customModalOptions
-		showDeleteModal: (item, name) ->
-			customModalOptions =
-				headerText: "Delete " + name
-				closeButtonText: "Cancel"
-				actionButtonText: "Delete"
-				bodyText: "Are you sure you want to delete " + (if item.display_name? then "the " else "this ") + name.toLowerCase() + (if item.display_name? then " \"" + item.display_name + "\"?" else "?")
-				bootstrapButtonClass: "btn-danger"
-			modalService.showModal {}, customModalOptions
-		showModal: (customModalDefaults, customModalOptions) ->
-			if not customModalDefaults
-				customModalDefaults = {}
-			if not customModalOptions
-				customModalOptions = {}
-			modalService.show customModalDefaults, customModalOptions
 		show: (customModalDefaults, customModalOptions) ->
 			tempModalDefaults = {}
 			tempModalOptions = {}
@@ -53,5 +27,32 @@ angular.module "app.services"
 					$scope.modalOptions.close = (result) ->
 						$uibModalInstance.dismiss "cancel"
 			$uibModal.open(tempModalDefaults).result
+		showModal: (customModalDefaults, customModalOptions) ->
+			if not customModalDefaults
+				customModalDefaults = {}
+			if not customModalOptions
+				customModalOptions = {}
+			modalService.show customModalDefaults, customModalOptions
+		showDeleteModal: (item, name) ->
+			if not name?
+				throw new Error "\"name\" cannot be undefined"
+			customModalOptions =
+				headerText: "Delete " + name
+				actionButtonText: "Delete"
+				bodyText: "Are you sure you want to delete " + (if item? and item.display_name? then "the " else "this ") + name.toLowerCase() + (if item? and item.display_name? then " \"" + item.display_name + "\"?" else "?")
+				bootstrapButtonClass: "btn-danger"
+			modalService.showModal {}, customModalOptions
+		showAddEditModal: (fields, item, defaultFields, defaultDataTypes, name) ->
+			customModalOptions =
+				actionButtonText: if item? then "Save changes" else "Add"
+				headerText: (if item? then "Edit " else "Add ") + name
+				fields: fields
+				defaultFields: defaultFields
+				defaultDataTypes: defaultDataTypes
+				dataTypeIdMap: CacheService.get keys.app.dataTypeIdMap
+				item: if item? then angular.copy(item) else {}
+			customModalDefaults =
+				templateUrl: "app/templates/modals/addEdit.html"
+			modalService.showModal customModalDefaults, customModalOptions
 
 	modalService
