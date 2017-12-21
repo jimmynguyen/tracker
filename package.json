@@ -14,26 +14,30 @@
   "homepage": "https://github.com/jimmynguyen/tracker#readme",
   "scripts": {
     "build": "node_modules/.bin/grunt",
-    "start": "npm run build && http-server -o"
+    "lint": "node_modules/.bin/grunt lint",
+    "start": "npm run build && http-server -o",
+    "test": "node_modules/.bin/grunt test",
+    "deploy": "node_modules/.bin/grunt production"
   },
   "dependencies": {
-    "angular": "^1.6.7",
-    "angular-animate": "^1.6.7",
-    "angular-cookies": "^1.6.7",
+    "angular": "^1.6.8",
+    "angular-animate": "^1.6.8",
+    "angular-cookies": "^1.6.8",
     "angular-local-storage": "^0.7.1",
-    "angular-route": "^1.6.7",
+    "angular-route": "^1.6.8",
     "angular-toastr": "^2.1.1",
     "angular-ui-bootstrap": "^2.5.6",
     "angular-ui-sortable": "^0.17.2",
     "angularfire": "^2.3.0",
     "bootstrap": "^3.3.7",
     "bootstrap-select": "^1.12.4",
+    "font-awesome": "^4.7.0",
     "jquery": "^3.2.1",
     "jquery-ui-dist": "^1.12.1"
   },
   "devDependencies": {
-    "angular-mocks": "^1.6.7",
-    "coffeescript": "^2.0.3",
+    "angular-mocks": "^1.6.8",
+    "coffeescript": "^2.1.0",
     "firebase-server": "^0.12.0",
     "grunt": "^1.0.1",
     "grunt-coffee-jshint": "^2.0.0",
@@ -44,7 +48,7 @@
     "grunt-contrib-copy": "^1.0.0",
     "grunt-contrib-cssmin": "^2.2.1",
     "grunt-contrib-jasmine": "^1.1.0",
-    "grunt-contrib-uglify": "^3.2.1",
+    "grunt-contrib-uglify": "git+https://github.com/gruntjs/grunt-contrib-uglify.git#harmony",
     "grunt-replace": "^1.0.1",
     "jasmine": "^2.8.0"
   }

@@ -1,22 +1,23 @@
-<navbar route="route" category="category"></navbar>
-
-<div class="container">
-	<div class="row">
-		<div class="col-lg-12">
-			<h1>{{ category.name }}</h1>
-			<hr>
-			<list-grid name="Entry"
-						plural-name="Entries"
-						data="entries"
-						datum-definition="category.fields"
-						order-by="entryOrderByField"
-						view-datum="viewEntry"
-						add-datum="addEntry"
-						edit-datum="editEntry"
-						delete-datum="deleteEntry"
-						default-fields="defaultFields"
-						default-data-types="defaultDataTypes"
-						allow-grid-view="false"/>
+<div class="height-100pc">
+	<navbar route="route" category="category"></navbar>
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-12">
+				<h1>{{ category.name }}</h1>
+				<hr>
+				<list-grid name="Entry"
+							plural-name="Entries"
+							data="entries"
+							datum-definition="category.fields"
+							order-by="entryOrderByField"
+							view-datum="viewEntry"
+							add-datum="addEntry"
+							edit-datum="editEntry"
+							delete-datum="deleteEntry"
+							default-fields="defaultFields"
+							default-data-types="defaultDataTypes"
+							allow-grid-view="false"/>
+			</div>
 		</div>
 	</div>
 </div>

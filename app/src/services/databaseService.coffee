@@ -2,32 +2,26 @@
 
 angular.module "app.services"
 
-.factory "DatabaseService", (errors, firebaseConfig, firebaseErrorCodes, keys, overrideCacheService, CacheService, LoggingService, MappingService, UtilService, $firebaseArray, $q) ->
+.factory "DatabaseService", (errors, firebaseConfig, firebaseErrorCodes, keys, overrideCacheService, CacheService, LocationService, LoggingService, MappingService, UtilService, $firebaseArray, $q) ->
 
 	# initialize firebase app if it has not been initialized
 	if firebase.apps.length is 0
 		firebase.initializeApp firebaseConfig
 		# TODO: update to only run the below if running in production mode. otherwise, it will error out in the console. not a big deal, but it's probably bad practice
-		firebase.auth().signInWithEmailAndPassword("jdoe@fakemail.com", "johndoe").catch (err) ->
-			# handle errors
-			LoggingService.error "firebase.auth().signInWithEmailAndPassword()", err
-			return
+		# firebase.auth().signInWithEmailAndPassword("jdoe@fakemail.com", "johndoe").catch (err) ->
+		# 	# handle errors
+		# 	LoggingService.error "firebase.auth().signInWithEmailAndPassword()", err
+		# 	return
 		firebase.auth().onAuthStateChanged (user) ->
 			if user
-				# user is signed in
-				# databaseService.account.get user.uid, (err, account) ->
-				# 	if err
-				# 		LoggingService.error "firebase.auth().onAuthStateChanged()", null, err
-				# 	else
-				# 		LoggingService.log account
-				# 		CacheService.setUser account
-				# 	return
-				# return
-				user =
-					id: user.uid
-				CacheService.setUser user
+				if not CacheService.getUser()?
+					user =
+						id: user.uid
+					CacheService.setUser user
+					LocationService.goToHome()
 			else
-				# user is signed out
+				CacheService.removeUser()
+				LocationService.goToLogin()
 			return
 
 	# TODO: write tests
@@ -131,46 +125,25 @@ angular.module "app.services"
 						return
 					.catch UtilService.callback.firebase.catch "DatabaseService.util.delete()", callback
 				return
-		# authentication:
-		# 	login: (email, password) ->
-		# 		firebase.auth().signInWithEmailAndPassword email, password
-		# 			.then ->
-		# 				user =
-		# 					id: firebase.auth().currentUser.uid
-		# 				CacheService.setUser user
-		# 				databaseService.account.get (err, account) ->
-		# 					if err
-		# 						LoggingService.error "DatabaseService.util.login()", err
-		# 						callback err, false
-		# 					else
-		# 						CacheService.setUser account
-		# 						callback null, true
-		# 					return
-		# 			.catch (err) ->
-		# 				LoggingService.error "DatabaseService.util.login()", err
-		# 				callback err, false
-		# 				return
-		# 	logout: (callback) ->
-		# 		firebase.auth().signOut()
-		# 			.then ->
-		# 				callback null
-		# 				return
-		# 			.catch (err) ->
-		# 				LoggingService.error "DatabaseService.util.logout()", err
-		# 				callback err
-		# 				return
-		# 		return
-		# 	signUp: (email, password, callback) ->
-		# 		firebase.auth().createUserWithEmailAndPassword email, password
-		# 			.then (user) ->
-		# 				# TODO: create user account
-		# 				callback null, user
-		# 				return
-		# 			.catch (err) ->
-		# 				LoggingService.error "DatabaseService.util.signUp()", err
-		# 				callback err, null
-		# 				return
-		# 		return
+		authentication:
+			login: (email, password, callback) ->
+				firebase.auth().signInWithEmailAndPassword email, password
+					.catch UtilService.callback.firebase.catch "DatabaseService.authentication.login()", callback
+			logout: (callback) ->
+				firebase.auth().signOut()
+					.catch UtilService.callback.firebase.catch "DatabaseService.authentication.logout()", callback
+				return
+			# signUp: (email, password, callback) ->
+			# 	firebase.auth().createUserWithEmailAndPassword email, password
+			# 		.then (user) ->
+			# 			# TODO: create user account
+			# 			callback null, user
+			# 			return
+			# 		.catch (err) ->
+			# 			LoggingService.error "DatabaseService.util.signUp()", err
+			# 			callback err, null
+			# 			return
+			# 	return
 		# account:
 		# 	get: () ->
 		# 		databaseService.util.get keys.user.accounts, true, null, true, MappingService.objectMapper

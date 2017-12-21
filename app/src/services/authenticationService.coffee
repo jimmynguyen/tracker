@@ -6,17 +6,26 @@ angular.module "app.services"
 
 	authenticationService =
 		isLoggedIn : ->
-			if not CacheService.getUser()
-				LocationService.goToLogin()
+			isLoggedIn = false
+			LocationService.logPath()
+			if CacheService.getUser()?
+				isLoggedIn = true
+				if LocationService.isLogin()
+					LocationService.goToHome()
+			else
+				if not LocationService.isLogin()
+					LocationService.goToLogin()
+			isLoggedIn
+		login : (email, password, callback) ->
+			if not email
+				callback errors.INVALID_EMAIL, null
+			else if not password
+				callback errors.INVALID_PASSWORD, null
+			else
+				DatabaseService.authentication.login email, password, callback
 			return
-		# login : (email, password, callback) ->
-		# 	if email? and password?
-		# 		DatabaseService.util.login email, password, callback
-		# 	else
-		# 		callback errors.INVALID_EMAIL_OR_PASSWORD, false
-		# 	return
-		logout : ->
-			CacheService.removeUser()
+		logout : (callback) ->
+			DatabaseService.authentication.logout callback
 			return
 		# signUp : (email, password, user, callback) ->
 		# 	if email? and password?

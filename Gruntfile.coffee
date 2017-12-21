@@ -23,14 +23,10 @@ module.exports = (grunt) ->
 				"spec/**/*.coffee"
 			]
 
-		clean:
-			production: [
-				"build"
-				"out"
-			]
-			development: [
-				"build"
-			]
+		clean:[
+			"build"
+			"out"
+		]
 
 		# compile .coffee to .js
 		coffee:
@@ -95,6 +91,7 @@ module.exports = (grunt) ->
 					"node_modules/jquery-ui-dist/jquery-ui.min.css"
 					"node_modules/angular-toastr/dist/angular-toastr.min.css"
 					"node_modules/bootstrap-select/dist/css/bootstrap-select.min.css"
+					"node_modules/font-awesome/css/font-awesome.min.css"
 					"app/css/**/*.css"
 				]
 				dest: "build/app.min.css"
@@ -190,29 +187,34 @@ module.exports = (grunt) ->
 		"cssmin:all"
 	]
 
-	grunt.registerTask "development", [
+	grunt.registerTask "lint", [
 		"coffee_jshint:source"
 		"coffee_jshint:test"
-		"clean:development"
+	]
+
+	grunt.registerTask "compile", [
 		"coffee:source"
 		"coffee:test"
+	]
+
+	grunt.registerTask "test", [
+		"lint"
+		"clean"
+		"compile"
 		"concat:dependencies"
 		"copy:jasmine_json"
 		"jasmine:test"
+	]
+
+	grunt.registerTask "development", [
+		"test"
 		"css"
 		"copy:index_html"
 		"replace:development"
 	]
 
 	grunt.registerTask "production", [
-		"coffee_jshint:source"
-		"coffee_jshint:test"
-		"clean:production"
-		"coffee:source"
-		"coffee:test"
-		"concat:dependencies"
-		"copy:jasmine_json"
-		"jasmine:test"
+		"test"
 		"uglify:production"
 		"css"
 		"copy:index_html"

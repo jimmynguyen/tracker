@@ -4,7 +4,12 @@ angular.module "app.services"
 
 .config (localStorageServiceProvider) ->
 
+	StorageType =
+		LOCAL_STORAGE: "localStorage"
+		SESSION_STORAGE: "sessionStorage"
+
 	localStorageServiceProvider
+		.setStorageType StorageType.SESSION_STORAGE
 		.setPrefix "app"
 		.setNotify true, true
 
