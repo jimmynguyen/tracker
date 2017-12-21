@@ -14,7 +14,9 @@
   "homepage": "https://github.com/jimmynguyen/tracker#readme",
   "scripts": {
     "build": "node_modules/.bin/grunt",
-    "start": "npm run build && http-server -o"
+    "lint": "node_modules/.bin/grunt lint",
+    "start": "npm run build && http-server -o",
+    "test": "node_modules/.bin/grunt test"
   },
   "dependencies": {
     "angular": "^1.6.7",
@@ -28,6 +30,7 @@
     "angularfire": "^2.3.0",
     "bootstrap": "^3.3.7",
     "bootstrap-select": "^1.12.4",
+    "font-awesome": "^4.7.0",
     "jquery": "^3.2.1",
     "jquery-ui-dist": "^1.12.1"
   },
