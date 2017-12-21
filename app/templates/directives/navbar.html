@@ -6,3 +6,21 @@
 		</div>
 	</div><!-- /.container-fluid -->
 </nav>
+<div ng-if="route != '/login'"
+		class="container margin-top-50px">
+	<div class="row">
+		<div class="col-lg-12">
+			<button type="button"
+					class="btn btn-link padding-bottom-0px padding-left-0px padding-right-0px"
+					ng-click="goToHome()">
+				> Home
+			</button>
+			<button ng-if="category"
+					type="button"
+					class="btn btn-link padding-bottom-0px padding-left-0px padding-right-0px"
+					ng-click="goToCategory(category.id)">
+				> {{ category.name }}
+			</button>
+		</div>
+	</div>
+</div>
