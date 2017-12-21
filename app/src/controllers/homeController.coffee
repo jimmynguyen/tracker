@@ -33,18 +33,17 @@ angular.module "app.controllers"
 		DatabaseService.category.delete category, callback
 		return
 	initialize = ->
-		LocationService.logPath()
-		AuthenticationService.isLoggedIn()
-		DatabaseService.util.initialize $scope
-		$scope.$watch "isDatabaseInitialized", ->
-			getCategories()
-			getCategoryDefinition()
-			getDefaultFields()
-			getDefaultDataTypes()
-			$scope.viewCategory = viewCategory
-			$scope.addCategory = addCategory
-			$scope.editCategory = editCategory
-			$scope.deleteCategory = deleteCategory
+		if AuthenticationService.isLoggedIn()
+			DatabaseService.util.initialize $scope
+			$scope.$watch "isDatabaseInitialized", ->
+				getCategories()
+				getCategoryDefinition()
+				getDefaultFields()
+				getDefaultDataTypes()
+				$scope.viewCategory = viewCategory
+				$scope.addCategory = addCategory
+				$scope.editCategory = editCategory
+				$scope.deleteCategory = deleteCategory
 		return
 	initialize()
 

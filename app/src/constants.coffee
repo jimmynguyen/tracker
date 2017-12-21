@@ -37,14 +37,23 @@ angular.module "app.constants"
 		dataTypeIdMap: "app/dataTypeIdMap"
 
 .constant "errors",
-	INVALID_EMAIL_OR_PASSWORD: "Invalid email or password"
+	INVALID_EMAIL: "Invalid email"
+	INVALID_PASSWORD: "Invalid password"
 	INVALID_CATEGORY_ID: "Invalid category id"
 	DATABASE_SERVICE_INITIALIZATION: "Error during DatabaseService initialization"
 
+.constant "errorTypes",
+	AUTHENTICATION_ERROR: "Authentication Error"
+
 .constant "firebaseErrorCodes",
-	auth:
-		EMAIL_ALREADY_IN_USE: "auth/email-already-in-use"
+	login:
 		INVALID_EMAIL: "auth/invalid-email"
+		USER_DISABLED: "auth/user-disabled"
+		USER_NOT_FOUND: "auth/user-not-found"
+		WRONG_PASSWORD: "auth/wrong-password"
+	register:
+		INVALID_EMAIL: "auth/invalid-email"
+		EMAIL_ALREADY_IN_USE: "auth/email-already-in-use"
 		OPERATION_NOT_ALLOWED: "auth/operation-not-allowed"
 		WEAK_PASSWORD: "auth/weak-password"
 

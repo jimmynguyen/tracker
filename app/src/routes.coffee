@@ -23,7 +23,7 @@ angular.module "app.routes"
 
 	$routeProvider
 		.when "/", routes.login
-		.when "/login", routes.login
+		.when "/login", routes.default
 		.when "/home", routes.home
 		.when "/category", routes.home
 		.when "/category/:categoryId", routes.category

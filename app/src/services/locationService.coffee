@@ -2,19 +2,24 @@
 
 angular.module "app.services"
 
-.factory "LocationService", (LoggingService, $location) ->
+.factory "LocationService", (LoggingService, $location, $timeout) ->
 
 	locationService =
+		isLogin: ->
+			$location.path() is "/" or $location.path() is "/login"
 		goToCategory: (categoryId) ->
 			path = "/category/" + categoryId
-			$location.url path
+			locationService.goToPath path
 			return
 		goToHome: ->
-			$location.url "/home"
+			locationService.goToPath "/home"
 			return
 		goToLogin: ->
-			$location.url "/login"
+			locationService.goToPath "/login"
 			return
+		goToPath: (path) ->
+			$timeout ->
+				$location.path path
 		logPath: () ->
 			LoggingService.log "path: " + $location.path()
 			return

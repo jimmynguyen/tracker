@@ -2,7 +2,7 @@
 
 angular.module "app.directives"
 
-.directive "navbar", (keys, CacheService, LocationService) ->
+.directive "navbar", (keys, AuthenticationService, CacheService, LocationService, UtilService) ->
 
 	restrict: "AE"
 	templateUrl: "app/templates/directives/navbar.html"
@@ -10,8 +10,12 @@ angular.module "app.directives"
 		route: "="
 		category: "="
 	link: (scope) ->
+		logout = ->
+			AuthenticationService.logout UtilService.callback.default "navbar.logout()"
+			return
 		initialize = ->
 			scope.goToHome = LocationService.goToHome
 			scope.goToCategory = LocationService.goToCategory
+			scope.logout = logout
 		initialize()
 		return
